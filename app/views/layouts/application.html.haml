@@ -5,12 +5,40 @@
     = stylesheet_link_tag "application"
     = csrf_meta_tags
   %body
-    .notice= notice
-    .alert= alert
-
-    - if user_signed_in?
-      = current_user.nickname
-    - else
-      = link_to "Sign in with Github", user_omniauth_authorize_path(:github)
-    = yield
+    %header.topbar
+      .topbar-inner
+        .container
+          %h3#title= link_to "Railsbp", root_path, :class => 'brand'
+          - if user_signed_in?
+            %ul.nav.secondary-nav
+              %li= link_to "Sign out", destroy_user_session_path, :method => :delete
+              %li.avatar= image_tag current_user.gravatar_url :size => 24
+          - else
+            %nav= link_to "Sign in with Github", user_omniauth_authorize_path(:github), :class => 'primary btn'
+    %section#overview
+      .inner
+        .container
+          .row
+            %section.span5.columns
+              %h2 What's Raisbp?
+              %p Railsbp helps you to follow rails best practices.
+              %p We parse source codes of your rails project and gives some suggestions to improve your code quality.
+            %section.span11.columns
+              %h2 How much does it cost?
+              %p
+    %section#primary
+      .container
+        %section.flash
+        .sidebar
+        .content
+          = yield
+    %footer.footer
+      .inner
+        .container
+          %p.pull-right
+            = link_to 'Railsbp on Twitter', 'http://twitter.com/railsbp', :class => 'twitter'
+          %p
+            © Railsbp, 2011
+            = link_to 'Terms of Service', '#'
+            = link_to 'Privacy Policy', '#'
     = javascript_include_tag "application"
