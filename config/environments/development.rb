@@ -1,4 +1,4 @@
-ServiceRailsBestpracticesCom::Application.configure do
+RailsbpCom::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # In the development environment your application's code is reloaded on
@@ -27,4 +27,6 @@ ServiceRailsBestpracticesCom::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end

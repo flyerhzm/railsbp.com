@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-ServiceRailsBestpracticesCom::Application.load_tasks
+RailsbpCom::Application.load_tasks

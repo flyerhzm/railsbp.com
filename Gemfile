@@ -8,7 +8,11 @@ gem 'rails', '3.1.1'
 gem 'mysql2'
 gem 'rails_best_practices'
 gem 'haml'
-
+gem 'simple_form'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'devise'
+gem 'oa-core'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,9 +36,21 @@ gem 'capistrano'
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+group :develop do
+  gem 'thin'
+end
+
 group :test do
-  # Pretty printed test output
-  gem 'turn', :require => false
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
+  gem 'cucumber'
+  gem 'cucumber-rails'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'launchy'
+  gem 'pickle'
+
+  gem 'rails3-generators'
 end
