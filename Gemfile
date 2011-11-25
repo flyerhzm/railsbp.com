@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.1.1'
+gem 'rails', '3.1.3'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -15,6 +15,7 @@ gem 'devise'
 gem 'oa-core'
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
+gem 'octokit'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -40,19 +41,30 @@ gem 'capistrano'
 
 group :develop do
   gem 'thin'
+  gem 'rb-fsevent'
+  gem 'guard'
+  gem 'guard-bundler'
 end
 
 group :test do
+  gem 'spork', '0.9.0.rc9'
   gem 'rspec'
   gem 'rspec-rails'
+  gem 'shoulda-matchers'
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'cucumber'
-  gem 'cucumber-rails'
+  gem 'cucumber-rails', :require => 'cucumber/rails'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'pickle'
+  gem 'webmock'
 
   gem 'rails3-generators'
+
+  gem 'guard-spork'
+  gem 'guard-rspec'
+
+  gem 'growl'
 end
