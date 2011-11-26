@@ -16,6 +16,7 @@ gem 'oa-core'
 gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
 gem 'octokit'
+gem 'delayed_job'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -44,6 +45,8 @@ group :develop do
   gem 'rb-fsevent'
   gem 'guard'
   gem 'guard-bundler'
+  gem 'guard-rails'
+  gem 'guard-livereload'
 end
 
 group :test do

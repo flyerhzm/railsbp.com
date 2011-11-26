@@ -54,4 +54,5 @@ class User < ActiveRecord::Base
       )
     end
   end
+  handle_asynchronously :sync_repositories
 end

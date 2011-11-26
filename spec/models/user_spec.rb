@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe User do
+  include DelayedJobSpecHelper
+
   it { should have_many(:user_repositories) }
   it { should have_many(:repositories).through(:user_repositories) }
 
@@ -10,6 +12,7 @@ describe User do
       stub_request(:get, "https://api.github.com/user/repos").to_return(:body => repos)
 
       @user = Factory(:user)
+      work_off
     end
 
     it "should sync user repositories" do
