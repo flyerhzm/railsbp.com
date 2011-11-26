@@ -47,6 +47,7 @@ group :develop do
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-livereload'
+  gem 'guard-delayed'
 end
 
 group :test do

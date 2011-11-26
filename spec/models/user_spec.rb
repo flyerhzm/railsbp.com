@@ -13,10 +13,15 @@ describe User do
 
       @user = Factory(:user)
       work_off
+      @user.reload
     end
 
     it "should sync user repositories" do
       @user.should have(30).repositories
+    end
+
+    it "should sync_repos" do
+      @user.should be_sync_repos
     end
   end
 end

@@ -52,3 +52,7 @@ guard 'livereload' do
   watch(%r{(app/assets/.+\.js)\.coffee}) { |m| m[1] }
   watch(%r{config/locales/.+\.yml})
 end
+
+guard 'delayed', :environment => 'development' do
+  watch(%r{^app/(.+)\.rb})
+end

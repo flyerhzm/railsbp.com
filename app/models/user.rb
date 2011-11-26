@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
         :github_id => repo.id
       )
     end
+    self.update_attribute(:sync_repos, true)
   end
   handle_asynchronously :sync_repositories
 end

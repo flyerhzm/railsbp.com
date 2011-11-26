@@ -1,0 +1,7 @@
+- if user_signed_in?
+  - if current_user.sync_repos?
+    %ul.repositories
+      - current_user.repositories.each do |repository|
+        %li= repository.name
+  - else
+    #loading
