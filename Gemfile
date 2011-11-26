@@ -52,6 +52,7 @@ end
 
 group :test do
   gem 'spork', '0.9.0.rc9'
+  gem 'mocha'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
