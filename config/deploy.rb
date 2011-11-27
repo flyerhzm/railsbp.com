@@ -21,7 +21,8 @@ role :web, "railsbp.com"                          # Your HTTP server, Apache/etc
 role :app, "railsbp.com"                          # This may be the same as your `Web` server
 role :db,  "railsbp.com", :primary => true # This is where Rails migrations will run
 
-before "deploy:assets:precompile", "config:init"
+after "deploy:update_code", "config:init"
+after "deploy:update_code", "assets:precompile"
 
 namespace :config do
   task :init do
@@ -30,11 +31,20 @@ namespace :config do
   end
 end
 
+namespace :assets do
+  task :precompile, :roles => :web do
+    run "cd #{current_path} && RAILS_ENV=production #{rake} assets:precompile"
+  end
+end
+
+
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
+    migrate
+    cleanup
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
   end
 end
