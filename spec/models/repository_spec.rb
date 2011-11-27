@@ -1,5 +1,9 @@
 require 'spec_helper'
 
 describe Repository do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it { should have_many(:builds) }
+
+  context "parse" do
+
+  end
 end

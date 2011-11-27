@@ -13,4 +13,8 @@ class RepositoriesController < ApplicationController
   def show
     @repository = Repository.find(params[:id])
   end
+
+  def sync
+    render :text => 'success'
+  end
 end

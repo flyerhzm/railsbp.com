@@ -33,4 +33,12 @@ describe RepositoriesController do
       assigns(:repository).should == repository
     end
   end
+
+  context "GET :sync" do
+    it "should " do
+      hook_json = File.read(Rails.root.join("spec/fixtures/github_hook.json"))
+      post :sync, :payload => hook_json, :format => 'json'
+      response.should be_ok
+    end
+  end
 end

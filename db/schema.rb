@@ -11,7 +11,15 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111126114507) do
+ActiveRecord::Schema.define(:version => 20111127155734) do
+
+  create_table "builds", :force => true do |t|
+    t.integer  "warning_count"
+    t.integer  "repository_id"
+    t.string   "aasm_state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
