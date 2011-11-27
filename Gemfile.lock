@@ -329,6 +329,7 @@ DEPENDENCIES
   shoulda-matchers
   simple_form
   spork (= 0.9.0.rc9)
+  therubyracer
   thin
   twitter-bootstrap-rails
   uglifier (>= 1.0.3)

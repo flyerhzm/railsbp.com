@@ -38,6 +38,10 @@ gem 'jquery-rails'
 gem 'capistrano'
 gem 'capistrano_colors'
 
+group :production do
+  gem 'therubyracer'
+end
+
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 

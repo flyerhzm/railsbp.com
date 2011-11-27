@@ -21,7 +21,7 @@ role :web, "railsbp.com"                          # Your HTTP server, Apache/etc
 role :app, "railsbp.com"                          # This may be the same as your `Web` server
 role :db,  "railsbp.com", :primary => true # This is where Rails migrations will run
 
-after "deploy:update_code", "config:init"
+before "deploy:assets:precompile", "config:init"
 
 namespace :config do
   task :init do
