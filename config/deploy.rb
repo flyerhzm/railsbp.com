@@ -1,5 +1,6 @@
 require 'capistrano_colors'
 require 'bundler/capistrano'
+require "delayed/recipes"
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
@@ -20,9 +21,16 @@ set :rake, "bundle exec rake"
 role :web, "railsbp.com"                          # Your HTTP server, Apache/etc
 role :app, "railsbp.com"                          # This may be the same as your `Web` server
 role :db,  "railsbp.com", :primary => true # This is where Rails migrations will run
+role :delayed_job, 'railsbp.com'
+set :delayed_job_server_role, :delayed_job
 
-after "deploy:update_code", "config:init"
-after "deploy:update_code", "assets:precompile"
+before "deploy:assets:precompile", "config:init"
+
+before "deploy:restart", "delayed_job:stop"
+after  "deploy:restart", "delayed_job:start"
+
+after "deploy:stop",  "delayed_job:stop"
+after "deploy:start", "delayed_job:start"
 
 namespace :config do
   task :init do
@@ -30,13 +38,6 @@ namespace :config do
     run "ln -nfs #{shared_path}/config/github.yml #{release_path}/config/github.yml"
   end
 end
-
-namespace :assets do
-  task :precompile, :roles => :web do
-    run "cd #{current_path} && RAILS_ENV=production #{rake} assets:precompile"
-  end
-end
-
 
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
