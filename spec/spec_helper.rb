@@ -29,6 +29,8 @@ Spork.prefork do
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
 
+    config.include Devise::TestHelpers, :type => :controller
+
     config.before(:each) do
       DatabaseCleaner.start
     end
@@ -51,6 +53,8 @@ end
 Spork.each_run do
   require 'factory_girl_rails'
   FactoryGirl.reload
+
+  load "#{Rails.root}/config/routes.rb"
 
   # reload all the models
   Dir["#{Rails.root}/app/models/**/*.rb"].each do |model|

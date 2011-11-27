@@ -2,13 +2,14 @@
 
 FactoryGirl.define do
   factory :repository do
-      url "MyString"
-      git_url "MyString"
-      name "MyString"
-      description "MyString"
+      sequence(:url) { |n| "http://test.com/repo#{n}" }
+      sequence(:git_url) { |n| "http://test.com/repo#{n}.git" }
+      sequence(:name) { |n| "repo#{n}" }
+      description "repository"
       private false
       fork false
-      master_branch "MyString"
+      master_branch "master"
       pushed_at "2011-11-23 22:48:10"
+      sequence(:github_id) { |n| n }
     end
 end
