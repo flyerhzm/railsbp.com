@@ -15,6 +15,8 @@ class RepositoriesController < ApplicationController
   end
 
   def sync
+    repository = Repository.where(:url => params[:payload][:repository][:url]).first
+    repository.generate_build
     render :text => 'success'
   end
 end
