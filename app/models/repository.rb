@@ -4,6 +4,6 @@ class Repository < ActiveRecord::Base
   validates :github_id, :presence => true, :uniqueness => true
 
   def generate_build
-
+    builds.create
   end
 end
