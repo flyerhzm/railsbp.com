@@ -14,8 +14,6 @@ class User < ActiveRecord::Base
   has_many :user_repositories
   has_many :repositories, :through => :user_repositories
 
-  after_create :sync_repositories
-
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
       user
@@ -55,5 +53,4 @@ class User < ActiveRecord::Base
     end
     update_attribute(:sync_repos, true)
   end
-  handle_asynchronously :sync_repositories
 end
