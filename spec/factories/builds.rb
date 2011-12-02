@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :build do
-      warning_count 1
-      repository_id 1
-      state "MyString"
+      warning_count 0
+      association(:repository)
+      state "scheduled"
     end
 end

@@ -3,6 +3,8 @@ class Build < ActiveRecord::Base
 
   belongs_to :repository
 
+  after_create :analyze
+
   aasm do
     state :scheduled, :initial => true
     state :running
@@ -16,4 +18,16 @@ class Build < ActiveRecord::Base
       transitions :to => :completed, :from => :running
     end
   end
+
+  def analyze
+    run!
+    absolute_path = Rails.root.join("builds", repository.unique_name, "commit", last_commit_id).to_s
+    FileUtils.mkdir(absolute_path)
+    Git.clone(repository.git_url, :name => repository.name, :path => absolute_path)
+    rails_best_practices = RailsBestPractices::Analyzer.new(absolute_path)
+    rails_best_practices.analyze
+    rails_best_practices.output
+    complete!
+  end
+  handle_asynchronously :analyze
 end
