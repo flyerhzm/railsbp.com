@@ -35,7 +35,7 @@ describe RepositoriesController do
   end
 
   context "GET :sync" do
-    let(:hook_json) { ActiveSupport::JSON.decode(File.read(Rails.root.join("spec/fixtures/github_hook.json"))) }
+    let(:hook_json) { File.read(Rails.root.join("spec/fixtures/github_hook.json")) }
 
     it "should generate build for repository" do
       repository = Factory.stub(:repository)
