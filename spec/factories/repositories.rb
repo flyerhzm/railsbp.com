@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :repository do
-      sequence(:url) { |n| "http://test.com/repo#{n}" }
+      sequence(:html_url) { |n| "http://test.com/repo#{n}" }
       sequence(:git_url) { |n| "http://test.com/repo#{n}.git" }
       sequence(:name) { |n| "repo#{n}" }
       description "repository"

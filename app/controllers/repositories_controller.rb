@@ -16,7 +16,7 @@ class RepositoriesController < ApplicationController
 
   def sync
     payload = params[:payload]
-    repository = Repository.where(:url => payload[:repository][:url]).first
+    repository = Repository.where(:html_url => payload[:repository][:url]).first
     repository.generate_build(:last_commit_id => payload[:commits].first["id"])
     render :text => 'success'
   end

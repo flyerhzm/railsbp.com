@@ -39,7 +39,7 @@ describe RepositoriesController do
 
     it "should generate build for repository" do
       repository = Factory.stub(:repository)
-      Repository.expects(:where).with(:url => "http://github.com/defunkt/github").returns([repository])
+      Repository.expects(:where).with(:html_url => "http://github.com/defunkt/github").returns([repository])
       repository.expects(:generate_build).with(:last_commit_id => "41a212ee83ca127e3c8cf465891ab7216a705f59")
       post :sync, :payload => hook_json, :format => 'json'
       response.should be_ok

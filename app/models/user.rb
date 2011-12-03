@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
     client = Octokit::Client.new(oauth_token: github_token)
     client.repositories.each do |repo|
       repositories << Repository.create(
-        :url => repo.url,
+        :html_url => repo.html_url,
         :git_url => repo.git_url,
         :name => repo.name,
         :description => repo.description,

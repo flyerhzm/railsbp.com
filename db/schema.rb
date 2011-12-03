@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111202152252) do
+ActiveRecord::Schema.define(:version => 20111203020456) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -38,7 +38,6 @@ ActiveRecord::Schema.define(:version => 20111202152252) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "repositories", :force => true do |t|
-    t.string   "url"
     t.string   "git_url"
     t.string   "name"
     t.string   "description"
@@ -50,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20111202152252) do
     t.datetime "updated_at"
     t.integer  "github_id"
     t.integer  "user_id"
+    t.string   "html_url"
   end
 
   create_table "user_repositories", :force => true do |t|
