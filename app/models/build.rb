@@ -22,9 +22,9 @@ class Build < ActiveRecord::Base
   def analyze
     run!
     absolute_path = Rails.root.join("builds", repository.unique_name, "commit", last_commit_id).to_s
-    clone_url = repository.private? ? repository.ssh_url : repository.git_url
     FileUtils.mkdir_p(absolute_path) unless File.exist?(absolute_path)
-    Git.clone(clone_url, :name => repository.name, :path => absolute_path)
+    FileUtils.cd(absolute_path)
+    Git.clone(repository.clone_url, repository.name)
     rails_best_practices = RailsBestPractices::Analyzer.new(absolute_path)
     rails_best_practices.analyze
     rails_best_practices.output

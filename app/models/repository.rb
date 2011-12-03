@@ -8,6 +8,10 @@ class Repository < ActiveRecord::Base
     "#{user.email}/#{self.name}"
   end
 
+  def clone_url
+    private? ? ssh_url : git_url
+  end
+
   def generate_build(commit_id)
     builds.create(:last_commit_id => commit_id)
   end
