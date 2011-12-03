@@ -29,6 +29,7 @@ describe Build do
       RailsBestPractices::Analyzer.expects(:new).with(path, 'format' => 'html', 'silent' => true, 'output-file' => path + "/rbp.html").returns(rails_best_practices)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
+      FileUtils.expects(:rm_rf).with(path + "/railsbp.com")
       work_off
     end
   end

@@ -28,6 +28,7 @@ class Build < ActiveRecord::Base
     rails_best_practices = RailsBestPractices::Analyzer.new(absolute_path, 'format' => 'html', "silent" => true, "output-file" => absolute_path + "/rbp.html")
     rails_best_practices.analyze
     rails_best_practices.output
+    FileUtils.rm_rf("#{absolute_path}/#{repository.name}")
     complete!
   end
   handle_asynchronously :analyze
