@@ -1,8 +1,8 @@
 GIT
   remote: git://github.com/flyerhzm/rails_best_practices.git
-  revision: d6c5b2898ceedc61c854b5e94ccbdef07d04c1a4
+  revision: 09a23e186614b27bf380f02888acb70b89469c50
   specs:
-    rails_best_practices (1.5.2)
+    rails_best_practices (1.5.3)
       activesupport
       colored
       erubis
@@ -161,7 +161,7 @@ GEM
     mime-types (1.17.2)
     mocha (0.10.0)
       metaclass (~> 0.0.1)
-    multi_json (1.0.3)
+    multi_json (1.0.4)
     multipart-post (1.1.3)
     mysql2 (0.3.7)
     net-scp (1.0.4)
