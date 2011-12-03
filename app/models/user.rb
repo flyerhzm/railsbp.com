@@ -42,6 +42,7 @@ class User < ActiveRecord::Base
       repositories << Repository.create(
         :html_url => repo.html_url,
         :git_url => repo.git_url,
+        :ssh_url => repo.ssh_url,
         :name => repo.name,
         :description => repo.description,
         :private => repo.private,
