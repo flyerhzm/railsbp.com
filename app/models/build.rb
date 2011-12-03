@@ -11,7 +11,7 @@ class Build < ActiveRecord::Base
     state :completed
 
     event :run do
-      transitions :to => :running, :from => :scheduled
+      transitions :to => :running, :from => [:scheduled, :running]
     end
 
     event :complete do
@@ -22,7 +22,7 @@ class Build < ActiveRecord::Base
   def analyze
     run!
     absolute_path = Rails.root.join("builds", repository.unique_name, "commit", last_commit_id).to_s
-    FileUtils.mkdir(absolute_path)
+    FileUtils.mkdir_p(absolute_path) unless File.exist?(absolute_path)
     Git.clone(repository.git_url, :name => repository.name, :path => absolute_path)
     rails_best_practices = RailsBestPractices::Analyzer.new(absolute_path)
     rails_best_practices.analyze

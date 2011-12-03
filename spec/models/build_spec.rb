@@ -21,7 +21,8 @@ describe Build do
 
     it "should fetch remote git and analyze" do
       path = Rails.root.join("builds/flyerhzm@gmail.com/rails_best_practices/commit/987654321").to_s
-      FileUtils.expects(:mkdir).with(path)
+      File.expects(:exist?).with(path).returns(false)
+      FileUtils.expects(:mkdir_p).with(path)
       Git.expects(:clone).with("git://github.com/flyerhzm/rails_best_practices.git", :name => "rails_best_practices", :path => path)
       rails_best_practices = mock
       RailsBestPractices::Analyzer.expects(:new).with(path).returns(rails_best_practices)
