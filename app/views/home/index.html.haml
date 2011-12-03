@@ -1,7 +1,0 @@
-- if user_signed_in?
-  %ul.repositories
-    - if current_user.sync_repos?
-      - current_user.repositories.each do |repository|
-        %li= link_to repository.name, repository_path(repository)
-    - else
-      #loading

@@ -7,8 +7,12 @@
   %body
     %header.topbar
       .topbar-inner
-        .container
+        .container-fluid
           %h3#title= link_to "Railsbp", root_path, :class => 'brand'
+          %ul.nav
+            %li= link_to "Home", '#'
+            %li= link_to "About", '#'
+            %li= link_to "Contact", '#'
           - if user_signed_in?
             %ul.nav.secondary-nav
               %li= link_to "Sign out", destroy_user_session_path, :method => :delete
@@ -16,7 +20,7 @@
           - else
             %nav= link_to "Sign in with Github", user_omniauth_authorize_path(:github), :class => 'primary btn'
     %section#flash
-      .container
+      .container-fluid
         = notice_message
     - unless user_signed_in?
       %section#overview
@@ -31,8 +35,19 @@
                 %h2 How much does it cost?
                 %p
     %section#primary
-      .container
+      .container-fluid
         .sidebar
+          .well
+            %ul.tabs
+              - if user_signed_in?
+                %li.active= link_to "My Projects", "#"
+              %li= link_to "Public Projects", "#"
+            - if user_signed_in?
+              %ul.repositories
+                - current_user.repositories.each do |repository|
+                  %li
+                    = link_to repository.name, repository_path(repository)
+                    %p Updated: #{time_ago_in_words(repository.updated_at)} ago
         .content
           = yield
     %footer.footer

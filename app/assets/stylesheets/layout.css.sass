@@ -1,4 +1,6 @@
 body
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif
+  line-height: 120%
   background-color: #eee
 .topbar
   li.avatar
@@ -10,6 +12,36 @@ body
   margin: 50px 0 0 10px
 #primary
   background-color: #fff
+
+.container-fluid > .sidebar
+  width: 400px
+  left: 0
+.well
+  padding: 10px 0
+  background-color: #fff
+  border: 1px solid #ccc
+  .tabs
+    margin: 0
+    li:first-child
+      margin-left: 25px
+.container-fluid > .content
+  margin-left: 440px
+
+ul.repositories
+  list-style: none
+  padding: 0
+  margin: 0
+  li
+    padding: 10px 25px
+    border-bottom: 1px solid #ccc
+    font-size: 16px
+    line-height: 24px
+    &:nth-child(even)
+      background-color: #f6f6f6
+    p
+      margin: 5px 0 0
+      font-size: 13px
+      color: #666
 
 #loading
   height: 100px
