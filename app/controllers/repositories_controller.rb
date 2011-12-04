@@ -28,6 +28,10 @@ class RepositoriesController < ApplicationController
     end
   end
 
+  def edit
+    @repository = Repository.find(params[:id])
+  end
+
   def sync
     payload = ActiveSupport::JSON.decode(params[:payload])
     repository = Repository.where(html_url: payload["repository"]["url"]).first

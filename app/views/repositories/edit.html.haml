@@ -1,0 +1,10 @@
+%h2 Edit Repository
+
+= simple_form_for @repository, wrapper: "inline" do |form|
+  = form.input :name, input_html: {:class => "span12"}
+  = form.input :description, input_html: {:class => "span12"}
+  = form.input :html_url, input_html: {:class => "span12"}
+  = form.input :git_url, input_html: {:class => "span12"}
+  = form.input :ssh_url, input_html: {:class => "span12"}
+  .actions
+    = form.button :submit, :class => "primary"
