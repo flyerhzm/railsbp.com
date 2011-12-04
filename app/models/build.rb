@@ -33,12 +33,13 @@ class Build < ActiveRecord::Base
     FileUtils.cd(analyze_path)
     Git.clone(repository.clone_url, repository.name)
     rails_best_practices = RailsBestPractices::Analyzer.new(analyze_path,
-                                                            format: "html",
-                                                            silent: true,
-                                                            "output-file" => analyze_file,
-                                                            "with-github" => true,
-                                                            "github-name" => repository.github_name,
-                                                            "only-table"  => true
+                                                            "format"         => "html",
+                                                            "silent"         => true,
+                                                            "output-file"    => analyze_file,
+                                                            "with-github"    => true,
+                                                            "github-name"    => repository.github_name,
+                                                            "last-commit-id" => last_commit_id,
+                                                            "only-table"     => true
                                                            )
     rails_best_practices.analyze
     rails_best_practices.output
