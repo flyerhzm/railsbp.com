@@ -17,12 +17,12 @@ describe Repository do
 
   context "#clone_url" do
     context "private" do
-      subject { Factory(:repository, :private => false, :git_url => "git://github.com/flyerhzm/rails-bestpractices.com.git") }
+      subject { Factory(:repository, private: false, git_url: "git://github.com/flyerhzm/rails-bestpractices.com.git") }
       its(:clone_url) { should == "git://github.com/flyerhzm/rails-bestpractices.com.git" }
     end
 
     context "public" do
-      subject { Factory(:repository, :private => true, :ssh_url => "git@github.com:flyerhzm/railsbp.com.git") }
+      subject { Factory(:repository, private: true, ssh_url: "git@github.com:flyerhzm/railsbp.com.git") }
       its(:clone_url) { should == "git@github.com:flyerhzm/railsbp.com.git" }
     end
   end
@@ -30,13 +30,13 @@ describe Repository do
   context "#sync_github" do
     before do
       repo = File.read(Rails.root.join("spec/fixtures/repository.json"))
-      stub_request(:get, "https://api.github.com/repos/flyrhzm/railsbp.com").to_return(:body => repo)
+      stub_request(:get, "https://api.github.com/repos/flyrhzm/railsbp.com").to_return(body: repo)
       user = Factory(:user)
       User.current = user
     end
 
     subject do
-      repository = Factory(:repository, :github_name => "flyerhzm/rack")
+      repository = Factory(:repository, github_name: "flyerhzm/rack")
       Delayed::Worker.new.work_off
       repository.reload
     end

@@ -14,8 +14,9 @@ describe Build do
 
   context "#analyze" do
     before do
-      repository = Factory(:repository, :github_name => "flyerhzm/railsbp.com", :name => "railsbp.com", :git_url => "git://github.com/flyerhzm/railsbp.com.git")
-      @build = repository.builds.create(:last_commit_id => "987654321")
+      Repository.any_instance.stubs(:sync_github).returns(true)
+      repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      @build = repository.builds.create(last_commit_id: "987654321")
     end
 
     it "should fetch remote git and analyze" do
@@ -25,7 +26,7 @@ describe Build do
       FileUtils.expects(:cd).with(path)
       Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
       rails_best_practices = mock
-      RailsBestPractices::Analyzer.expects(:new).with(path, 'format' => 'html', 'silent' => true, 'output-file' => path + "/rbp.html").returns(rails_best_practices)
+      RailsBestPractices::Analyzer.expects(:new).with(path, format: "html", silent: true, "output-file" => path + "/rbp.html").returns(rails_best_practices)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
       FileUtils.expects(:rm_rf).with(path + "/railsbp.com")

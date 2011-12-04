@@ -15,8 +15,8 @@
             %li= link_to "Contact", '#'
           - if user_signed_in?
             %ul.nav.secondary-nav
-              %li= link_to "Sign out", destroy_user_session_path, :method => :delete
-              %li.avatar= image_tag current_user.gravatar_url :size => 24
+              %li= link_to "Sign out", destroy_user_session_path, method: :delete
+              %li.avatar= image_tag current_user.gravatar_url size: 24
           - else
             %nav= link_to "Sign in with Github", user_omniauth_authorize_path(:github), :class => 'primary btn'
     %section#flash
@@ -46,9 +46,10 @@
             - if user_signed_in?
               %ul.repositories
                 - current_user.repositories.each do |repository|
-                  %li
-                    = link_to repository.name, repository_path(repository)
-                    %p Updated: #{time_ago_in_words(repository.updated_at)} ago
+                  - unless repository.new_record?
+                    %li
+                      = link_to repository.name, repository_path(repository)
+                      %p Updated: #{time_ago_in_words(repository.updated_at)} ago
         .content
           .well
             = yield

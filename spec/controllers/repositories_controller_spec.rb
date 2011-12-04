@@ -5,20 +5,20 @@ describe RepositoriesController do
     it "should get unauthorized if user sync_repos is false" do
       user = Factory(:user)
       sign_in user
-      get :index, :format => 'json'
+      get :index, format: 'json'
       response.should be_ok
       ActiveSupport::JSON.decode(response.body).should == {"error" => "not_ready"}
     end
 
     it "should get repositories if user sync_repos is true" do
-      user = Factory(:user, :sync_repos => true)
+      user = Factory(:user, sync_repos: true)
       User.current = user
       repo1 = Factory(:repository)
       repo2 = Factory(:repository)
       user.repositories << repo1
       user.repositories << repo2
       sign_in user
-      get :index, :format => 'json'
+      get :index, format: 'json'
       response.should be_ok
       repos = ActiveSupport::JSON.decode(response.body)
       repos[0]["name"].should == repo1.name
@@ -31,7 +31,7 @@ describe RepositoriesController do
       user = Factory(:user)
       sign_in user
       repository = Factory(:repository)
-      get :show, :id => repository.id
+      get :show, id: repository.id
       response.should be_ok
       assigns(:repository).should == repository
     end
@@ -54,14 +54,14 @@ describe RepositoriesController do
     end
 
     it "should redirect to show if success" do
-      post :create, :repository => {:github_name => "flyerhzm/railsbp.com"}
+      post :create, repository: {github_name: "flyerhzm/railsbp.com"}
       repository = assigns(:repository)
       response.should redirect_to(repository_path(repository))
     end
 
     it "should render new action if failed" do
-      post :create, :repository => {}
-      response.should render_template(:action => :new)
+      post :create, repository: {github_name: ""}
+      response.should render_template(action: "new")
     end
   end
 
@@ -70,9 +70,9 @@ describe RepositoriesController do
 
     it "should generate build for repository" do
       repository = Factory.stub(:repository)
-      Repository.expects(:where).with(:html_url => "http://github.com/defunkt/github").returns([repository])
+      Repository.expects(:where).with(html_url: "http://github.com/defunkt/github").returns([repository])
       repository.expects(:generate_build).with("41a212ee83ca127e3c8cf465891ab7216a705f59")
-      post :sync, :payload => hook_json, :format => 'json'
+      post :sync, payload: hook_json, format: 'json'
       response.should be_ok
     end
   end
