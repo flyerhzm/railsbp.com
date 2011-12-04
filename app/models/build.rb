@@ -25,7 +25,14 @@ class Build < ActiveRecord::Base
     FileUtils.mkdir_p(absolute_path) unless File.exist?(absolute_path)
     FileUtils.cd(absolute_path)
     Git.clone(repository.clone_url, repository.name)
-    rails_best_practices = RailsBestPractices::Analyzer.new(absolute_path, format: "html", silent: true, "output-file" => absolute_path + "/rbp.html", "with-github" => true, "github-name" => repository.github_name)
+    rails_best_practices = RailsBestPractices::Analyzer.new(absolute_path,
+                                                            format: "html",
+                                                            silent: true,
+                                                            "output-file" => absolute_path + "/rbp.html",
+                                                            "with-github" => true,
+                                                            "github-name" => repository.github_name,
+                                                            "only-table"  => true
+                                                           )
     rails_best_practices.analyze
     rails_best_practices.output
     FileUtils.rm_rf("#{absolute_path}/#{repository.name}")
