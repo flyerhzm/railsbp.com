@@ -5,7 +5,7 @@ RailsbpCom::Application.routes.draw do
     get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session
     get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
   end
-  resources :repositories, :only => [:index, :show]
+  resources :repositories
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

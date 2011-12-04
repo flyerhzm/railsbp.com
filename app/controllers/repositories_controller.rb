@@ -1,5 +1,6 @@
 class RepositoriesController < ApplicationController
-  before_filter :authenticate_user!, :only => :index
+  before_filter :authenticate_user!, :except => :sync
+  before_filter :set_current_user, :only => :create
   respond_to :json, :html
 
   def index
@@ -12,6 +13,19 @@ class RepositoriesController < ApplicationController
 
   def show
     @repository = Repository.find(params[:id])
+  end
+
+  def new
+    @repository = Repository.new
+  end
+
+  def create
+    @repository = current_user.repositories.build(params[:repository])
+    if @repository.save
+      redirect_to repository_path(@repository)
+    else
+      render :action => :new
+    end
   end
 
   def sync

@@ -14,13 +14,12 @@ describe Build do
 
   context "#analyze" do
     before do
-      user = Factory(:user, :email => "flyerhzm@gmail.com")
-      repository = Factory(:repository, :name => "railsbp.com", :user => user, :git_url => "git://github.com/flyerhzm/railsbp.com.git")
+      repository = Factory(:repository, :github_name => "flyerhzm/railsbp.com", :name => "railsbp.com", :git_url => "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(:last_commit_id => "987654321")
     end
 
     it "should fetch remote git and analyze" do
-      path = Rails.root.join("builds/flyerhzm@gmail.com/railsbp.com/commit/987654321").to_s
+      path = Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s
       File.expects(:exist?).with(path).returns(false)
       FileUtils.expects(:mkdir_p).with(path)
       FileUtils.expects(:cd).with(path)

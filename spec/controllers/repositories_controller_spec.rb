@@ -27,10 +27,40 @@ describe RepositoriesController do
 
   context "GET :show" do
     it "should assign repository" do
+      user = Factory(:user)
+      sign_in user
       repository = Factory(:repository)
       get :show, :id => repository.id
       response.should be_ok
       assigns(:repository).should == repository
+    end
+  end
+
+  context "GET :new" do
+    it "should assign repository" do
+      user = Factory(:user)
+      sign_in user
+      get :new
+      response.should be_ok
+      assigns(:repository).should_not be_nil
+    end
+  end
+
+  context "POST :create" do
+    before do
+      user = Factory(:user)
+      sign_in user
+    end
+
+    it "should redirect to show if success" do
+      post :create, :repository => {:github_name => "flyerhzm/railsbp.com"}
+      repository = assigns(:repository)
+      response.should redirect_to(repository_path(repository))
+    end
+
+    it "should render new action if failed" do
+      post :create, :repository => {}
+      response.should render_template(:action => :new)
     end
   end
 

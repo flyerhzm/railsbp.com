@@ -19,6 +19,7 @@ gem 'octokit'
 gem 'delayed_job'
 gem 'aasm'
 gem 'git'
+gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.

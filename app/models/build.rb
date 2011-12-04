@@ -21,7 +21,7 @@ class Build < ActiveRecord::Base
 
   def analyze
     run!
-    absolute_path = Rails.root.join("builds", repository.unique_name, "commit", last_commit_id).to_s
+    absolute_path = Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
     FileUtils.mkdir_p(absolute_path) unless File.exist?(absolute_path)
     FileUtils.cd(absolute_path)
     Git.clone(repository.clone_url, repository.name)

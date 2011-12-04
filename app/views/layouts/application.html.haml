@@ -38,6 +38,7 @@
       .container-fluid
         .sidebar
           .well
+            = link_to "Add Project", new_repository_path, :class => 'btn primary'
             %ul.tabs
               - if user_signed_in?
                 %li.active= link_to "My Projects", "#"
