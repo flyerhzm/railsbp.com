@@ -26,7 +26,7 @@ describe Build do
       FileUtils.expects(:cd).with(path)
       Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
       rails_best_practices = mock
-      RailsBestPractices::Analyzer.expects(:new).with(path, format: "html", silent: true, "output-file" => path + "/rbp.html").returns(rails_best_practices)
+      RailsBestPractices::Analyzer.expects(:new).with(path, format: "html", silent: true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com").returns(rails_best_practices)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
       FileUtils.expects(:rm_rf).with(path + "/railsbp.com")
