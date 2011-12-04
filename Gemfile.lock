@@ -10,6 +10,14 @@ GIT
       progressbar
       sexp_processor
 
+GIT
+  remote: git://github.com/plataformatec/simple_form.git
+  revision: 3af639660d59832007181ca1cff3f0c4378cc9ce
+  specs:
+    simple_form (2.0.0.dev)
+      actionpack (~> 3.0)
+      activemodel (~> 3.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -255,9 +263,6 @@ GEM
       rubyzip
     sexp_processor (3.0.8)
     shoulda-matchers (1.0.0)
-    simple_form (1.5.2)
-      actionpack (~> 3.0)
-      activemodel (~> 3.0)
     spork (0.9.0.rc9)
     sprockets (2.0.3)
       hike (~> 1.2)
@@ -337,7 +342,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 3.1.4)
   shoulda-matchers
-  simple_form
+  simple_form!
   spork (= 0.9.0.rc9)
   therubyracer
   thin

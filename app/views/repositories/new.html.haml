@@ -1,5 +1,6 @@
 %h2 Create Repository
 
-= simple_form_for @repository do |form|
-  = form.input :github_name
-  = form.submit
+= simple_form_for @repository, wrapper: "inline" do |form|
+  = form.input :github_name, input_html: {:class => "span12"}, hint: "e.g. flyerhzm/rails-bestpractices.com"
+  .actions
+    = form.button :submit, :class => "primary"

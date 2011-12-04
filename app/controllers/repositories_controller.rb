@@ -20,11 +20,11 @@ class RepositoriesController < ApplicationController
   end
 
   def create
-    @repository = current_user.repositories.build(params[:repository])
-    if @repository.save
-      redirect_to repository_path(@repository)
-    else
+    @repository = current_user.repositories.create(params[:repository])
+    if @repository.new_record?
       render :action => :new
+    else
+      redirect_to repository_path(@repository)
     end
   end
 

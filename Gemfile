@@ -8,7 +8,7 @@ gem 'rails', '3.1.3'
 gem 'mysql2'
 gem 'rails_best_practices', :git => "git://github.com/flyerhzm/rails_best_practices.git"
 gem 'haml'
-gem 'simple_form'
+gem 'simple_form', :git => "git://github.com/plataformatec/simple_form.git"
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'devise'
@@ -19,7 +19,6 @@ gem 'octokit'
 gem 'delayed_job'
 gem 'aasm'
 gem 'git'
-gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.

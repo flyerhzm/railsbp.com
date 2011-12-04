@@ -50,7 +50,8 @@
                     = link_to repository.name, repository_path(repository)
                     %p Updated: #{time_ago_in_words(repository.updated_at)} ago
         .content
-          = yield
+          .well
+            = yield
     %footer.footer
       .inner
         .container
