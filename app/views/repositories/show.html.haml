@@ -4,3 +4,4 @@
   %li.active= link_to "Current", "#"
   %li= link_to "History", "#"
 
+= render :file => @repository.builds.last.analyze_file

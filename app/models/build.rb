@@ -19,23 +19,30 @@ class Build < ActiveRecord::Base
     end
   end
 
+  def analyze_path
+    Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
+  end
+
+  def analyze_file
+    analyze_path + "/rbp.html"
+  end
+
   def analyze
     run!
-    absolute_path = Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
-    FileUtils.mkdir_p(absolute_path) unless File.exist?(absolute_path)
-    FileUtils.cd(absolute_path)
+    FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
+    FileUtils.cd(analyze_path)
     Git.clone(repository.clone_url, repository.name)
-    rails_best_practices = RailsBestPractices::Analyzer.new(absolute_path,
+    rails_best_practices = RailsBestPractices::Analyzer.new(analyze_path,
                                                             format: "html",
                                                             silent: true,
-                                                            "output-file" => absolute_path + "/rbp.html",
+                                                            "output-file" => analyze_file,
                                                             "with-github" => true,
                                                             "github-name" => repository.github_name,
                                                             "only-table"  => true
                                                            )
     rails_best_practices.analyze
     rails_best_practices.output
-    FileUtils.rm_rf("#{absolute_path}/#{repository.name}")
+    FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
     complete!
   end
   handle_asynchronously :analyze

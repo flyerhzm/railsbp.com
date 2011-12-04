@@ -12,6 +12,24 @@ describe Build do
     end
   end
 
+  context "#analyze_path" do
+    before do
+      Repository.any_instance.stubs(:sync_github).returns(true)
+      @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+    end
+    subject { @build = @repository.builds.create(last_commit_id: "987654321") }
+    its(:analyze_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s }
+  end
+
+  context "#analyze_file" do
+    before do
+      Repository.any_instance.stubs(:sync_github).returns(true)
+      @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+    end
+    subject { @build = @repository.builds.create(last_commit_id: "987654321") }
+    its(:analyze_file) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.html").to_s }
+  end
+
   context "#analyze" do
     before do
       Repository.any_instance.stubs(:sync_github).returns(true)
