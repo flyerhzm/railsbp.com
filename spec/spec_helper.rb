@@ -29,6 +29,9 @@ Spork.prefork do
     # rspec-rails.
     config.infer_base_class_for_anonymous_controllers = false
 
+    config.filter_run :focus => true
+    config.run_all_when_everything_filtered = true
+
     config.include Devise::TestHelpers, type: :controller
 
     config.before(:each) do

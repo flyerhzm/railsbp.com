@@ -14,8 +14,8 @@ class Repository < ActiveRecord::Base
     private? ? ssh_url : git_url
   end
 
-  def generate_build(commit_id)
-    builds.create(last_commit_id: commit_id)
+  def generate_build(commit)
+    builds.create(last_commit_id: commit["id"], last_commit_message: commit["message"])
   end
 
   def sync_github

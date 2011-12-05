@@ -1,8 +1,37 @@
 %h2= @repository.github_name
 
-%ul.tabs
-  %li.active= link_to "Current", "#"
-  %li= link_to "History", "#"
+#repository
+  %ul.tabs
+    %li.current.active= link_to "Current", "#"
+    %li.history= link_to "History", "#"
 
-- if @repository.builds.last.try(:completed?)
-  = render @repository.builds.last.analyze_file
+  .current
+    - if @repository.builds.last.try(:completed?)
+      %dl.summary.clearfix
+        .left
+          %dt Build
+          %dd #{@repository.builds.size}
+          %dt Commit
+          %dd #{@repository.builds.last.last_commit_id}
+        .right
+          %dt Duration
+          %dd #{distance_of_time_in_words(@repository.builds.last.created_at, @repository.builds.last.updated_at, true)}
+          %dt Finished
+          %dd #{time_ago_in_words(@repository.builds.last.updated_at)} ago
+      = render :inline => File.read(@repository.builds.last.analyze_file)
+  .history.hidden
+    - if @repository.builds.present?
+      %table
+        %thead
+          %th Build
+          %th Commit
+          %th Message
+          %th Duration
+          %th Finished
+        %tbody
+          - @repository.builds.each_with_index do |build, index|
+            %td #{@repository.builds.size - index}
+            %td #{build.last_commit_id}
+            %td #{build.last_commit_message}
+            %td #{distance_of_time_in_words(build.created_at, build.updated_at, true)}
+            %td #{time_ago_in_words(build.updated_at)} ago

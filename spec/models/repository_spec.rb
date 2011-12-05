@@ -11,7 +11,7 @@ describe Repository do
 
     subject { Factory(:repository) }
     it "should create a build" do
-      lambda { subject.generate_build("987654321") }.should change(subject.builds, :count).by(1)
+      lambda { subject.generate_build("id" => "987654321", "message" => "commit message") }.should change(subject.builds, :count).by(1)
     end
   end
 
