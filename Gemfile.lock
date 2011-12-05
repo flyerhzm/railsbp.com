@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/flyerhzm/rails_best_practices.git
-  revision: fa951f4cb263baad9b0c8773fec26682248f5149
+  revision: 567b83ded5db485a0560dcf660a1bb1ae913e253
   specs:
     rails_best_practices (1.5.3)
       activesupport

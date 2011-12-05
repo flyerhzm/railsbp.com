@@ -30,6 +30,11 @@ describe Build do
     its(:analyze_file) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.html").to_s }
   end
 
+  context "#templae_file" do
+    subject { @build = Factory(:build) }
+    its(:template_file) { should == Rails.root.join("app/views/builds/_rbp.html.erb").to_s }
+  end
+
   context "#analyze" do
     before do
       Repository.any_instance.stubs(:sync_github).returns(true)
@@ -39,12 +44,13 @@ describe Build do
 
     it "should fetch remote git and analyze" do
       path = Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s
+      template = Rails.root.join("app/views/builds/_rbp.html.erb").to_s
       File.expects(:exist?).with(path).returns(false)
       FileUtils.expects(:mkdir_p).with(path)
       FileUtils.expects(:cd).with(path)
       Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
       rails_best_practices = mock
-      RailsBestPractices::Analyzer.expects(:new).with(path, "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "only-table" => true).returns(rails_best_practices)
+      RailsBestPractices::Analyzer.expects(:new).with(path, "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "template" => template).returns(rails_best_practices)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
       FileUtils.expects(:rm_rf).with(path + "/railsbp.com")

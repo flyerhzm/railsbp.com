@@ -27,6 +27,10 @@ class Build < ActiveRecord::Base
     analyze_path + "/rbp.html"
   end
 
+  def template_file
+    Rails.root.join("app/views/builds/_rbp.html.erb").to_s
+  end
+
   def analyze
     run!
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
@@ -39,7 +43,7 @@ class Build < ActiveRecord::Base
                                                             "with-github"    => true,
                                                             "github-name"    => repository.github_name,
                                                             "last-commit-id" => last_commit_id,
-                                                            "only-table"     => true
+                                                            "template"       => template_file
                                                            )
     rails_best_practices.analyze
     rails_best_practices.output
