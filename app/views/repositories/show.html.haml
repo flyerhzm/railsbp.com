@@ -32,8 +32,9 @@
           %th Finished
         %tbody
           - @repository.builds.each_with_index do |build, index|
-            %td #{@repository.builds.size - index}
-            %td #{build.last_commit_id}
-            %td #{build.last_commit_message}
-            %td #{distance_of_time_in_words(build.created_at, build.updated_at, true)}
-            %td #{time_ago_in_words(build.updated_at)} ago
+            %tr
+              %td #{@repository.builds.size - index}
+              %td #{build.last_commit_id}
+              %td #{build.last_commit_message}
+              %td #{distance_of_time_in_words(build.created_at, build.updated_at, true)}
+              %td #{time_ago_in_words(build.updated_at)} ago

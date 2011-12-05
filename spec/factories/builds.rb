@@ -2,8 +2,7 @@
 
 FactoryGirl.define do
   factory :build do
-      warning_count 0
-      association(:repository)
-      state "scheduled"
-    end
+    warning_count 0
+    association(:repository)
+  end
 end
