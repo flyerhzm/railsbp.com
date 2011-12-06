@@ -37,19 +37,7 @@
     %section#primary
       .container-fluid
         .sidebar
-          .well
-            = link_to "Add Project", new_repository_path, :class => 'btn primary'
-            %ul.tabs
-              - if user_signed_in?
-                %li.active= link_to "My Projects", "#"
-              %li= link_to "Public Projects", "#"
-            - if user_signed_in?
-              %ul.repositories
-                - current_user.repositories.each do |repository|
-                  - unless repository.new_record?
-                    %li
-                      = link_to repository.name, repository_path(repository)
-                      %p Updated: #{time_ago_in_words(repository.updated_at)} ago
+          .well= render_cell :sidebar, :repositories, current_user
         .content
           .well
             = yield

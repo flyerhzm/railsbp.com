@@ -16,6 +16,6 @@ $ ->
     closeOnEscape: true
   )
   $(".open-modal").click ->
-    domModal.toggle()  
+    domModal.toggle()
 $ ->
 	$(".btn").button "complete"

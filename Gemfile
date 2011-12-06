@@ -19,6 +19,7 @@ gem 'octokit'
 gem 'delayed_job'
 gem 'aasm'
 gem 'git'
+gem 'cells'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -72,6 +73,7 @@ group :test do
   gem 'launchy'
   gem 'pickle'
   gem 'webmock'
+  gem 'rspec-cells'
 
   gem 'rails3-generators'
 

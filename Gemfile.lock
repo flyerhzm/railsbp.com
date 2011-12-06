@@ -69,6 +69,9 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 0.1.4)
+    cells (3.7.0)
+      actionpack (~> 3.0)
+      railties (~> 3.0)
     childprocess (0.2.2)
       ffi (~> 1.0.6)
     coffee-rails (3.1.1)
@@ -239,6 +242,9 @@ GEM
       rspec-core (~> 2.7.0)
       rspec-expectations (~> 2.7.0)
       rspec-mocks (~> 2.7.0)
+    rspec-cells (0.1.0)
+      rails (~> 3.0)
+      rspec-rails (~> 2.2)
     rspec-core (2.7.1)
     rspec-expectations (2.7.0)
       diff-lcs (~> 1.1.2)
@@ -306,6 +312,7 @@ DEPENDENCIES
   capistrano
   capistrano_colors
   capybara
+  cells
   coffee-rails (~> 3.1.1)
   cucumber
   cucumber-rails
@@ -339,6 +346,7 @@ DEPENDENCIES
   rails_best_practices!
   rb-fsevent
   rspec
+  rspec-cells
   rspec-rails
   sass-rails (~> 3.1.4)
   shoulda-matchers

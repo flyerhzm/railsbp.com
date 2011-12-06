@@ -1,0 +1,21 @@
+= link_to "Add Project", new_repository_path, :class => 'btn primary'
+%ul.tabs{"data-tabs" => "tabs"}
+  - if @user
+    %li.active= link_to "My Projects", "#private"
+  %li= link_to "Public Projects", "#public"
+
+.tab-content
+  - if @user
+    .tab-pane.active#private
+      %ul
+        - @private_repositories.each do |repository|
+          - unless repository.new_record?
+            %li
+              = link_to repository.name, repository_path(repository)
+              %p Updated: #{time_ago_in_words(repository.updated_at)} ago
+  .tab-pane#public
+    %ul
+      - @public_repositories.each do |repository|
+        %li
+          = link_to repository.name, repository_path(repository)
+          %p Updated: #{time_ago_in_words(repository.updated_at)} ago
