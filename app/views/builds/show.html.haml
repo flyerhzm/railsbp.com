@@ -1,8 +1,9 @@
 %h2= @repository.github_name
 
 %ul.tabs
-  %li.active= link_to "Current", repository_path(@repository)
+  %li= link_to "Current", repository_path(@repository)
   %li= link_to "History", repository_builds_path(@repository)
+  %li.active= link_to "Build", repository_build_path(@repository, @build)
 
 .current
   - if @repository.builds.last.try(:completed?)
@@ -16,7 +17,7 @@
         %dt Duration
         %dd #{distance_of_time_in_words(@build.created_at, @build.updated_at, true)}
         %dt Finished
-        %dd #{time_ago_in_words(@.build.updated_at)} ago
+        %dd #{time_ago_in_words(@build.updated_at)} ago
       %dt Message
       %dd.message #{@build.last_commit_message}
     %h3 Analyze Result

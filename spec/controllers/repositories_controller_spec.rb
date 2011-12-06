@@ -31,9 +31,11 @@ describe RepositoriesController do
       user = Factory(:user)
       sign_in user
       repository = Factory(:repository)
+      build = Factory(:build, :repository => repository)
       get :show, id: repository.id
       response.should be_ok
-      assigns(:repository).should == repository
+      assigns(:repository).should_not be_nil
+      assigns(:build).should_not be_nil
     end
   end
 
