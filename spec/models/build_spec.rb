@@ -12,6 +12,12 @@ describe Build do
     end
   end
 
+  context "#short_commit_id" do
+    before { Repository.any_instance.stubs(:sync_github).returns(true) }
+    subject { Factory(:build, :last_commit_id => "1234567890") }
+    its(:short_commit_id) { should == "1234567" }
+  end
+
   context "#analyze_path" do
     before do
       Repository.any_instance.stubs(:sync_github).returns(true)
@@ -31,6 +37,7 @@ describe Build do
   end
 
   context "#templae_file" do
+    before { Repository.any_instance.stubs(:sync_github).returns(true) }
     subject { @build = Factory(:build) }
     its(:template_file) { should == Rails.root.join("app/views/builds/_rbp.html.erb").to_s }
   end

@@ -12,7 +12,7 @@
           %dt Build
           %dd #{@repository.builds.size}
           %dt Commit
-          %dd #{@repository.builds.last.last_commit_id}
+          %dd #{@repository.builds.last.short_commit_id}
         .right
           %dt Duration
           %dd #{distance_of_time_in_words(@repository.builds.last.created_at, @repository.builds.last.updated_at, true)}
@@ -34,7 +34,7 @@
           - @repository.builds.each_with_index do |build, index|
             %tr
               %td #{@repository.builds.size - index}
-              %td #{build.last_commit_id}
+              %td #{build.short_commit_id}
               %td #{build.last_commit_message}
               %td #{distance_of_time_in_words(build.created_at, build.updated_at, true)}
               %td #{time_ago_in_words(build.updated_at)} ago

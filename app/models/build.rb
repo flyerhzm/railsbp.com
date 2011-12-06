@@ -19,6 +19,10 @@ class Build < ActiveRecord::Base
     end
   end
 
+  def short_commit_id
+    last_commit_id[0..6]
+  end
+
   def analyze_path
     Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
   end
