@@ -6,3 +6,5 @@ tmp/
 .rvmrc
 config/database.yml
 config/github.yml
+config/rails_best_practices.yml
+builds/

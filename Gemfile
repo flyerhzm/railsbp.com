@@ -77,6 +77,8 @@ group :test do
 
   gem 'rails3-generators'
 
+  gem 'fakefs', :require => 'fakefs/safe'
+
   gem 'guard-spork'
   gem 'guard-rspec'
 

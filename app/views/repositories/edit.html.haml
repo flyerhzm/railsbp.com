@@ -8,3 +8,18 @@
   = form.input :ssh_url, input_html: {:class => "span12"}
   .actions
     = form.button :submit, :class => "primary"
+
+%h3 Configurations
+= form_for @repository do |form|
+  %fieldset
+    - Category.all.each do |category|
+      %legend= category.name
+      .input
+        %ul.inputs-list
+          - category.configurations.each do |configuration|
+            %li
+              %label
+                = check_box_tag "repository[configurations][][name]", configuration.name
+                %span= configuration.description
+  .actions
+    = form.submit "Save Configurations", :class => "btn primary"
