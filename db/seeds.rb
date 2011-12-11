@@ -3,7 +3,7 @@ Configuration.destroy_all
 Category.destroy_all
 
 category = Category.create(name: "Move code from Controller to Model")
-category.configurations.create(name: "MoveFindertoNamedScopeCheck", description: "Move finder to named_scope", url: "http://rails-bestpractices.com/posts/1-move-finder-to-named_scope")
+category.configurations.create(name: "MoveFinderToNamedScopeCheck", description: "Move finder to named_scope", url: "http://rails-bestpractices.com/posts/1-move-finder-to-named_scope")
 category.configurations.create(name: "UseModelAssociationCheck", description: "Use model association", url: "http://rails-bestpractices.com/posts/2-use-model-association")
 category.configurations.create(name: "UseScopeAccessCheck", description: "Use scope access", url: "http://rails-bestpractices.com/posts/3-use-scope-access")
 category.configurations.create(name: "AddModelVirtualAttributeCheck", description: "Add model virtual attribute", url: "http://rails-bestpractices.com/posts/4-add-model-virtual-attribute")
@@ -13,7 +13,7 @@ configuration = category.configurations.create(name: "MoveModelLogicIntoModelChe
 configuration.parameters.create(name: "use_count", kind: "integer", value: 4, description: "use count")
 
 category = Category.create(name: "RESTful Conventions")
-configuration = category.configurations.create(name: "OveruseRouteCustomizationCheck", description: "Overuse route cutomization", url: "http://rails-bestpractices.com/posts/10-overuse-route-customizations")
+configuration = category.configurations.create(name: "OveruseRouteCustomizationsCheck", description: "Overuse route cutomizations", url: "http://rails-bestpractices.com/posts/10-overuse-route-customizations")
 configuration.parameters.create(name: "customize_count", kind: "integer", value: 3, description: "customize count")
 configuration = category.configurations.create(name: "NeedlessDeepNestingCheck", description: "Needless deep nesting", url: "http://rails-bestpractices.com/posts/11-needless-deep-nesting")
 configuration.parameters.create(name: "nested_count", kind: "integer", value: 2, description: "nested count")
@@ -61,6 +61,6 @@ category = Category.create(name: "Deployment")
 category.configurations.create(name: "DryBundlerInCapistranoCheck", description: "Dry bundler in capistrano", url: "http://rails-bestpractices.com/posts/51-dry-bundler-in-capistrano")
 
 category = Category.create(name: "Other")
-category.configurations.create(name: "RemoveTrailingWhiteSpaceCheck", description: "Remove trailing white space", url: "http://rails-bestpractices.com/posts/60-remove-trailing-whitespace")
+category.configurations.create(name: "RemoveTrailingWhitespaceCheck", description: "Remove trailing whitespace", url: "http://rails-bestpractices.com/posts/60-remove-trailing-whitespace")
 category.configurations.create(name: "RemoveTabCheck", description: "Remove tab", url: "http://rails-bestpractices.com/posts/81-remove-tab")
 

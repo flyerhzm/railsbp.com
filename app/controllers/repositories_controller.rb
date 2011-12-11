@@ -31,6 +31,7 @@ class RepositoriesController < ApplicationController
 
   def edit
     @repository = Repository.find(params[:id])
+    @configs = RepositoryConfigs.new(@repository).read
   end
 
   def update

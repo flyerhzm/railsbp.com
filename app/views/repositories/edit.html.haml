@@ -19,7 +19,7 @@
           - category.configurations.each do |configuration|
             %li
               %label
-                = check_box_tag "repository[configurations][][name]", configuration.name
+                = check_box_tag "repository[configs][][name]", configuration.name, !@configs[configuration.name].nil?
                 %span= configuration.description
   .actions
     = form.submit "Save Configurations", :class => "btn primary"
