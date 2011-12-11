@@ -45,6 +45,8 @@ configuration.parameters.create(name: "except_methods", kind: "array", value: []
 
 category = Category.create(name: "Helper")
 category.configurations.create(name: "RemoveEmptyHelpersCheck", description: "Remove empty helpers", url: "http://rails-bestpractices.com/posts/72-remove-empty-helpers")
+configuration = category.configurations.create(name: "RemoveUnusedMethodsInHelpersCheck", description: "Remove unused methods in helpers")
+configuration.parameters.create(name: "except_methods", kind: "array", value: [], description: "except methods")
 
 category = Category.create(name: "View")
 category.configurations.create(name: "MoveCodeIntoControllerCheck", description: "Move code into controller", url: "http://rails-bestpractices.com/posts/24-move-code-into-controller")
@@ -61,5 +63,4 @@ category.configurations.create(name: "DryBundlerInCapistranoCheck", description:
 category = Category.create(name: "Other")
 category.configurations.create(name: "RemoveTrailingWhiteSpaceCheck", description: "Remove trailing white space", url: "http://rails-bestpractices.com/posts/60-remove-trailing-whitespace")
 category.configurations.create(name: "RemoveTabCheck", description: "Remove tab", url: "http://rails-bestpractices.com/posts/81-remove-tab")
-
 
