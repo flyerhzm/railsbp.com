@@ -5,13 +5,26 @@ class RepositoryConfigs
     @repository = repository
   end
 
-  def write
+  def write(configs)
+    result = {}
+    configs.each do |config|
+      config_name = config.delete("name")
+      result[config_name] = {}
+      config.each do |key, value|
+        if key =~ /_count$/
+          result[config_name][key] = value.to_i
+        elsif key =~ /_methods$/
+          result[config_name][key] = value.split(",").map(&:strip)
+        end
+      end
+    end
+    p result
     File.open(@repository.config_file_path, 'w+') do |file|
-      file.write(@configs)
+      file.write(result.to_yaml)
     end
   end
 
   def read
-    @configs = YAML.load(File.open(@repository.config_file_path))
+    YAML.load_file(@repository.config_file_path)
   end
 end

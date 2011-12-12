@@ -6,6 +6,9 @@ RailsbpCom::Application.routes.draw do
     get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
   end
   resources :repositories do
+    member do
+      put :update_configs
+    end
     resources :builds
   end
 
