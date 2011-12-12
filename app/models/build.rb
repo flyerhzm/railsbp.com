@@ -40,7 +40,7 @@ class Build < ActiveRecord::Base
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     FileUtils.cd(analyze_path)
     Git.clone(repository.clone_url, repository.name)
-    rails_best_practices = RailsBestPractices::Analyzer.new(analyze_path,
+    rails_best_practices = RailsBestPractices::Analyzer.new("#{analyze_path}/#{repository.name}",
                                                             "format"         => "html",
                                                             "silent"         => true,
                                                             "output-file"    => analyze_file,

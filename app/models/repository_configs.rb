@@ -18,7 +18,6 @@ class RepositoryConfigs
         end
       end
     end
-    p result
     File.open(@repository.config_file_path, 'w+') do |file|
       file.write(result.to_yaml)
     end
