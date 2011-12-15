@@ -52,6 +52,7 @@ class Build < ActiveRecord::Base
     rails_best_practices.analyze
     rails_best_practices.output
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
+    self.warning_count = rails_best_practices.runner.errors.size
     complete!
   end
   handle_asynchronously :analyze
