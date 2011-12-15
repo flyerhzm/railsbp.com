@@ -2,7 +2,7 @@ class BuildsController < ApplicationController
   before_filter :load_repository
 
   def index
-    @builds = @repository.builds
+    @builds = @repository.builds.order("id desc")
   end
 
   def show
