@@ -1,4 +1,5 @@
 %h2= @repository.github_name
+%p Warning count: #{@build.warning_count}
 
 = link_to 'Configure', edit_repository_path(@repository), :class => "config btn primary"
 %ul.tabs
@@ -11,8 +12,6 @@
       .left
         %dt Build
         %dd #{@repository.builds.size}
-        %dt Warnings
-        %dd #{@build.warning_count}
         %dt Commit
         %dd #{@build.short_commit_id}
       .right
