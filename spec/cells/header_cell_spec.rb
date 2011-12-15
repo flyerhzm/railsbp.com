@@ -3,7 +3,7 @@ require 'spec_helper'
 describe HeaderCell do
   context "cell rendering" do
     context "rendering display without current_user" do
-      subject { render_cell(:header, :display, nil) }
+      subject { render_cell(:header, :display, nil, nil) }
 
       it { should have_selector("h3", :content => "Railsbp") }
       it { should have_link("Home") }
@@ -15,13 +15,15 @@ describe HeaderCell do
 
     context "rendering display with current_user" do
       let(:user) { Factory(:user) }
-      subject { render_cell(:header, :display, user) }
+      let(:repository) { Factory(:repository) }
+      before { User.current = user }
+      subject { render_cell(:header, :display, user, repository) }
 
       it { should have_selector("h3", :content => "Railsbp") }
       it { should have_link("Home") }
       it { should have_link("About") }
       it { should have_link("Contact") }
-      it { should have_link("Projects") }
+      it { should have_link(repository.name) }
       it { should have_link("New Project") }
       it { should have_link("Sign out") }
     end

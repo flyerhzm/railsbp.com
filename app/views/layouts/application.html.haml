@@ -5,7 +5,7 @@
     = stylesheet_link_tag "application"
     = csrf_meta_tags
   %body
-    = render_cell :header, :display, current_user
+    = render_cell :header, :display, current_user, current_repository
     %section#flash
       .container-fluid
         = notice_message

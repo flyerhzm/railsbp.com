@@ -8,13 +8,16 @@
         %li= link_to "Contact", '#'
       - if @user
         %ul.nav.secondary-nav
-          %li.dropdown
-            = link_to "Projects", "#", :class => "dropdown-toggle"
-            %ul.dropdown-menu
-              - @repositories.each do |repository|
-                %li= link_to repository.name, repository_path(repository)
-              %li.divider
-              %li= link_to "New Project", new_repository_path
+          - if @repository
+            %li.dropdown
+              = link_to @repository.name, "#", :class => "dropdown-toggle"
+              %ul.dropdown-menu
+                - @repositories.each do |repository|
+                  %li= link_to repository.name, repository_path(repository)
+                %li.divider
+                %li= link_to "New Project", new_repository_path
+          - else
+            %li= link_to "New Project", new_repository_path
           %li= link_to "Sign out", destroy_user_session_path, method: :delete
           %li.avatar= image_tag @user.gravatar_url size: 24
       - else
