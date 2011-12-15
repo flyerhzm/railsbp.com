@@ -14,6 +14,9 @@ Spork.prefork do
   # in spec/support/ and its subdirectories.
   Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+  Devise.stretches = 1
+  Rails.logger.level = 4
+
   RSpec.configure do |config|
     config.mock_with :mocha
 

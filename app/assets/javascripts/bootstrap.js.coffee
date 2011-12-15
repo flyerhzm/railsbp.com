@@ -18,4 +18,7 @@ $ ->
   $(".open-modal").click ->
     domModal.toggle()
 $ ->
-	$(".btn").button "complete"
+  $(".btn").button "complete"
+
+$ ->
+  $('.topbar').dropdown()

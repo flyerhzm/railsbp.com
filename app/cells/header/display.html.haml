@@ -1,0 +1,21 @@
+%header.topbar
+  .topbar-inner
+    .container-fluid
+      %h3#title= link_to "Railsbp", root_path, :class => 'brand'
+      %ul.nav
+        %li= link_to "Home", '#'
+        %li= link_to "About", '#'
+        %li= link_to "Contact", '#'
+      - if @user
+        %ul.nav.secondary-nav
+          %li.dropdown
+            = link_to "Projects", "#", :class => "dropdown-toggle"
+            %ul.dropdown-menu
+              - @repositories.each do |repository|
+                %li= link_to repository.name, repository_path(repository)
+              %li.divider
+              %li= link_to "New Project", new_repository_path
+          %li= link_to "Sign out", destroy_user_session_path, method: :delete
+          %li.avatar= image_tag @user.gravatar_url size: 24
+      - else
+        %nav= link_to "Sign in with Github", user_omniauth_authorize_path(:github), :class => 'primary btn'
