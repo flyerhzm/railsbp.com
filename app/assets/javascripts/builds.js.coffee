@@ -2,9 +2,10 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
-  categories = $("#buildsChart").data("categories")
-  data = $("#buildsChart").data("data")
-  chart = new Highcharts.Chart(
+  categories = $("#buildsChart").data("categories").reverse()
+  data = $("#buildsChart").data("data").reverse()
+  repository = $("#buildsChart").data("repository")
+  buildsChart = new Highcharts.Chart(
     chart:
       renderTo: "buildsChart"
       defaultSeriesType: "line"
@@ -28,6 +29,8 @@ $ ->
       formatter: ->
         @x
 
-    serials:
+    series: [
+      name: repository
       data: data
+    ]
   )

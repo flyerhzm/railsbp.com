@@ -4,7 +4,7 @@
 
 .history
   - if @builds.present?
-    #buildsChart{ data: { categories: @builds.map(&:position), data: @builds.map(&:warning_count) } }
+    #buildsChart{ data: { categories: @builds.map(&:position), data: @builds.map(&:warning_count), repository: @repository.github_name } }
     %table.condensed-table.zebra-striped
       %thead
         %th.build Build
