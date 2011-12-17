@@ -1,5 +1,4 @@
 %h2= @repository.github_name
-%p Warning count: #{@build.warning_count}
 
 = link_to 'Configure', edit_repository_path(@repository), :class => "config btn primary"
 %ul.tabs
@@ -23,4 +22,5 @@
       %dt Message
       %dd.message #{@build.last_commit_message}
     %h3 Analyze Result
+    %p Warning count: #{@build.warning_count}
     = render :inline => File.read(@build.analyze_file)
