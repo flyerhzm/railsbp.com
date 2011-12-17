@@ -14,7 +14,7 @@
       %tbody
         - @builds.each_with_index do |build, index|
           %tr
-            %td= link_to @builds.size - index, repository_build_path(@repository, build)
+            %td= link_to @builds.position, repository_build_path(@repository, build)
             %td #{build.short_commit_id}
             %td #{build.last_commit_message}
             %td #{distance_of_time_in_words(build.created_at, build.updated_at, true)}

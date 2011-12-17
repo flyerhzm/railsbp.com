@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111205144518) do
+ActiveRecord::Schema.define(:version => 20111217082756) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20111205144518) do
     t.datetime "updated_at"
     t.string   "last_commit_id"
     t.text     "last_commit_message"
+    t.integer  "position"
   end
 
   create_table "categories", :force => true do |t|
