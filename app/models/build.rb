@@ -61,6 +61,7 @@ class Build < ActiveRecord::Base
     end_time = Time.now
     self.warning_count = rails_best_practices.runner.errors.size
     self.duration = end_time - start_time
+    self.finished_at = end_time
     complete!
   end
   handle_asynchronously :analyze
