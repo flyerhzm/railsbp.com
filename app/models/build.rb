@@ -1,8 +1,9 @@
 class Build < ActiveRecord::Base
   include AASM
 
-  belongs_to :repository
+  belongs_to :repository, :counter_cache => true
 
+  before_create :set_position
   after_create :analyze
 
   aasm do
@@ -33,6 +34,10 @@ class Build < ActiveRecord::Base
 
   def template_file
     Rails.root.join("app/views/builds/_rbp.html.erb").to_s
+  end
+
+  def set_position
+    self.position = repository.builds_count + 1
   end
 
   def analyze
