@@ -1,4 +1,18 @@
-%h1
-  Build#content
-%p
-  Find me in app/cells/build/content.html.haml
+.current
+  - if @build.try(:completed?)
+    %dl.summary.clearfix
+      .left
+        %dt Build
+        %dd #{@repository.builds.size}
+        %dt Commit
+        %dd #{@build.short_commit_id}
+      .right
+        %dt Duration
+        %dd #{distance_of_time_in_words(@build.created_at, @build.updated_at, true)}
+        %dt Finished
+        %dd #{time_ago_in_words(@build.updated_at)} ago
+      %dt Message
+      %dd.message #{@build.last_commit_message}
+    %h3 Analyze Result
+    %p Warning count: #{@build.warning_count}
+    = render :inline => File.read(@build.analyze_file)

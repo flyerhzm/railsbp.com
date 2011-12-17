@@ -3,6 +3,8 @@
 FactoryGirl.define do
   factory :build do
     warning_count 0
+    last_commit_id "1234567890"
+    last_commit_message "test"
     association(:repository)
   end
 end

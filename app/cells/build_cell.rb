@@ -5,7 +5,9 @@ class BuildCell < Cell::Rails
     render
   end
 
-  def content
+  def content(repository, build=nil)
+    @repository, @build = repository, build
+    @build ||= @repository.builds.last
     render
   end
 

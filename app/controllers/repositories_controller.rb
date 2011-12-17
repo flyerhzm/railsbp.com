@@ -14,7 +14,6 @@ class RepositoriesController < ApplicationController
 
   def show
     set_current_repository(@repository)
-    @build = @repository.builds.last
   end
 
   def new

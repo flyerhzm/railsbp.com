@@ -22,7 +22,7 @@ describe BuildCell do
         it { should have_selector("li.active", :content => "Current") }
       end
 
-      context "Build" do
+      context "build" do
         subject { render_cell(:build, :tabs, "history", repository, build) }
 
         it { should have_link("Configure") }
@@ -31,12 +31,30 @@ describe BuildCell do
     end
 
     context "rendering content" do
-      subject { render_cell(:build, :content) }
+      let(:user) { Factory(:user) }
+      let(:repository) { Factory(:repository) }
+      let(:build) { Factory(:build, :repository => repository, :warning_count => 10).tap { |build| build.run!; build.complete! } }
+      before do
+        User.current = user
+        File.stubs(:read).returns("")
+      end
 
-      it { should have_selector("h1", :content => "Build#content") }
-      it { should have_selector("p", :content => "Find me in app/cells/build/content.html") }
+      context "repository with build" do
+        subject { render_cell(:build, :content, repository, build) }
+
+        it { should have_content("Analyze Result") }
+        it { should have_content("Warning count: 10") }
+      end
+
+      context "repository without build" do
+        subject { render_cell(:build, :content, repository) }
+
+        it { should_not have_content("Analyze Result") }
+      end
+
+      context "build" do
+      end
     end
-
   end
 
 

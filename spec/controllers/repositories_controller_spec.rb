@@ -35,7 +35,6 @@ describe RepositoriesController do
       get :show, id: repository.id
       response.should be_ok
       assigns(:repository).should_not be_nil
-      assigns(:build).should_not be_nil
     end
   end
 
