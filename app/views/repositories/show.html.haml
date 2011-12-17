@@ -1,9 +1,6 @@
 %h2= @repository.github_name
 
-= link_to 'Configure', edit_repository_path(@repository), :class => "config btn primary"
-%ul.tabs
-  %li.active= link_to "Current", repository_path(@repository)
-  %li= link_to "History", repository_builds_path(@repository)
+= render_cell :build, :tabs, "current", @repository
 
 .current
   - if @repository.builds.last.try(:completed?)

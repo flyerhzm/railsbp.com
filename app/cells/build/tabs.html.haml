@@ -1,0 +1,6 @@
+= link_to 'Configure', edit_repository_path(@repository), :class => "config btn primary"
+%ul.tabs
+  %li{:class => @active_class_name == "current" ? "active" : ""}= link_to "Current", repository_path(@repository)
+  %li{:class => @active_class_name == "history" ? "active" : ""}= link_to "History", repository_builds_path(@repository)
+  - if @build
+    %li{:class => @active_class_name == "build" ? "active" : ""}= link_to "Build", repository_build_path(@repository, @build)
