@@ -30,7 +30,6 @@ class RepositoriesController < ApplicationController
   end
 
   def edit
-    @configs = RepositoryConfigs.new(@repository).read
   end
 
   def update

@@ -9,22 +9,4 @@
   .actions
     = form.button :submit, :class => "primary"
 
-%h3 Configurations
-= form_for @repository, url: update_configs_repository_path(@repository) do |form|
-  %fieldset
-    - Category.all.each do |category|
-      %legend= category.name
-      .input
-        %ul.inputs-list
-          - category.configurations.each do |configuration|
-            %li
-              %label
-                = check_box_tag "repository[configs][][name]", configuration.name, !@configs[configuration.name].nil?
-                %span= configuration.description
-              - if @configs[configuration.name].present?
-                - @configs[configuration.name].each do |key, value|
-                  %label
-                    %span= "#{key}: "
-                    = text_field_tag "repository[configs][][#{key}]", value
-  .actions
-    = form.submit "Save Configurations", :class => "btn primary"
+= render_cell :repository, :configurations_form, @repository
