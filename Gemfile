@@ -20,6 +20,7 @@ gem 'delayed_job'
 gem 'aasm'
 gem 'git'
 gem 'cells'
+gem 'lazy_high_charts'
 
 # Gems used only for assets and not required
 # in production environments by default.
