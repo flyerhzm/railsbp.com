@@ -3,10 +3,6 @@ class BuildsController < ApplicationController
 
   def index
     @builds = @repository.builds.order("id desc")
-    @h = LazyHighCharts::HighChart.new('graph') do |f|
-      f.options[:chart][:defaultSeriesType] = "area"
-      f.series(:name=>'Builds', :data => @builds.map(&:warning_count))
-    end
   end
 
   def show
