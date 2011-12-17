@@ -8,6 +8,7 @@ describe Build do
   context "after_save" do
     it "should call analyze" do
       Build.any_instance.expects(:analyze)
+      Build.any_instance.expects(:set_position)
       Build.create
     end
   end
@@ -60,6 +61,9 @@ describe Build do
       RailsBestPractices::Analyzer.expects(:new).with(path + "/railsbp.com", "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "template" => template).returns(rails_best_practices)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
+      runner = mock
+      rails_best_practices.expects(:runner).returns(runner)
+      runner.expects(:errors).returns([])
       FileUtils.expects(:rm_rf).with(path + "/railsbp.com")
       work_off
     end
