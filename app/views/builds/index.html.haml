@@ -4,17 +4,17 @@
 
 .history
   - if @builds.present?
-    %table
+    %table.condensed-table.zebra-striped
       %thead
-        %th Build
-        %th Commit
-        %th Message
-        %th Duration
-        %th Finished
+        %th.build Build
+        %th.commit Commit
+        %th.message Message
+        %th.duration Duration
+        %th.finished Finished
       %tbody
-        - @builds.each_with_index do |build, index|
+        - @builds.each do |build|
           %tr
-            %td= link_to @builds.position, repository_build_path(@repository, build)
+            %td= link_to build.position, repository_build_path(@repository, build)
             %td #{build.short_commit_id}
             %td #{build.last_commit_message}
             %td #{distance_of_time_in_words(build.created_at, build.updated_at, true)}
