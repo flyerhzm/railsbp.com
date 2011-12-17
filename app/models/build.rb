@@ -42,6 +42,7 @@ class Build < ActiveRecord::Base
 
   def analyze
     run!
+    start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     FileUtils.cd(analyze_path)
     Git.clone(repository.clone_url, repository.name)
@@ -57,7 +58,9 @@ class Build < ActiveRecord::Base
     rails_best_practices.analyze
     rails_best_practices.output
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
+    end_time = Time.now
     self.warning_count = rails_best_practices.runner.errors.size
+    self.duration = end_time - start_time
     complete!
   end
   handle_asynchronously :analyze

@@ -8,7 +8,7 @@
         %dd #{@build.short_commit_id}
       .right
         %dt Duration
-        %dd #{distance_of_time_in_words(@build.created_at, @build.updated_at, true)}
+        %dd #{@build.duration} secs
         %dt Finished
         %dd #{time_ago_in_words(@build.updated_at)} ago
       %dt Message
