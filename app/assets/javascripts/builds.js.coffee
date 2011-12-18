@@ -9,7 +9,7 @@ $ ->
         checks.push $(item).attr("class")
     checksPanel = $("#checksPanel")
     $.each($.unique(checks), (index, check) ->
-      checksPanel.append($("<li><input type='checkbox' value='"+check+"' checked='checked' />"+check+"</li>"))
+      checksPanel.append($("<li><input type='checkbox' value='"+check+"' />"+check+"</li>"))
     )
     $("#customizeChecks").click ->
       if $(this).hasClass("active")
@@ -18,14 +18,13 @@ $ ->
       else
         checksPanel.show()
         $(this).addClass("active")
-    $('input[type=checkbox]').prop('checked', true).click ->
-      $self = $(this)
-      if $self.attr('checked')
-        $self.prop('checked', true)
-        $('.'+$self.val()).show()
+    $("input[type=checkbox]").prop("checked", true).click ->
+      if $(this).attr("checked")
+        $(this).prop('checked', true)
+        $("."+$(this).val()).show()
       else
-        $self.prop('checked', false)
-        $('.'+$self.val()).hide()
+        $(this).prop('checked', false)
+        $("."+$(this).val()).hide()
 
 $ ->
   $("#history table tr").click ->
