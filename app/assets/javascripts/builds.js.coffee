@@ -2,6 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
+  $(".history table tr").click ->
+    url = $(this).data("url")
+    window.location.href = url
+
+$ ->
   categories = $("#buildsChart").data("categories").reverse()
   data = $("#buildsChart").data("data").reverse()
   repository = $("#buildsChart").data("repository")

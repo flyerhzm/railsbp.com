@@ -14,8 +14,8 @@
         %th.finished Finished
       %tbody
         - @builds.each do |build|
-          %tr
-            %td= link_to build.position, repository_build_path(@repository, build)
+          %tr{data: {url: repository_build_path(@repository, build}}
+            %td #{build.position}
             %td #{build.short_commit_id}
             %td #{build.last_commit_message}
             %td #{build.duration} secs
