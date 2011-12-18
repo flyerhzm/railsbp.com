@@ -32,5 +32,9 @@ $ ->
     series: [
       name: repository
       data: data
+      point:
+        events:
+          click: ->
+            window.location.href = window.location.href + "?position=" + @category
     ]
   )
