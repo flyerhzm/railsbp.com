@@ -8,10 +8,16 @@ $ ->
       if index > 0
         checks.push $(item).attr("class")
     checksPanel = $("#checksPanel")
-    $.unique(checks).each (index, check) ->
-      checksPanel.append($("<li><input type='checkbox' value='"+check+"' />"+check+"</li>"))
-    checksPanel.slidePanel()
-
+    $.each($.unique(checks), (index, check) ->
+      checksPanel.append($("<li><input type='checkbox' value='"+check+"' checked='checked' />"+check+"</li>"))
+    )
+    $("#customizeChecks").click ->
+      if $(this).hasClass("active")
+        checksPanel.hide()
+        $(this).removeClass("active")
+      else
+        checksPanel.show()
+        $(this).addClass("active")
 
 $ ->
   $("#history table tr").click ->
