@@ -2,7 +2,7 @@
 
 = render_cell :build, :tabs, "history", @repository
 
-.history
+#history
   - if @builds.present?
     #buildsChart{ data: { categories: @builds.map(&:position), data: @builds.map(&:warning_count), repository: @repository.github_name } }
     %table.condensed-table.zebra-striped

@@ -2,44 +2,57 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 $ ->
-  $(".history table tr").click ->
+  if $("#build").length > 0
+    checks = []
+    $("#build table tr").each (index, item) ->
+      if index > 0
+        checks.push $(item).attr("class")
+    checksPanel = $("#checksPanel")
+    $.unique(checks).each (index, check) ->
+      checksPanel.append($("<li><input type='checkbox' value='"+check+"' />"+check+"</li>"))
+    checksPanel.slidePanel()
+
+
+$ ->
+  $("#history table tr").click ->
     url = $(this).data("url")
     window.location.href = url
 
 $ ->
-  categories = $("#buildsChart").data("categories").reverse()
-  data = $("#buildsChart").data("data").reverse()
-  repository = $("#buildsChart").data("repository")
-  buildsChart = new Highcharts.Chart(
-    chart:
-      renderTo: "buildsChart"
-      defaultSeriesType: "line"
+  if $("#buildsChart").length > 0
+    categories = $("#buildsChart").data("categories").reverse()
+    data = $("#buildsChart").data("data").reverse()
+    repository = $("#buildsChart").data("repository")
+    buildsChart = new Highcharts.Chart(
+      chart:
+        renderTo: "buildsChart"
+        defaultSeriesType: "line"
 
-    title:
-      text: "Builds History"
-
-    xAxis:
-      categories: categories
-
-    yAxis:
       title:
-        text: "Warning count"
-      plotLines: [
-        value: 0
-        width: 1
-        color: "#808080"
+        text: "Builds History"
+
+      xAxis:
+        categories: categories
+
+      yAxis:
+        title:
+          text: "Warning count"
+        plotLines: [
+          value: 0
+          width: 1
+          color: "#808080"
+        ]
+
+      tooltip:
+        formatter: ->
+          @x
+
+      series: [
+        name: repository
+        data: data
+        point:
+          events:
+            click: ->
+              window.location.href = window.location.href + "?position=" + @category
       ]
-
-    tooltip:
-      formatter: ->
-        @x
-
-    series: [
-      name: repository
-      data: data
-      point:
-        events:
-          click: ->
-            window.location.href = window.location.href + "?position=" + @category
-    ]
-  )
+    )
