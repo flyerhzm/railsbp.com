@@ -18,6 +18,14 @@ $ ->
       else
         checksPanel.show()
         $(this).addClass("active")
+    $('input[type=checkbox]').prop('checked', true).click ->
+      $self = $(this)
+      if $self.attr('checked')
+        $self.prop('checked', true)
+        $('.'+$self.val()).show()
+      else
+        $self.prop('checked', false)
+        $('.'+$self.val()).hide()
 
 $ ->
   $("#history table tr").click ->
