@@ -14,7 +14,7 @@
       %dt Message
       %dd.message #{@build.last_commit_message}
     %h3 Analyze Result
-    %p Warning count: #{@build.warning_count}
+    %p.warning-count Warning count: #{@build.warning_count}
     = link_to "Customize Checks", "#", :id => "customizeChecks", :class => "trigger"
     %ul#checksPanel.hidden
     = render :inline => File.read(@build.analyze_file)

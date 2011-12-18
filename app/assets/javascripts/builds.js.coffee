@@ -5,10 +5,10 @@ $ ->
   if $("#build").length > 0
     checks = []
     $("#build table tr").each (index, item) ->
-      if index > 0
+      if index > 0 && $.inArray($(item).attr("class"), checks) == -1
         checks.push $(item).attr("class")
     checksPanel = $("#checksPanel")
-    $.each($.unique(checks), (index, check) ->
+    $.each(checks, (index, check) ->
       checksPanel.append($("<li><input type='checkbox' value='"+check+"' />"+check+"</li>"))
     )
     $("#customizeChecks").click ->
