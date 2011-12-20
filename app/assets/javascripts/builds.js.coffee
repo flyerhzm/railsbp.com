@@ -18,6 +18,7 @@ $ ->
       else
         checksPanel.show()
         $(this).addClass("active")
+      return false
     $("input[type=checkbox]").prop("checked", true).click ->
       if $(this).attr("checked")
         $(this).prop('checked', true)
@@ -25,11 +26,13 @@ $ ->
       else
         $(this).prop('checked', false)
         $("."+$(this).val()).hide()
+      return false
 
 $ ->
   $("#history table tr").click ->
     url = $(this).data("url")
     window.location.href = url
+    return false
 
 $ ->
   if $("#buildsChart").length > 0
@@ -67,5 +70,6 @@ $ ->
           events:
             click: ->
               window.location.href = window.location.href + "?position=" + @category
+              return false
       ]
     )
