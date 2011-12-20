@@ -20,6 +20,7 @@ gem 'delayed_job'
 gem 'aasm'
 gem 'git'
 gem 'cells'
+gem 'stripe'
 
 # Gems used only for assets and not required
 # in production environments by default.

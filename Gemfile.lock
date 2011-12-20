@@ -239,6 +239,8 @@ GEM
     rb-fsevent (0.4.3.1)
     rdoc (3.11)
       json (~> 1.4)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
     rspec (2.7.0)
       rspec-core (~> 2.7.0)
       rspec-expectations (~> 2.7.0)
@@ -275,6 +277,8 @@ GEM
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
+    stripe (1.5.25)
+      rest-client (~> 1.4)
     term-ansicolor (1.0.7)
     therubyracer (0.9.9)
       libv8 (~> 3.3.10)
@@ -354,6 +358,7 @@ DEPENDENCIES
   shoulda-matchers
   simple_form!
   spork (= 0.9.0.rc9)
+  stripe
   therubyracer
   thin
   twitter-bootstrap-rails
