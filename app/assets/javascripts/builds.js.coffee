@@ -9,7 +9,7 @@ $ ->
         checks.push $(item).attr("class")
     checksPanel = $("#checksPanel")
     $.each(checks, (index, check) ->
-      checksPanel.append($("<li><input type='checkbox' value='"+check+"' />"+check+"</li>"))
+      checksPanel.append($("<li><input id='"+check+"' type='checkbox' value='"+check+"' /><label for='"+check+"'>"+check+"</label></li>"))
     )
     $("#customizeChecks").click ->
       if $(this).hasClass("active")
