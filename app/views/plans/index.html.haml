@@ -35,6 +35,8 @@
     = link_to "x", "#", :class => "close"
     %h3 Credit card information
   .modal-body
+    .alert-message.info
+      %p Your information will be stored securely with #{link_to "Stripe", "https://stripe.com"}.
     = form_for current_user, url: update_credit_card_path do |f|
       = f.hidden_field :stripe_card_token
       = f.hidden_field :plan_id
