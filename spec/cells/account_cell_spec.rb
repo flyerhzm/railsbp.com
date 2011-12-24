@@ -4,10 +4,10 @@ describe AccountCell do
   context "cell rendering" do
 
     context "rendering tabs" do
-      subject { render_cell(:account, :tabs) }
+      subject { render_cell(:account, :tabs, "plans") }
 
       it { should have_link("Account Overview") }
-      it { should have_link("Plan & Billing") }
+      it { should have_selector("li.active a", :content => "Plan & Billing") }
     end
 
   end

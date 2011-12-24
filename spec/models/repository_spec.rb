@@ -4,6 +4,7 @@ describe Repository do
   include FakeFS::SpecHelpers
 
   it { should have_many(:builds) }
+  it { should have_many(:branches) }
 
   before do
     FakeFS do
@@ -62,7 +63,7 @@ describe Repository do
   context "#sync_github" do
     before do
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
-      stub_request(:get, "https://api.github.com/repos/flyrhzm/railsbp.com").to_return(body: repo)
+      stub_request(:get, "https://api.github.com/repos/flyerhzm/railsbp.com").to_return(body: repo)
     end
 
     subject do

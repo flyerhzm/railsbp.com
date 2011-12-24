@@ -56,11 +56,15 @@ describe Build do
       File.expects(:exist?).with(path).returns(false)
       FileUtils.expects(:mkdir_p).with(path)
       FileUtils.expects(:cd).with(path)
+
       Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
+      Dir.expects(:chdir).with("railsbp.com")
+
       rails_best_practices = mock
       RailsBestPractices::Analyzer.expects(:new).with(path + "/railsbp.com", "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "template" => template).returns(rails_best_practices)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
+
       runner = mock
       rails_best_practices.expects(:runner).returns(runner)
       runner.expects(:errors).returns([])
