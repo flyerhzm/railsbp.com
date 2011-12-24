@@ -4,7 +4,6 @@ describe Repository do
   include FakeFS::SpecHelpers
 
   it { should have_many(:builds) }
-  it { should have_many(:branches) }
 
   before do
     FakeFS do

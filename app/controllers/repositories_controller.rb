@@ -49,8 +49,12 @@ class RepositoriesController < ApplicationController
   def sync
     payload = ActiveSupport::JSON.decode(params[:payload])
     repository = Repository.where(html_url: payload["repository"]["url"]).first
-    repository.generate_build(payload["commits"].first)
-    render text: "success"
+    if payload["ref"] =~ /#{repository.branch}$/
+      repository.generate_build(payload["commits"].first)
+      render text: "success"
+    else
+      render text: "skip"
+    end
   end
 
   protected

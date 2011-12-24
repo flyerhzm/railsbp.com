@@ -9,7 +9,7 @@ FactoryGirl.define do
     description "repository"
     private false
     fork false
-    master_branch "master"
+    branch "master"
     pushed_at "2011-11-23 22:48:10"
     sequence(:github_id) { |n| n }
   end

@@ -1,9 +1,7 @@
 require 'delayed_job/sync_repository'
 
 class Repository < ActiveRecord::Base
-  has_many :builds
-
-  attr_accessor :user
+  has_many :builds, :dependent => :destroy
 
   validates :github_name, presence: true
   validates :github_id, uniqueness: true
