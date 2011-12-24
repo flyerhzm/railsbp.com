@@ -1,0 +1,3 @@
+%ul.tabs
+  %li{:class => @active_class_name == "account" ? "active" : ""}= link_to "Account Overview", "#"
+  %li{:class => @active_class_name == "plans" ? "active" : ""}= link_to "Plan & Billing", :plans

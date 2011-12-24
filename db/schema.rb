@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220153314) do
+ActiveRecord::Schema.define(:version => 20111224082603) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -39,6 +39,16 @@ ActiveRecord::Schema.define(:version => 20111220153314) do
     t.integer "category_id"
   end
 
+  create_table "credit_cards", :force => true do |t|
+    t.string   "last4"
+    t.string   "card_type"
+    t.integer  "exp_month"
+    t.integer  "exp_year"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -64,9 +74,13 @@ ActiveRecord::Schema.define(:version => 20111220153314) do
 
   create_table "plans", :force => true do |t|
     t.string   "name"
-    t.decimal  "price",      :precision => 10, :scale => 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "identifier"
+    t.integer  "amount"
+    t.string   "interval"
+    t.boolean  "livemode"
+    t.integer  "trial_period_days"
   end
 
   create_table "repositories", :force => true do |t|
@@ -85,14 +99,6 @@ ActiveRecord::Schema.define(:version => 20111220153314) do
     t.string   "ssh_url"
     t.string   "github_name"
     t.integer  "builds_count",  :default => 0
-  end
-
-  create_table "subscriptions", :force => true do |t|
-    t.integer  "plan_id"
-    t.string   "email"
-    t.string   "stripe_customer_token"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "user_repositories", :force => true do |t|
@@ -118,6 +124,8 @@ ActiveRecord::Schema.define(:version => 20111220153314) do
     t.string   "name"
     t.string   "github_token"
     t.boolean  "sync_repos",                            :default => false
+    t.string   "stripe_customer_token"
+    t.integer  "plan_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

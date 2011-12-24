@@ -1,0 +1,63 @@
+%h2 Account Settings
+
+= render_cell :account, :tabs, "plans"
+
+#plans
+  - if current_user.stripe_customer_token?
+    %p
+      You have already set credit card.
+      %b= link_to "Show card", "#", :class => "open-credit-card-modal"
+    = link_to "Update credit card", "#", :class => "btn primary open-credit-card-form-modal"
+  - else
+    = link_to "Add credit card", "#", :class => "btn primary open-modal open-credit-card-form-modal"
+  %table.condensed-table
+    %tr
+      %th Plan
+      %th Price
+      %th Trial Period
+      %th
+    - @plans.each do |plan|
+      %tr
+        %td
+          %b= plan.name
+        %td #{number_to_currency(plan.amount / 100.0)}/#{plan.interval}
+        %td #{plan.trial_period_days} Days
+        %td
+          - if current_user.plan == plan
+            Your Plan
+          - elsif current_user.plan.amount > plan.amount
+            = link_to "Downgrade", update_plan_path(:plan_id => plan.id), :class => "btn primary", :confirm => "Are you sure to downgrade your plan?", :method => :put
+          - else
+            = link_to "Upgrade", update_plan_path(:plan_id => plan.id), :class => "btn primary", :confirm => "Are you sure to upgrade your plan?", :method => :put
+
+#creditCardFormModal.hidden.modal
+  .modal-header
+    = link_to "x", "#", :class => "close"
+    %h3 Credit card information
+  .modal-body
+    = form_for current_user, url: update_credit_card_path do |f|
+      = f.hidden_field :stripe_card_token
+      = f.hidden_field :plan_id
+      .clearfix.string
+        = label_tag :card_number, "Credit Card Number ", :class => "clearfix string"
+        .input= text_field_tag :card_number, nil, name: nil, :class => "string span5"
+      .clearfix.string
+        = label_tag :card_code, "Security Code on Card (CVV)", :class => "clearfix string"
+        .input= text_field_tag :card_code, nil, name: nil, :class => "string span5"
+      .clearfix.string
+        = label_tag :card_month, "Card Expiration", :class => "clearfix string"
+        .input
+          = select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"}
+          = select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"}
+      #stripe_error
+      .actions= f.submit "Subscribe", :class => "btn primary"
+
+- if current_user.credit_card
+  #creditCardModal.hidden.modal
+    .modal-header
+      = link_to "x", "#", :class => "close"
+      %h3 Credit card information
+    .modal-body
+      %p Card #: #{"x" * 12 + current_user.credit_card.last4}
+      %p Exp: #{current_user.credit_card.expire_date}
+      %p Type: #{current_user.credit_card.card_type}

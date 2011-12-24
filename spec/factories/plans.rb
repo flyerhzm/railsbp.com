@@ -3,6 +3,7 @@
 FactoryGirl.define do
   factory :plan do
       name "MyString"
-      price "9.99"
+      amount "9.99"
+      interval "month"
     end
 end

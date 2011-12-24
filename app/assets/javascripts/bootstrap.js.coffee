@@ -11,12 +11,22 @@ $ ->
 $ ->
   $(".alert-message").alert()
 $ ->
-  domModal = $(".modal").modal(
+  creditCardFormModal = $("#creditCardFormModal").modal(
     backdrop: true
     closeOnEscape: true
   )
-  $(".open-modal").click ->
-    domModal.toggle()
+  $(".open-credit-card-form-modal").click ->
+    creditCardFormModal.toggle()
+
+  creditCardModal = $("#creditCardModal").modal(
+    backdrop: true
+    closeOnEscape: true
+  )
+  $(".open-credit-card-modal").click ->
+    creditCardModal.toggle()
+
+  $(".modal .close").click ->
+    $(this).parents(".modal").toggle()
 $ ->
   $(".btn").button "complete"
 

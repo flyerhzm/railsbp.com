@@ -1,9 +1,11 @@
 RailsbpCom::Application.routes.draw do
   post '/' => 'repositories#sync'
   root :to => "home#index"
-  devise_for :users, :controllers => { :sessions => "users/sessions", :omniauth_callbacks => "users/omniauth_callbacks" } do
+  devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks" } do
     get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session
     get 'sign_out', :to => 'users/sessions#destroy', :as => :destroy_user_session
+    put 'update_credit_card', :to => 'users/registrations#update_credit_card', :as => :update_credit_card
+    put 'update_plan', :to => 'users/registrations#update_plan', :as => :update_plan
   end
   resources :repositories do
     member do
@@ -11,6 +13,7 @@ RailsbpCom::Application.routes.draw do
     end
     resources :builds
   end
+  resources :plans
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
