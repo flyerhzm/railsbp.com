@@ -39,6 +39,7 @@ namespace :config do
     run "ln -nfs #{shared_path}/config/initializers/stripe.rb #{release_path}/config/initializers/stripe.rb"
     run "ln -nfs #{shared_path}/config/initializers/action_mailer.rb #{release_path}/config/initializers/action_mailer.rb"
     run "ln -nfs #{shared_path}/builds #{release_path}/builds"
+    run "cd #{release_path}; bundle exec rails_best_practices -g"
   end
 end
 
