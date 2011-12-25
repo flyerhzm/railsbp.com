@@ -22,5 +22,7 @@ class DelayedJob::SyncRepository
       pushed_at: repo.pushed_at,
       github_id: repo.id
     )
+  rescue => e
+    ExceptionNotifier::Notifier.background_exception_notification(e)
   end
 end

@@ -57,4 +57,9 @@ RailsbpCom::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  config.middleware.use ExceptionNotifier,
+    :email_prefix => "[railsbp.com] ",
+    :sender_address => %{"Application Error" <exception.notifier@railsbp.com>},
+    :exception_recipients => %w{flyerhzm@gmail.com.com, flyerhzm@railsbp.com}
 end

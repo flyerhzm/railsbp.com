@@ -64,6 +64,8 @@ class Build < ActiveRecord::Base
     self.duration = end_time - start_time
     self.finished_at = end_time
     complete!
+  rescue => e
+    ExceptionNotifier::Notifier.background_exception_notification(e)
   end
   handle_asynchronously :analyze
 end
