@@ -1,5 +1,11 @@
 %h2 Edit Repository
 
+.repository-info
+  %p
+    %span Repository token
+    %b= @repository.authentication_token
+    ( for github hook )
+
 = simple_form_for @repository, wrapper: "inline" do |form|
   = form.input :name, input_html: {:class => "span5"}
   = form.input :description, input_html: {:class => "span5"}

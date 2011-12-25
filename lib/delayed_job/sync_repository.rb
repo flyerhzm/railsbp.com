@@ -18,7 +18,6 @@ class DelayedJob::SyncRepository
       description: repo.description,
       private: repo.private,
       fork: repo.fork,
-      master_branch: repo.master_branch,
       pushed_at: repo.pushed_at,
       github_id: repo.id
     )

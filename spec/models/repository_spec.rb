@@ -22,6 +22,10 @@ describe Repository do
   after { FakeFS.deactivate! }
   subject { @repository }
 
+  context "#reset_authentication_token" do
+    its(:authentication_token) { should_not be_nil }
+  end
+
   context "#generate_build" do
     it "should create a build" do
       lambda { subject.generate_build("id" => "987654321", "message" => "commit message") }.should change(subject.builds, :count).by(1)

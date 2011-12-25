@@ -47,8 +47,14 @@ class RepositoriesController < ApplicationController
   end
 
   def sync
+    render text: "not authenticate" and return if params[:token].blank?
+
+    repository = Repository.where(authentication_token: params[:token]).first
+    render text: "not authenticate" and return if repository.blank?
+
     payload = ActiveSupport::JSON.decode(params[:payload])
-    repository = Repository.where(html_url: payload["repository"]["url"]).first
+    render text: "not authenticate" and return if repository.html_url != payload["repository"]["url"]
+
     if payload["ref"] =~ /#{repository.branch}$/
       repository.generate_build(payload["commits"].first)
       render text: "success"
