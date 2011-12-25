@@ -61,5 +61,5 @@ RailsbpCom::Application.configure do
   config.middleware.use ExceptionNotifier,
     :email_prefix => "[railsbp.com] ",
     :sender_address => %{"Application Error" <exception.notifier@railsbp.com>},
-    :exception_recipients => %w{flyerhzm@gmail.com.com, flyerhzm@railsbp.com}
+    :exception_recipients => %w{flyerhzm@gmail.com, flyerhzm@railsbp.com}
 end
