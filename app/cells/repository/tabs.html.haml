@@ -1,0 +1,4 @@
+%ul.tabs
+  %li{:class => @active_class_name == "overview" ? "active" : ""}= link_to "Overview", [:edit, @repository]
+  %li{:class => @active_class_name == "configs" ? "active" : ""}= link_to "Configurations", [:edit_configs, @repository]
+  %li{:class => @active_class_name == "collaborations" ? "active" : ""}= link_to "Collaborations", [:edit_collaborations, @repository]

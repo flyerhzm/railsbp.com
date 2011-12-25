@@ -9,6 +9,8 @@ RailsbpCom::Application.routes.draw do
   end
   resources :repositories do
     member do
+      get :edit_configs
+      get :edit_collaborations
       put :update_configs
     end
     resources :builds

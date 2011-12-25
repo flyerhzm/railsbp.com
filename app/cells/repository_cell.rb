@@ -1,5 +1,10 @@
 class RepositoryCell < Cell::Rails
 
+  def tabs(active_class_name, repository)
+    @active_class_name, @repository = active_class_name, repository
+    render
+  end
+
   def configurations_form(repository)
     @repository = repository
     @categories = Category.includes(:configurations => :parameters).all
