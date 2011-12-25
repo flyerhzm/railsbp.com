@@ -21,6 +21,15 @@ class User < ActiveRecord::Base
 
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
+      if user.github_token.blank?
+        user.email = data.info.email
+        user.password = Devise.friendly_token[0, 20]
+        user.github_uid = data.uid
+        user.github_token = data.credentials.token
+        user.name = data.info.name
+        user.nickname = data.info.nickname
+        user.save
+      end
       user
     else # Create a user with a stub password.
       user = User.new(email: data.info.email, password: Devise.friendly_token[0, 20])

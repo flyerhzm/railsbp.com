@@ -1,14 +1,13 @@
 class DelayedJob::SyncRepository
-  def initialize(repository_id, user_id)
+  def initialize(repository_id, github_token)
     @repository_id = repository_id
-    @user_id = user_id
+    @github_token = github_token
   end
 
   def perform
     repository = Repository.find(@repository_id)
-    user = User.find(@user_id)
 
-    client = Octokit::Client.new(oauth_token: user.github_token)
+    client = Octokit::Client.new(oauth_token: @github_token)
     repo = client.repository(repository.github_name)
     repository.update_attributes(
       html_url: repo.html_url,

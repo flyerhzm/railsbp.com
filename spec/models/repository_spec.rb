@@ -4,6 +4,8 @@ describe Repository do
   include FakeFS::SpecHelpers
 
   it { should have_many(:builds) }
+  it { should have_many(:user_repositories) }
+  it { should have_many(:users) }
 
   before do
     FakeFS do
@@ -63,16 +65,33 @@ describe Repository do
     end
   end
 
+  context "#sync_collaborators" do
+    before do
+      @flyerhzm = Factory(:user, github_uid: 66836)
+      @scott = Factory(:user, github_uid: 366)
+      @ben = Factory(:user, github_uid: 149420)
+      @repository.users << @flyerhzm
+      @repository.users << @scott
+      collaborators = File.read(Rails.root.join("spec/fixtures/collaborators.json").to_s)
+      stub_request(:get, "https://api.github.com/repos/flyerhzm/railsbp.com/collaborators").to_return(body: collaborators)
+      @repository.sync_collaborators
+      Delayed::Worker.new.work_off
+    end
+
+    subject { @repository.reload }
+
+    its(:users) { should be_include(@ben) }
+    its(:users) { should be_include(User.find_by_github_uid(10122)) }
+  end
+
   context "#sync_github" do
     before do
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
       stub_request(:get, "https://api.github.com/repos/flyerhzm/railsbp.com").to_return(body: repo)
+      Delayed::Worker.new.work_off
     end
 
-    subject do
-      Delayed::Worker.new.work_off
-      @repository.reload
-    end
+    subject { @repository.reload }
 
     its(:html_url) { should == "https://github.com/flyerhzm/railsbp.com" }
     its(:git_url) { should == "git://github.com/flyerhzm/railsbp.com.git" }

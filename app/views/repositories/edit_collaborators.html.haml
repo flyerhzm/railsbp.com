@@ -1,0 +1,5 @@
+%h2 Edit Repository
+
+= render_cell :repository, :tabs, "collaborators", @repository
+
+= link_to "Sync github collaborators", sync_collaborators_repository_path(@repository), :method => :put

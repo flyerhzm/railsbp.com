@@ -1,7 +1,7 @@
 class RepositoriesController < ApplicationController
   before_filter :authenticate_user!, except: :sync
-  before_filter :set_current_user, only: :create
-  before_filter :load_repository, only: [:show, :edit, :edit_configs, :update, :update_configs, :edit_collaborations]
+  before_filter :set_current_user, only: [:create, :sync_collaborators]
+  before_filter :load_repository, only: [:show, :edit, :edit_configs, :update, :update_configs, :edit_collaborators, :sync_collaborators]
   respond_to :json, :html
 
   def index
@@ -23,9 +23,9 @@ class RepositoriesController < ApplicationController
   def create
     @repository = current_user.repositories.create(params[:repository])
     if @repository.valid?
-      redirect_to repository_path(@repository)
+      redirect_to @repository
     else
-      render action: :new
+      render :new
     end
   end
 
@@ -35,18 +35,26 @@ class RepositoriesController < ApplicationController
   def edit_configs
   end
 
+  def edit_collaborators
+  end
+
   def update
     if @repository.update_attributes(params[:repository])
-      redirect_to edit_repository_path(@repository)
+      redirect_to [:edit, @repository]
     else
       @configs = RepositoryConfigs.new(@repository).read
-      render :action => :edit
+      render :edit
     end
   end
 
   def update_configs
     RepositoryConfigs.new(@repository).write(params[:repository][:configs])
-    redirect_to edit_repository_path(@repository)
+    redirect_to [:edit, @repository]
+  end
+
+  def sync_collaborators
+    @repository.sync_collaborators
+    redirect_to [:edit_collaborators, @repository]
   end
 
   def sync

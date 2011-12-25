@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111225053301) do
+ActiveRecord::Schema.define(:version => 20111225130822) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -93,7 +93,6 @@ ActiveRecord::Schema.define(:version => 20111225053301) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "github_id"
-    t.integer  "user_id"
     t.string   "html_url"
     t.string   "ssh_url"
     t.string   "github_name"
@@ -103,8 +102,9 @@ ActiveRecord::Schema.define(:version => 20111225053301) do
   end
 
   create_table "user_repositories", :force => true do |t|
-    t.integer "user_id"
     t.integer "repository_id"
+    t.integer "user_id"
+    t.boolean "own",           :default => true
   end
 
   create_table "users", :force => true do |t|

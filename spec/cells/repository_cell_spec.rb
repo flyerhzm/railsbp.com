@@ -4,11 +4,11 @@ describe RepositoryCell do
   context "cell rendering" do
     context "rendering tabs" do
       before { Repository.any_instance.stubs(:sync_github).returns(true) }
-      subject { render_cell(:repository, :tabs, "configurations", Factory(:repository)) }
+      subject { render_cell(:repository, :tabs, "configs", Factory(:repository)) }
 
       it { should have_link("Overview") }
       it { should have_selector("li.active a", :content => "Configurations") }
-      it { should have_link("Collaborations") }
+      it { should have_link("Collaborators") }
     end
 
     context "rendering configurations_form" do
@@ -17,7 +17,7 @@ describe RepositoryCell do
       before { User.current = user }
       subject { render_cell(:repository, :configurations_form, repository) }
 
-      it { should have_content("Configurations") }
+      it { should have_selector("form") }
     end
 
   end

@@ -1,7 +1,9 @@
 require 'delayed_job/sync_repository'
 
 class Repository < ActiveRecord::Base
-  has_many :builds, :dependent => :destroy
+  has_many :user_repositories
+  has_many :users, through: :user_repositories
+  has_many :builds, dependent: :destroy
 
   validates :github_name, presence: true
   validates :github_id, uniqueness: true
@@ -29,6 +31,10 @@ class Repository < ActiveRecord::Base
     builds.create(last_commit_id: commit["id"], last_commit_message: commit["message"])
   end
 
+  def sync_collaborators
+    Delayed::Job.enqueue(DelayedJob::SyncCollaborators.new(self.id, User.current.github_token))
+  end
+
   protected
     def reset_authentication_token
       self.authentication_token = Devise.friendly_token
@@ -40,6 +46,6 @@ class Repository < ActiveRecord::Base
     end
 
     def sync_github
-      Delayed::Job.enqueue(DelayedJob::SyncRepository.new(self.id, User.current.id))
+      Delayed::Job.enqueue(DelayedJob::SyncRepository.new(self.id, User.current.github_token))
     end
 end
