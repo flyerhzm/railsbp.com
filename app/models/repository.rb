@@ -35,6 +35,30 @@ class Repository < ActiveRecord::Base
     Delayed::Job.enqueue(DelayedJob::SyncCollaborators.new(self.id, User.current.github_token))
   end
 
+  def add_collaborator(login)
+    client = Octokit::Client.new(oauth_token: User.current.github_token)
+    github_user = client.user(login)
+
+    unless user = User.where(github_uid: github_user.id).first
+      user = User.new(email: github_user.email, password: Devise.friendly_token[0, 20])
+      user.github_uid = github_user.id
+      user.name = github_user.name
+      user.nickname = github_user.login
+      user.save
+    end
+    add_collaborator_if_necessary(user)
+  end
+
+  def add_collaborator_if_necessary(user)
+    unless collaborator_ids.include?(user.id)
+      self.users << user
+    end
+  end
+
+  def collaborator_ids
+    user_repositories.map(&:user_id)
+  end
+
   protected
     def reset_authentication_token
       self.authentication_token = Devise.friendly_token

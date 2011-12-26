@@ -13,6 +13,7 @@ RailsbpCom::Application.routes.draw do
       get :edit_collaborators
       put :update_configs
       put :sync_collaborators
+      put :add_collaborator
     end
     resources :builds
   end

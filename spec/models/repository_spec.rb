@@ -84,6 +84,28 @@ describe Repository do
     its(:users) { should be_include(User.find_by_github_uid(10122)) }
   end
 
+  context "#add_collaborator" do
+    before do
+      user = File.read(Rails.root.join("spec/fixtures/user.json").to_s)
+      stub_request(:get, "https://api.github.com/users/flyerhzm").to_return(body: user)
+      @repository.add_collaborator("flyerhzm")
+    end
+
+    its(:users) { should be_include(User.find_by_github_uid(66836)) }
+  end
+
+  context "#collaborator_ids" do
+    before do
+      @flyerhzm = Factory(:user, github_uid: 66836)
+      @scott = Factory(:user, github_uid: 366)
+      @ben = Factory(:user, github_uid: 149420)
+      @repository.users << @flyerhzm
+      @repository.users << @scott
+    end
+
+    its(:collaborator_ids) { should == [@flyerhzm.id, @scott.id] }
+  end
+
   context "#sync_github" do
     before do
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
