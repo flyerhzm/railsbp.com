@@ -1,4 +1,4 @@
-= form_for @repository, url: update_configs_repository_path(@repository) do |form|
+= form_for @repository, url: [@repository, :configs], method: :put do |form|
   %fieldset
     - @categories.each do |category|
       .subtitle= category.name

@@ -8,11 +8,8 @@ RailsbpCom::Application.routes.draw do
     put 'update_plan', :to => 'users/registrations#update_plan', :as => :update_plan
   end
   resources :repositories do
-    member do
-      get :edit_configs
-      put :update_configs
-    end
     resources :builds
+    resource :configs
     resources :collaborators do
       collection do
         put :sync

@@ -1,7 +1,7 @@
 class RepositoriesController < ApplicationController
   before_filter :authenticate_user!, except: :sync
   before_filter :set_current_user, only: [:create]
-  before_filter :load_repository, only: [:show, :edit, :edit_configs, :update, :update_configs]
+  before_filter :load_repository, only: [:show, :edit, :update]
   respond_to :json, :html
 
   def index
@@ -32,9 +32,6 @@ class RepositoriesController < ApplicationController
   def edit
   end
 
-  def edit_configs
-  end
-
   def update
     if @repository.update_attributes(params[:repository])
       redirect_to [:edit, @repository]
@@ -42,11 +39,6 @@ class RepositoriesController < ApplicationController
       @configs = RepositoryConfigs.new(@repository).read
       render :edit
     end
-  end
-
-  def update_configs
-    RepositoryConfigs.new(@repository).write(params[:repository][:configs])
-    redirect_to [:edit, @repository]
   end
 
   def sync
