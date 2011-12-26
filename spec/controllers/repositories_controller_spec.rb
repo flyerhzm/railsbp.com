@@ -70,8 +70,8 @@ describe RepositoriesController do
     let(:hook_json) { File.read(Rails.root.join("spec/fixtures/github_hook.json")) }
 
     it "should generate build for master branch" do
-      repository = Factory.stub(:repository, html_url: "http://github.com/defunkt/github")
-      Repository.expects(:where).with(authentication_token: "123456789").returns([repository])
+      repository = Factory.stub(:repository, html_url: "http://github.com/defunkt/github", authentication_token: "123456789")
+      Repository.expects(:where).with(html_url: "http://github.com/defunkt/github").returns([repository])
       repository.expects(:generate_build).with('id' => '41a212ee83ca127e3c8cf465891ab7216a705f59', 'url' => 'http://github.com/defunkt/github/commit/41a212ee83ca127e3c8cf465891ab7216a705f59', 'author' => {'email' => 'chris@ozmm.org', 'name' => 'Chris Wanstrath'}, 'message' => 'okay i give in', 'timestamp' => '2008-02-15T14:57:17-08:00', 'added' => ['filepath.rb'])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
@@ -79,15 +79,16 @@ describe RepositoriesController do
     end
 
     it "should not generate build for develop branch" do
-      repository = Factory.stub(:repository, branch: "develop", html_url: "http://github.com/defunkt/github")
-      Repository.expects(:where).with(authentication_token: "123456789").returns([repository])
+      repository = Factory.stub(:repository, html_url: "http://github.com/defunkt/github", authentication_token: "123456789", branch: "develop")
+      Repository.expects(:where).with(html_url: "http://github.com/defunkt/github").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
       response.body.should == "skip"
     end
 
     it "should not generate build if authentication_token does not match" do
-      Repository.expects(:where).with(authentication_token: "123456789").returns([])
+      repository = Factory.stub(:repository, html_url: "http://github.com/defunkt/github", authentication_token: "987654321")
+      Repository.expects(:where).with(html_url: "http://github.com/defunkt/github").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
       response.body.should == "not authenticate"
