@@ -35,6 +35,10 @@ class Repository < ActiveRecord::Base
     Delayed::Job.enqueue(DelayedJob::SyncCollaborators.new(self.id, User.current.github_token))
   end
 
+  def delete_collaborator(user_id)
+    user_repositories.where(user_id: user_id).destroy
+  end
+
   def add_collaborator(login)
     client = Octokit::Client.new(oauth_token: User.current.github_token)
     github_user = client.user(login)

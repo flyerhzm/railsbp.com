@@ -10,12 +10,14 @@ RailsbpCom::Application.routes.draw do
   resources :repositories do
     member do
       get :edit_configs
-      get :edit_collaborators
       put :update_configs
-      put :sync_collaborators
-      put :add_collaborator
     end
     resources :builds
+    resources :collaborators do
+      collection do
+        put :sync
+      end
+    end
   end
   resources :plans
 
