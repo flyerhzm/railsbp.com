@@ -18,6 +18,8 @@ RailsbpCom::Application.routes.draw do
   end
   resources :plans
 
+  get "stripe" => "stripe#handle"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

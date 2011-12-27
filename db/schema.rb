@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111225130822) do
+ActiveRecord::Schema.define(:version => 20111227001414) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -63,6 +63,16 @@ ActiveRecord::Schema.define(:version => 20111225130822) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
+  create_table "invoices", :force => true do |t|
+    t.integer  "total"
+    t.integer  "period_start"
+    t.integer  "period_end"
+    t.integer  "user_id"
+    t.text     "raw"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "parameters", :force => true do |t|
     t.string  "name"

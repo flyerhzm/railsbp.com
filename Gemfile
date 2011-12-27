@@ -76,6 +76,7 @@ group :test do
   gem 'pickle'
   gem 'webmock'
   gem 'rspec-cells'
+  gem 'email_spec'
 
   gem 'rails3-generators'
 

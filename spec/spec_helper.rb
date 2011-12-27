@@ -9,6 +9,7 @@ Spork.prefork do
   require 'webmock/rspec'
   require 'database_cleaner'
   require 'fakefs/spec_helpers'
+  require 'email_spec'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -35,6 +36,9 @@ Spork.prefork do
 
     config.filter_run :focus => true
     config.run_all_when_everything_filtered = true
+
+    config.include(EmailSpec::Helpers)
+    config.include(EmailSpec::Matchers)
 
     config.include Devise::TestHelpers, type: :controller
 

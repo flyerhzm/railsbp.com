@@ -1,0 +1,19 @@
+%p Dear #{@user.nickname}:
+
+%p
+  This is a receipt for your GitHub subscription. This is only a receipt, no payment is due. If you have any questions, please contact us anytime at
+  %a{href: "mailto:support@railsbp.com"}support@railsbp.com
+  = ". Thank you for your business!"
+
+%p
+  = "------------------------------"
+  %br/
+  RAILSBP RECEIPT - #{@invoice.created_at.to_s(:db)}
+  %br/
+  User: #{@user.nickname}
+  %br/
+  Plan: #{@user.plan.name}
+  %br/
+  Amount: USD #{number_to_currency(@invoice.total / 100.0)}
+  %br/
+  = "------------------------------"
