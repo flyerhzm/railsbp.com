@@ -27,6 +27,12 @@ describe User do
         subject.pay!
       end
       its(:aasm_state) { should == "paid" }
+
+      it "should allow pay! more than once" do
+        subject.stubs(:notify_user_pay)
+        subject.pay!
+        lambda { subject.pay! }.should_not raise_error
+      end
     end
 
     context "#unpay!" do

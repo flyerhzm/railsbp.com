@@ -9,11 +9,11 @@ class User < ActiveRecord::Base
     state :paid
 
     event :trial do
-      transitions to: :trial, from: [:unpaid]
+      transitions to: :trial, from: [:unpaid, :trial, :paid]
     end
 
     event :pay, after: [:notify_user_pay] do
-      transitions to: :paid, from: [:unpaid, :trial]
+      transitions to: :paid, from: [:unpaid, :trial, :paid]
     end
 
     event :unpay, after: [:notify_user_unpay] do
