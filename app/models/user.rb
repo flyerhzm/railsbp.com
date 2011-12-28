@@ -91,7 +91,13 @@ class User < ActiveRecord::Base
     customer = Stripe::Customer.retrieve(self.stripe_customer_token)
     customer.update_subscription(plan: plan.identifier)
     self.plan = plan
-    save!
+    if plan.free?
+      unpay!
+    elsif plan.has_trial?
+      trial!
+    else
+      save!
+    end
   rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while update plan: #{e.message}"
     errors.add :base, "There was a problem when updating plan."
