@@ -14,4 +14,22 @@ describe UserMailer do
     it { should have_body_text("Plan: Basic") }
     it { should have_body_text("Amount: USD $5.00") }
   end
+
+  context "#notify_payment_final_failed" do
+    let(:user) { Factory(:user, email: "flyerhzm@gmail.com", nickname: "flyerhzm") }
+
+    subject { UserMailer.notify_payment_final_failed(user.id) }
+    it { should deliver_to("flyerhzm@gmail.com") }
+    it { should have_subject("[Railsbp] Payment Failed") }
+    it { should have_body_text("Please update your credit card soon.") }
+  end
+
+  context "#notify_payment_failed" do
+    let(:user) { Factory(:user, email: "flyerhzm@gmail.com", nickname: "flyerhzm") }
+
+    subject { UserMailer.notify_payment_final_failed(user.id) }
+    it { should deliver_to("flyerhzm@gmail.com") }
+    it { should have_subject("[Railsbp] Payment Failed") }
+    it { should have_body_text("Please update your credit card soon.") }
+  end
 end

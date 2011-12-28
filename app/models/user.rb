@@ -1,6 +1,25 @@
 class User < ActiveRecord::Base
+  include AASM
   include Gravtastic
   is_gravtastic
+
+  aasm do
+    state :unpaid, :initial => true
+    state :trial
+    state :paid
+
+    event :trial do
+      transitions to: :trial, from: [:unpaid]
+    end
+
+    event :pay, after: [:notify_user_pay] do
+      transitions to: :paid, from: [:unpaid, :trial]
+    end
+
+    event :unpay, after: [:notify_user_unpay] do
+      transitions to: :unpaid, from: [:paid, :trial]
+    end
+  end
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -77,6 +96,18 @@ class User < ActiveRecord::Base
     logger.error "Stripe error while update plan: #{e.message}"
     errors.add :base, "There was a problem when updating plan."
     false
+  end
+
+  def notify_user_pay_failed
+    UserMailer.delay.notify_payment_failed(self.id)
+  end
+
+  def notify_user_pay
+    UserMailer.delay.notify_payment_success(self.invoices.last.id)
+  end
+
+  def notify_user_unpay
+    UserMailer.delay.notify_payment_final_failed(self.id)
   end
 
   protected

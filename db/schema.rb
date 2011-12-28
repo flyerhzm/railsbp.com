@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111227001414) do
+ActiveRecord::Schema.define(:version => 20111227140410) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -137,6 +137,7 @@ ActiveRecord::Schema.define(:version => 20111227001414) do
     t.boolean  "sync_repos",                            :default => false
     t.string   "stripe_customer_token"
     t.integer  "plan_id"
+    t.string   "aasm_state"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

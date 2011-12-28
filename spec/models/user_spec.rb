@@ -15,4 +15,28 @@ describe User do
     subject { Factory(:user) }
     its(:plan) { should == @free_plan }
   end
+
+  context "aasm_state" do
+    subject { Factory(:user) }
+    its(:aasm_state) { should == "unpaid" }
+
+    context "#pay!" do
+      before do
+        invoice = Factory(:invoice, :user => subject)
+        subject.expects(:notify_user_pay)
+        subject.pay!
+      end
+      its(:aasm_state) { should == "paid" }
+    end
+
+    context "#unpay!" do
+      before do
+        subject.stubs(:notify_user_pay)
+        subject.pay!
+        subject.expects(:notify_user_unpay)
+        subject.unpay!
+      end
+      its(:aasm_state) { should == "unpaid" }
+    end
+  end
 end
