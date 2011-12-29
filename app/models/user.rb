@@ -42,24 +42,16 @@ class User < ActiveRecord::Base
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
       if user.github_token.blank?
-        user.email = data.info.email
-        user.password = Devise.friendly_token[0, 20]
-        user.github_uid = data.uid
-        user.github_token = data.credentials.token
-        user.name = data.info.name
-        user.nickname = data.info.nickname
+        import_github_data(user, data)
         user.save
       end
       user
     else # Create a user with a stub password.
-      user = User.new(email: data.info.email, password: Devise.friendly_token[0, 20])
-      user.github_uid = data.uid
-      user.github_token = data.credentials.token
-      user.name = data.info.name
-      user.nickname = data.info.nickname
+      user = User.new
+      import_github_data(user, data)
       user.save
-      user
     end
+    user
   end
 
   def self.new_with_session(params, session)
@@ -117,6 +109,15 @@ class User < ActiveRecord::Base
   end
 
   protected
+    def self.import_github_data(user, data)
+      user.email = data.info.email || "#{data.info.nickname}@fakemail.com"
+      user.password = Devise.friendly_token[0, 20]
+      user.github_uid = data.uid
+      user.github_token = data.credentials.token
+      user.name = data.info.name
+      user.nickname = data.info.nickname
+    end
+
     def create_stripe_customer(params)
       stripe_params = {description: email, card: params[:stripe_card_token]}
       if params[:plan_id].present?
