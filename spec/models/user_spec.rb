@@ -83,4 +83,15 @@ describe User do
       its(:plan) { should == free_plan }
     end
   end
+
+  context "#fakemail?" do
+    context "flyerhzm" do
+      subject { Factory(:user, email: "flyerhzm@gmail.com") }
+      its(:fakemail?) { should be_false }
+    end
+    context "flyerhzm-test" do
+      subject { Factory(:user, email: "flyerhzm-test@fakemail.com") }
+      its(:fakemail?) { should be_true }
+    end
+  end
 end

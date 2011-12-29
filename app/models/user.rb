@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
   attr_accessor :stripe_card_token
 
   has_many :user_repositories
-  has_many :repositories, through: :user_repositories
+  has_many :repositories, through: :user_repositories, uniq: true
   has_many :invoices
   has_one :credit_card
   belongs_to :plan
@@ -106,6 +106,10 @@ class User < ActiveRecord::Base
 
   def notify_user_unpay
     UserMailer.delay.notify_payment_final_failed(self.id)
+  end
+
+  def fakemail?
+    email =~ /@fakemail.com/
   end
 
   protected
