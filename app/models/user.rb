@@ -78,6 +78,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def add_repository(github_name)
+    if repository = Repository.where(github_name: github_name).first
+      self.repositories << repository
+    else
+      repository = self.repositories.create(github_name: github_name)
+    end
+    repository
+  end
+
   def update_plan(plan_id)
     plan = Plan.find(plan_id)
     customer = Stripe::Customer.retrieve(self.stripe_customer_token)

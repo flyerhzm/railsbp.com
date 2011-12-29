@@ -21,7 +21,7 @@ class RepositoriesController < ApplicationController
   end
 
   def create
-    @repository = current_user.repositories.create(params[:repository])
+    @repository = current_user.add_repository(params[:repository][:github_name])
     if @repository.valid?
       redirect_to @repository
     else

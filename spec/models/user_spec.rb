@@ -84,6 +84,26 @@ describe User do
     end
   end
 
+  context "#add_repository" do
+    before do
+      Repository.any_instance.stubs(:sync_github)
+      @user = Factory(:user)
+      @repository = Factory(:repository, github_name: "flyerhzm/old")
+      @user.repositories << @repository
+    end
+
+    it "should create a new repository" do
+      lambda { @user.add_repository("flyerhzm/new") }.should change(@user.repositories, :count).by(1)
+    end
+
+    it "should attach to an old repository" do
+      lambda {
+        repository = @user.add_repository("flyerhzm/old")
+        repository.should == @repository
+      }.should_not change(@user.repositories, :count)
+    end
+  end
+
   context "#fakemail?" do
     context "flyerhzm" do
       subject { Factory(:user, email: "flyerhzm@gmail.com") }
