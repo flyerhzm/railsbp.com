@@ -97,15 +97,21 @@ class User < ActiveRecord::Base
   end
 
   def notify_user_pay_failed
-    UserMailer.delay.notify_payment_failed(self.id)
+    unless fakemail?
+      UserMailer.delay.notify_payment_failed(self.id)
+    end
   end
 
   def notify_user_pay
-    UserMailer.delay.notify_payment_success(self.invoices.last.id)
+    unless fakemail?
+      UserMailer.delay.notify_payment_success(self.invoices.last.id)
+    end
   end
 
   def notify_user_unpay
-    UserMailer.delay.notify_payment_final_failed(self.id)
+    unless fakemail?
+      UserMailer.delay.notify_payment_final_failed(self.id)
+    end
   end
 
   def fakemail?

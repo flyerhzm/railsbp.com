@@ -94,4 +94,34 @@ describe User do
       its(:fakemail?) { should be_true }
     end
   end
+
+  context "#notify_user_pay" do
+    context "fakemail" do
+      it "should not send mail" do
+        user = Factory(:user, email: "test@fakemail.com")
+        UserMailer.expects(:delay).never
+        user.notify_user_pay
+      end
+    end
+  end
+
+  context "#notify_user_pay_failed" do
+    context "fakemail" do
+      it "should not send mail" do
+        user = Factory(:user, email: "test@fakemail.com")
+        UserMailer.expects(:delay).never
+        user.notify_user_pay_failed
+      end
+    end
+  end
+
+  context "#notify_user_unpay" do
+    context "fakemail" do
+      it "should not send mail" do
+        user = Factory(:user, email: "test@fakemail.com")
+        UserMailer.expects(:delay).never
+        user.notify_user_unpay
+      end
+    end
+  end
 end
