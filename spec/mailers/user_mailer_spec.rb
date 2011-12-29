@@ -22,6 +22,7 @@ describe UserMailer do
     it { should deliver_to("flyerhzm@gmail.com") }
     it { should have_subject("[Railsbp] Payment Failed") }
     it { should have_body_text("Please update your credit card soon.") }
+    it { should have_body_text("<a href='http://localhost:3000/plans'>update credit card</a>") }
   end
 
   context "#notify_payment_failed" do
@@ -31,5 +32,6 @@ describe UserMailer do
     it { should deliver_to("flyerhzm@gmail.com") }
     it { should have_subject("[Railsbp] Payment Failed") }
     it { should have_body_text("Please update your credit card soon.") }
+    it { should have_body_text("<a href='http://localhost:3000/plans'>update credit card</a>") }
   end
 end
