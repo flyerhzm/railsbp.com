@@ -1,0 +1,8 @@
+%h2 Contact Us
+
+= simple_form_for @contact, wrapper: "inline" do |form|
+  = form.input :email, input_html: {:class => "span5"}
+  = form.input :message, as: :text, input_html: {:class => "span8"}
+  .actions
+    = form.button :submit, "Submit", :class => "primary"
+

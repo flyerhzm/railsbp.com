@@ -58,7 +58,6 @@ group :develop do
   gem 'guard-rails'
   gem 'guard-livereload'
   gem 'guard-delayed'
-  gem 'letter_opener'
 end
 
 group :test do

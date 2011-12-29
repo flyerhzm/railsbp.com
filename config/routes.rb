@@ -17,6 +17,7 @@ RailsbpCom::Application.routes.draw do
     end
   end
   resources :plans
+  resources :contacts
 
   get "stripe" => "stripe#handle"
 
