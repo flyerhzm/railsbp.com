@@ -44,7 +44,7 @@ class Repository < ActiveRecord::Base
     github_user = client.user(login)
 
     unless user = User.where(github_uid: github_user.id).first
-      user = User.new(email: github_user.email, password: Devise.friendly_token[0, 20])
+      user = User.new(email: "#{github_user.login}@fakemail.com", password: Devise.friendly_token[0, 20])
       user.github_uid = github_user.id
       user.name = github_user.name
       user.nickname = github_user.login

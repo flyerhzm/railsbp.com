@@ -86,8 +86,8 @@ describe Repository do
 
   context "#add_collaborator" do
     before do
-      user = File.read(Rails.root.join("spec/fixtures/user.json").to_s)
-      stub_request(:get, "https://api.github.com/users/flyerhzm").to_return(body: user)
+      collaborator = File.read(Rails.root.join("spec/fixtures/collaborator.json").to_s)
+      stub_request(:get, "https://api.github.com/users/flyerhzm").to_return(body: collaborator)
       @repository.add_collaborator("flyerhzm")
     end
 
