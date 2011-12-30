@@ -1,7 +1,7 @@
 class ResetUserRepositories < ActiveRecord::Migration
   def up
     remove_column :repositories, :user_id
-    add_column :user_repositories, :own, :boolean, default: true, nil: false
+    add_column :user_repositories, :own, :boolean, default: true, null: false
   end
 
   def down

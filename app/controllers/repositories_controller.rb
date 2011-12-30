@@ -1,4 +1,5 @@
 class RepositoriesController < ApplicationController
+  load_and_authorize_resource
   before_filter :authenticate_user!, except: :sync
   before_filter :set_current_user, only: [:create]
   before_filter :load_repository, only: [:show, :edit, :update]

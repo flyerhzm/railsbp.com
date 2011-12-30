@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111228152906) do
+ActiveRecord::Schema.define(:version => 20111230133006) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(:version => 20111228152906) do
     t.integer  "builds_count",         :default => 0
     t.string   "branch",               :default => "master"
     t.string   "authentication_token"
+    t.boolean  "visible",              :default => true,     :null => false
   end
 
   create_table "user_repositories", :force => true do |t|

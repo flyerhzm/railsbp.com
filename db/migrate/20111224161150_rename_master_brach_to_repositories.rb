@@ -1,7 +1,7 @@
 class RenameMasterBrachToRepositories < ActiveRecord::Migration
   def up
     remove_column :repositories, :master_branch
-    add_column :repositories, :branch, :string, :default => "master", :nil => false
+    add_column :repositories, :branch, :string, :default => "master", :null => false
   end
 
   def down

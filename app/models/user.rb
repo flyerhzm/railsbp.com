@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
 
   has_many :user_repositories
   has_many :repositories, through: :user_repositories, uniq: true
+  has_many :own_repositories, through: :user_repositories, source: :repository, conditions: ["own = ?", true]
   has_many :invoices
   has_one :credit_card
   belongs_to :plan
