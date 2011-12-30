@@ -6,7 +6,7 @@ gem 'rails', '3.1.3'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'rails_best_practices', :git => "git://github.com/flyerhzm/rails_best_practices.git"
+gem 'rails_best_practices', :git => "git://github.com/railsbp/rails_best_practices.git"
 gem 'haml'
 gem 'simple_form', :git => "git://github.com/plataformatec/simple_form.git"
 gem 'omniauth'
@@ -39,10 +39,6 @@ gem 'jquery-rails'
 # Use unicorn as the web server
 # gem 'unicorn'
 
-# Deploy with Capistrano
-gem 'capistrano'
-gem 'capistrano_colors'
-
 group :production do
   gem 'therubyracer'
 end
@@ -58,6 +54,11 @@ group :develop do
   gem 'guard-rails'
   gem 'guard-livereload'
   gem 'guard-delayed'
+
+  # Deploy with Capistrano
+  gem 'capistrano'
+  gem 'capistrano_colors'
+  gem 'capistrano-ext'
 end
 
 group :test do
