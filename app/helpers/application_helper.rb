@@ -12,6 +12,10 @@ module ApplicationHelper
   end
 
   def render_page(name)
-    Page.find_by_name(name).body.html_safe
+    if page = Page.find_by_name(name)
+      page.body.html_safe
+    else
+      ""
+    end
   end
 end
