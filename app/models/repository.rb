@@ -37,7 +37,7 @@ class Repository < ActiveRecord::Base
   def generate_proxy_build(commit, errors)
     build = self.builds.build(last_commit_id: commit["id"], last_commit_message: commit["message"], warnings: errors)
     if build.save
-      build.proxy_build
+      build.proxy_analyze
     end
   end
 

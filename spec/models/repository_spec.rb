@@ -29,8 +29,16 @@ describe Repository do
   end
 
   context "#generate_build" do
-    it "should create a build" do
+    it "should create a build and call analyze" do
+      Build.any_instance.expects(:analyze)
       lambda { subject.generate_build("id" => "987654321", "message" => "commit message") }.should change(subject.builds, :count).by(1)
+    end
+  end
+
+  context "#generate_proxy_build" do
+    it "should create a build and call proxy_analyze" do
+      Build.any_instance.expects(:proxy_analyze)
+      lambda { subject.generate_proxy_build({"id" => "987654321", "message" => "commit message"}, []) }.should change(subject.builds, :count).by(1)
     end
   end
 
