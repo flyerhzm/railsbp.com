@@ -11,6 +11,8 @@ class Repository < ActiveRecord::Base
   before_create :reset_authentication_token
   after_create :copy_config_file, :sync_github
 
+  scope :visible, where(:visible => true)
+
   def clone_url
     private? ? ssh_url : git_url
   end

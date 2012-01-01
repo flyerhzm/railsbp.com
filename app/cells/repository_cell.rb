@@ -12,4 +12,9 @@ class RepositoryCell < Cell::Rails
     render
   end
 
+  def public
+    @repositories = Repository.visible.order("updated_at desc").limit(10)
+    render
+  end
+
 end

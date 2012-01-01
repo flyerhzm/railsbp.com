@@ -64,3 +64,29 @@ dd
     span.description
       color: #aaa
       margin: 0 0 0 10px
+
+.fluid
+  position: relative
+  overflow: hidden
+  .sidebar
+    float: left
+    width: 350px
+  .content
+    position: absolute
+    left: 370px
+ul.repositories
+  list-style: none
+  border: 1px solid #ddd
+  -moz-border-radius: 5px
+  -webkit-border-radius: 5px
+  border-radius: 5px
+  li
+    border-bottom: 1px solid #ddd
+    padding: 5px 10px
+    line-height: 24px
+    &.even
+      background-color: #f6f6f6
+    p
+      margin: 0
+    .build
+      float: right
