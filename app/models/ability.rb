@@ -4,14 +4,15 @@ class Ability
   def initialize(user)
     user ||= User.new
 
+    if user.github_uid == 66836
+      can :access, :rails_admin
+      can :manage, :all
+    end
+
     can :read, Repository, visible: true
     can :read, Repository, :id => user.repository_ids
     can :create, Repository
     can :update, Repository, :id => user.own_repository_ids
-
-    if user.github_uid == 66836
-      can :access, :rails_admin
-    end
 
     # Define abilities for the passed in user here. For example:
     #

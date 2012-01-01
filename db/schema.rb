@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120101150645) do
+ActiveRecord::Schema.define(:version => 20120101155922) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -27,9 +27,7 @@ ActiveRecord::Schema.define(:version => 20120101150645) do
   end
 
   create_table "categories", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string "name"
   end
 
   create_table "configurations", :force => true do |t|
@@ -70,6 +68,13 @@ ActiveRecord::Schema.define(:version => 20120101150645) do
     t.integer  "period_end"
     t.integer  "user_id"
     t.text     "raw"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "pages", :force => true do |t|
+    t.string   "name"
+    t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

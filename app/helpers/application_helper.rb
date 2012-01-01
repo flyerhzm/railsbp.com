@@ -10,4 +10,8 @@ module ApplicationHelper
 
     flash_messages.join("\n").html_safe
   end
+
+  def render_page(name)
+    Page.find_by_name(name).body.html_safe
+  end
 end

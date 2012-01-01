@@ -1,6 +1,4 @@
 RailsbpCom::Application.routes.draw do
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
-
   post '/' => 'repositories#sync'
   post '/sync_proxy' => 'repositories#sync_proxy'
   root :to => "home#index"
@@ -23,6 +21,8 @@ RailsbpCom::Application.routes.draw do
   resources :contacts
 
   get "stripe" => "stripe#handle"
+
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
