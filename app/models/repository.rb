@@ -28,7 +28,17 @@ class Repository < ActiveRecord::Base
   end
 
   def generate_build(commit)
-    builds.create(last_commit_id: commit["id"], last_commit_message: commit["message"])
+    build = self.builds.build(last_commit_id: commit["id"], last_commit_message: commit["message"])
+    if build.save
+      build.analyze
+    end
+  end
+
+  def generate_proxy_build(commit, errors)
+    build = self.builds.build(last_commit_id: commit["id"], last_commit_message: commit["message"], warnings: errors)
+    if build.save
+      build.proxy_build
+    end
   end
 
   def sync_collaborators

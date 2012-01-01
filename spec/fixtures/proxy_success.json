@@ -1,0 +1,16 @@
+{
+  "errors":[
+    {
+      "type": "RailsBestPractices::Reviews::AlwaysAddDbIndexReview",
+      "short_filename": "db/schema.rb",
+      "line_number": "125",
+      "message": "always add db index (jobs => [external_id])"
+    },
+    {
+      "type": "RailsBestPractices::Reviews::UseBeforeFilterReview",
+      "short_filename": "app/cells/sidebar_cell.rb",
+      "line_number": "36,50,54",
+      "message": "use before_filter for login,posts_navigation,blog_rss"
+    }
+  ]
+}

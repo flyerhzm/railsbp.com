@@ -5,14 +5,6 @@ describe Build do
 
   it { should belong_to(:repository) }
 
-  context "after_save" do
-    it "should call analyze" do
-      Build.any_instance.expects(:analyze)
-      Build.any_instance.expects(:set_position)
-      Build.create
-    end
-  end
-
   context "#short_commit_id" do
     before { Repository.any_instance.stubs(:sync_github).returns(true) }
     subject { Factory(:build, :last_commit_id => "1234567890") }
@@ -48,6 +40,7 @@ describe Build do
       Repository.any_instance.stubs(:sync_github).returns(true)
       repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
+      @build.analyze
     end
 
     it "should fetch remote git and analyze" do
@@ -70,6 +63,19 @@ describe Build do
       runner.expects(:errors).returns([])
       FileUtils.expects(:rm_rf).with(path + "/railsbp.com")
       work_off
+    end
+  end
+
+  context "#proxy_analyze" do
+    before do
+      Repository.any_instance.stubs(:sync_github).returns(true)
+      repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      @build = repository.builds.create(last_commit_id: "987654321")
+      @build.proxy_analyze
+    end
+
+    it "should analyze proxy" do
+      File.exist?(@build.analyze_file)
     end
   end
 end

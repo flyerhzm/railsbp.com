@@ -1,6 +1,6 @@
 class RepositoriesController < ApplicationController
-  load_and_authorize_resource
-  before_filter :authenticate_user!, except: :sync
+  load_and_authorize_resource except: [:sync, :sync_proxy]
+  before_filter :authenticate_user!, except: [:sync, :sync_proxy]
   before_filter :set_current_user, only: [:create]
   before_filter :load_repository, only: [:show, :edit, :update]
   respond_to :json, :html
@@ -51,7 +51,25 @@ class RepositoriesController < ApplicationController
     render text: "not authenticate" and return unless repository.authentication_token == params["token"]
 
     if payload["ref"] =~ /#{repository.branch}$/
-      repository.generate_build(payload["commits"].first)
+      repository.generate_build(payload["commits"].last)
+      render text: "success"
+    else
+      render text: "skip"
+    end
+  end
+
+  def sync_proxy
+    render text: "not authenticate" and return if params[:token].blank?
+
+    repository = Repository.where(html_url: params[:repository_url]).first
+    render text: "not authenticate" and return unless repository
+    render text: "not authenticate" and return unless repository.authentication_token == params[:token]
+
+    if params[:error].present?
+      raise Marshal.load(params[:error])
+    elsif params[:ref] =~ /#{repository.branch}$/
+      errors = ActiveSupport::JSON.decode(params[:result])["errors"]
+      repository.generate_proxy_build(params[:last_commit], errors)
       render text: "success"
     else
       render text: "skip"

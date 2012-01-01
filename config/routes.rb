@@ -1,5 +1,6 @@
 RailsbpCom::Application.routes.draw do
   post '/' => 'repositories#sync'
+  post '/sync_proxy' => 'repositories#sync_proxy'
   root :to => "home#index"
   devise_for :users, :controllers => { :sessions => "users/sessions", :registrations => "users/registrations", :omniauth_callbacks => "users/omniauth_callbacks" } do
     get 'sign_in', :to => 'users/sessions#new', :as => :new_user_session

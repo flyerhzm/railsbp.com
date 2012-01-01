@@ -4,7 +4,8 @@ class Build < ActiveRecord::Base
   belongs_to :repository, :counter_cache => true
 
   before_create :set_position
-  after_create :analyze
+
+  attr_accessor :warnings
 
   aasm do
     state :scheduled, initial: true
@@ -68,4 +69,17 @@ class Build < ActiveRecord::Base
     ExceptionNotifier::Notifier.background_exception_notification(e)
   end
   handle_asynchronously :analyze
+
+  def proxy_analyze
+    FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
+    File.open(analyze_file, 'w+') do |file|
+      eruby = Erubis::Eruby.new(template_file)
+      file.puts eruby.evaluate(
+        :errors         => warnings,
+        :github         => true,
+        :github_name    => repository.github_name,
+        :last_commit_id => last_commit_id
+      )
+    end
+  end
 end
