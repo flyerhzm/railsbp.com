@@ -9,6 +9,10 @@ class Ability
     can :create, Repository
     can :update, Repository, :id => user.own_repository_ids
 
+    if user.github_uid == 66836
+      can :access, :rails_admin
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

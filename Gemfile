@@ -6,14 +6,14 @@ gem 'rails', '3.1.3'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'rails_best_practices', :git => "git://github.com/railsbp/rails_best_practices.git"
+gem 'rails_best_practices'
 gem 'haml'
 gem 'simple_form', :git => "git://github.com/plataformatec/simple_form.git"
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'devise'
 gem 'oa-core'
-gem 'twitter-bootstrap-rails'
+gem 'bootstrap-sass'
 gem 'gravtastic'
 gem 'octokit'
 gem 'delayed_job'
@@ -23,6 +23,7 @@ gem 'cells'
 gem 'stripe'
 gem 'exception_notification'
 gem 'cancan'
+gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 
 # Gems used only for assets and not required
 # in production environments by default.

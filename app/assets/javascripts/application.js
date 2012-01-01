@@ -6,6 +6,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require twitter/bootstrap
+//= require bootstrap-tabs
+//= require bootstrap-modal
+//= require bootstrap-dropdown
+//= require bootstrap-alerts
+//= require bootstrap-buttons
 //= require highstock
 //= require_tree .

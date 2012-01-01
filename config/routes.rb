@@ -1,4 +1,6 @@
 RailsbpCom::Application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
   post '/' => 'repositories#sync'
   post '/sync_proxy' => 'repositories#sync_proxy'
   root :to => "home#index"
