@@ -7,7 +7,7 @@ require "delayed/recipes"
 
 $:.unshift(File.expand_path('./lib', ENV['rvm_path']))
 require 'rvm/capistrano'
-set :rvm_ruby_string, 'ruby-1.9.2-p180@railsbp.com'
+set :rvm_ruby_string, 'ruby-1.9.2-p290@railsbp.com'
 set :rvm_type, :user
 
 set :application, "railsbp.com"
@@ -21,10 +21,10 @@ set :scm, :git
 
 set :rake, "bundle exec rake"
 
-role :web, "railsbp.com"                          # Your HTTP server, Apache/etc
-role :app, "railsbp.com"                          # This may be the same as your `Web` server
-role :db,  "railsbp.com", :primary => true # This is where Rails migrations will run
-role :delayed_job, 'railsbp.com'
+role :web, "app.railsbp.com"                          # Your HTTP server, Apache/etc
+role :app, "app.railsbp.com"                          # This may be the same as your `Web` server
+role :db,  "db.railsbp.com", :primary => true # This is where Rails migrations will run
+role :delayed_job, 'db.railsbp.com'
 set :delayed_job_server_role, :delayed_job
 
 before "deploy:assets:precompile", "config:init"
