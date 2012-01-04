@@ -57,7 +57,7 @@ describe RepositoriesController do
     it "should redirect to show if success" do
       post :create, repository: {github_name: "flyerhzm/railsbp.com"}
       repository = assigns(:repository)
-      response.should redirect_to(repository_path(repository))
+      response.should redirect_to(edit_repository_path(repository))
     end
 
     it "should render new action if failed" do

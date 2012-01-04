@@ -24,7 +24,7 @@ class RepositoriesController < ApplicationController
   def create
     @repository = current_user.add_repository(params[:repository][:github_name])
     if @repository.valid?
-      redirect_to @repository
+      redirect_to [:edit, @repository], notice: "Repository created successfully."
     else
       render :new
     end
@@ -35,7 +35,7 @@ class RepositoriesController < ApplicationController
 
   def update
     if @repository.update_attributes(params[:repository])
-      redirect_to [:edit, @repository]
+      redirect_to [:edit, @repository], notice: "Repository updated successfully."
     else
       @configs = RepositoryConfigs.new(@repository).read
       render :edit
