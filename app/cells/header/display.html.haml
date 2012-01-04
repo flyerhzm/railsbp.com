@@ -20,6 +20,6 @@
             %li= link_to "New Project", new_repository_path
           %li= link_to "Sign out", destroy_user_session_path, method: :delete
           %li= link_to "Account Setting", edit_user_registration_path
-          %li.avatar= image_tag @user.gravatar_url size: 24
+          %li.avatar= image_tag @user.gravatar_url size: 24, secure: true
       - else
         %nav= link_to "Sign in with Github", user_omniauth_authorize_path(:github), :class => 'primary btn'
