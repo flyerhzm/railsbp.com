@@ -131,5 +131,6 @@ describe Repository do
     its(:private) { should be_true }
     its(:fork) { should be_false }
     its(:github_id) { should == 2860164 }
+    its(:visible) { should be_false }
   end
 end

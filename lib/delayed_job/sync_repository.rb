@@ -18,7 +18,8 @@ class DelayedJob::SyncRepository
       private: repo.private,
       fork: repo.fork,
       pushed_at: repo.pushed_at,
-      github_id: repo.id
+      github_id: repo.id,
+      visible: !repo.private
     )
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e)
