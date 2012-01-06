@@ -13,7 +13,8 @@
               = link_to @repository.name, "#", :class => "dropdown-toggle"
               %ul.dropdown-menu
                 - @repositories.each do |repository|
-                  %li= link_to repository.name, repository_path(repository)
+                  - unless repository.new_record?
+                    %li= link_to repository.name, repository_path(repository)
                 %li.divider
                 %li= link_to "New Project", new_repository_path
           - else

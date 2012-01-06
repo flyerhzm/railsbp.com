@@ -50,6 +50,7 @@ describe RepositoriesController do
 
   context "POST :create" do
     before do
+      Repository.any_instance.stubs(:sync_github)
       user = Factory(:user)
       sign_in user
     end

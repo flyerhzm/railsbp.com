@@ -80,12 +80,21 @@ class User < ActiveRecord::Base
   end
 
   def add_repository(github_name)
-    if repository = Repository.where(github_name: github_name).first
-      self.repositories << repository
-    else
+    if own_repository?(github_name) || org_repository?(github_name)
       repository = self.repositories.create(github_name: github_name)
+    else
+      raise AuthorizationException.new("Seems you are not the owner or collaborator of this repository")
     end
-    repository
+  end
+
+  def own_repository?(github_name)
+    github_name.include?("/") && github_name.split("/").first == self.nickname
+  end
+
+  def org_repository?(github_name)
+    client = Octokit::Client.new(oauth_token: github_token)
+    collaborators = client.repository(github_name).collaborators
+    collaborators && collaborators.any? { |collaborator| collaborator.id == github_uid }
   end
 
   def update_plan(plan_id)

@@ -28,6 +28,12 @@ class RepositoriesController < ApplicationController
     else
       render :new
     end
+  rescue Octokit::NotFound
+    flash[:error] = "There is no such repository on githbu"
+    redirect_to action: :new
+  rescue AuthorizationException => e
+    flash[:error] = e.message
+    redirect_to [:new, :repository]
   end
 
   def edit

@@ -1,15 +1,15 @@
-require 'delayed_job/sync_repository'
+require 'exceptions/authorization_exception'
 
 class Repository < ActiveRecord::Base
   has_many :user_repositories
   has_many :users, through: :user_repositories, uniq: true
   has_many :builds, dependent: :destroy
 
-  validates :github_name, presence: true
+  validates :github_name, presence: true, uniqueness: true
   validates :github_id, uniqueness: true
 
-  before_create :reset_authentication_token
-  after_create :copy_config_file, :sync_github
+  before_create :reset_authentication_token, :sync_github
+  after_create :copy_config_file
 
   scope :visible, where(:visible => true)
 
@@ -80,12 +80,23 @@ class Repository < ActiveRecord::Base
       self.authentication_token = Devise.friendly_token
     end
 
+    def sync_github
+      client = Octokit::Client.new(oauth_token: User.current.github_token)
+      repo = client.repository(github_name)
+      self.html_url = repo.html_url
+      self.git_url = repo.git_url
+      self.ssh_url = repo.ssh_url
+      self.name = repo.name
+      self.description = repo.description
+      self.private = repo.private
+      self.fork = repo.fork
+      self.pushed_at = repo.pushed_at
+      self.github_id = repo.id
+      self.visible = !repo.private
+    end
+
     def copy_config_file
       FileUtils.mkdir_p(config_path) unless File.exist?(config_path)
       FileUtils.cp(default_config_file_path, config_file_path)
-    end
-
-    def sync_github
-      Delayed::Job.enqueue(DelayedJob::SyncRepository.new(self.id, User.current.github_token))
     end
 end
