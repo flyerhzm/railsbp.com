@@ -20,7 +20,7 @@ RailsbpCom::Application.routes.draw do
   resources :plans
   resources :contacts
 
-  get "stripe" => "stripe#handle"
+  post "stripe" => "stripe#handle"
 
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
