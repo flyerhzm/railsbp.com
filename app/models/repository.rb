@@ -93,6 +93,7 @@ class Repository < ActiveRecord::Base
       self.pushed_at = repo.pushed_at
       self.github_id = repo.id
       self.visible = !repo.private
+      true
     end
 
     def copy_config_file
