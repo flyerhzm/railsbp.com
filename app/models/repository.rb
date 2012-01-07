@@ -1,4 +1,4 @@
-require 'exceptions/authorization_exception'
+require 'authorization_exception'
 
 class Repository < ActiveRecord::Base
   has_many :user_repositories
