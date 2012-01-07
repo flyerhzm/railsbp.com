@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe Repository do
-  include FakeFS::SpecHelpers
-
   it { should have_many(:builds) }
   it { should have_many(:user_repositories) }
   it { should have_many(:users) }
   it { should validate_presence_of(:github_name) }
 
   context "stub sync_githbu" do
+    include FakeFS::SpecHelpers
+
     it { should validate_uniqueness_of(:github_name) }
     it { should validate_uniqueness_of(:github_id) }
 
@@ -21,13 +21,12 @@ describe Repository do
         }
         User.current = Factory(:user)
         @repository = Factory(:repository,
-                        github_name: "flyerhzm/railsbp.com",
-                        git_url: "git://github.com/flyerhzm/rails-bestpractices.com.git",
-                        ssh_url: "git@github.com:flyerhzm/railsbp.com.git"
+                        github_name: "railsbp/railsbp.com",
+                        git_url: "git://github.com/railsbp/railsbp.com.git",
+                        ssh_url: "git@github.com:railsbp/railsbp.com.git"
                       )
       end
     end
-    after { FakeFS.deactivate! }
     subject { @repository }
 
     context "#reset_authentication_token" do
@@ -51,12 +50,12 @@ describe Repository do
     context "#clone_url" do
       context "private" do
         subject { @repository.tap { |repository| repository.update_attribute(:private, false) } }
-        its(:clone_url) { should == "git://github.com/flyerhzm/rails-bestpractices.com.git" }
+        its(:clone_url) { should == "git://github.com/railsbp/railsbp.com.git" }
       end
 
       context "public" do
         subject { @repository.tap { |repository| repository.update_attribute(:private, true) } }
-        its(:clone_url) { should == "git@github.com:flyerhzm/railsbp.com.git" }
+        its(:clone_url) { should == "git@github.com:railsbp/railsbp.com.git" }
       end
     end
 
@@ -65,11 +64,11 @@ describe Repository do
     end
 
     context "config_path" do
-      its(:config_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com").to_s }
+      its(:config_path) { should == Rails.root.join("builds/railsbp/railsbp.com").to_s }
     end
 
     context "config_file_path" do
-      its(:config_file_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/rails_best_practices.yml").to_s }
+      its(:config_file_path) { should == Rails.root.join("builds/railsbp/railsbp.com/rails_best_practices.yml").to_s }
     end
 
     context "copy_config_file" do
@@ -87,7 +86,7 @@ describe Repository do
         @repository.users << @flyerhzm
         @repository.users << @scott
         collaborators = File.read(Rails.root.join("spec/fixtures/collaborators.json").to_s)
-        stub_request(:get, "https://api.github.com/repos/flyerhzm/railsbp.com/collaborators").to_return(body: collaborators)
+        stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com/collaborators").to_return(body: collaborators)
         @repository.sync_collaborators
         Delayed::Worker.new.work_off
       end
@@ -124,15 +123,15 @@ describe Repository do
   context "#sync_github" do
     before do
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
-      stub_request(:get, "https://api.github.com/repos/flyerhzm/railsbp.com").to_return(body: repo)
-      Delayed::Worker.new.work_off
+      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
+      User.current = Factory(:user)
     end
 
-    subject { @repository.reload }
+    subject { Factory(:repository, github_name: "railsbp/railsbp.com") }
 
-    its(:html_url) { should == "https://github.com/flyerhzm/railsbp.com" }
-    its(:git_url) { should == "git://github.com/flyerhzm/railsbp.com.git" }
-    its(:ssh_url) { should == "git@github.com:flyerhzm/railsbp.com.git" }
+    its(:html_url) { should == "https://github.com/railsbp/railsbp.com" }
+    its(:git_url) { should == "git://github.com/railsbp/railsbp.com.git" }
+    its(:ssh_url) { should == "git@github.com:railsbp/railsbp.com.git" }
     its(:name) { should == "railsbp.com" }
     its(:description) { should == "railsbp.com" }
     its(:private) { should be_true }

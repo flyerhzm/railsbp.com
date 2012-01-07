@@ -87,16 +87,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def own_repository?(github_name)
-    github_name.include?("/") && github_name.split("/").first == self.nickname
-  end
-
-  def org_repository?(github_name)
-    client = Octokit::Client.new(oauth_token: github_token)
-    collaborators = client.repository(github_name).collaborators
-    collaborators && collaborators.any? { |collaborator| collaborator.id == github_uid }
-  end
-
   def update_plan(plan_id)
     plan = Plan.find(plan_id)
     customer = Stripe::Customer.retrieve(self.stripe_customer_token)
@@ -189,5 +179,15 @@ class User < ActiveRecord::Base
 
     def init_plan
       self.plan = Plan.free.first
+    end
+
+    def own_repository?(github_name)
+      github_name.include?("/") && github_name.split("/").first == self.nickname
+    end
+
+    def org_repository?(github_name)
+      client = Octokit::Client.new(oauth_token: github_token)
+      collaborators = client.collaborators(github_name)
+      collaborators && collaborators.any? { |collaborator| collaborator.id == github_uid }
     end
 end

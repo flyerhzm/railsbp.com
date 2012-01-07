@@ -29,7 +29,7 @@ class RepositoriesController < ApplicationController
       render :new
     end
   rescue Octokit::NotFound
-    flash[:error] = "There is no such repository on githbu"
+    flash[:error] = "There is no such repository or you don't have access to such repository on githbub"
     redirect_to action: :new
   rescue AuthorizationException => e
     flash[:error] = e.message

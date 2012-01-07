@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe RepositoriesController do
+  before do
+    Repository.any_instance.stubs(:sync_github).returns(true)
+  end
+
   context "GET :index" do
     it "should get unauthorized if user sync_repos is false" do
       user = Factory(:user)
@@ -29,9 +33,10 @@ describe RepositoriesController do
   context "GET :show" do
     it "should assign repository" do
       user = Factory(:user)
-      sign_in user
       repository = Factory(:repository)
+      user.repositories << repository
       build = Factory(:build, :repository => repository)
+      sign_in user
       get :show, id: repository.id
       response.should be_ok
       assigns(:repository).should_not be_nil
@@ -51,7 +56,7 @@ describe RepositoriesController do
   context "POST :create" do
     before do
       Repository.any_instance.stubs(:sync_github)
-      user = Factory(:user)
+      user = Factory(:user, nickname: "flyerhzm")
       sign_in user
     end
 
@@ -62,6 +67,7 @@ describe RepositoriesController do
     end
 
     it "should render new action if failed" do
+      User.any_instance.stubs(:org_repository?).returns(false)
       post :create, repository: {github_name: ""}
       response.should render_template(action: "new")
     end
