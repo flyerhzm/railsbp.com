@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120104124906) do
+ActiveRecord::Schema.define(:version => 20120107004528) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -96,6 +96,7 @@ ActiveRecord::Schema.define(:version => 20120104124906) do
     t.string   "interval"
     t.boolean  "livemode",          :default => false
     t.integer  "trial_period_days", :default => 0
+    t.boolean  "visible",           :default => false, :null => false
   end
 
   create_table "rails_admin_histories", :force => true do |t|

@@ -193,25 +193,27 @@ RailsAdmin.config do |config|
   #   create do; end
   #   update do; end
   # end
-  # config.model Plan do
-  #   # Found associations:
-  #     configure :users, :has_many_association   #   # Found columns:
-  #     configure :id, :integer
-  #     configure :name, :string
-  #     configure :created_at, :datetime
-  #     configure :updated_at, :datetime
-  #     configure :identifier, :string
-  #     configure :amount, :integer
-  #     configure :interval, :string
-  #     configure :livemode, :boolean
-  #     configure :trial_period_days, :integer   #   # Sections:
-  #   list do; end
-  #   export do; end
-  #   show do; end
-  #   edit do; end
-  #   create do; end
-  #   update do; end
-  # end
+  config.model Plan do
+    # Found associations:
+    configure :users, :has_many_association   #   # Found columns:
+    configure :id, :integer
+    configure :name, :string
+    configure :created_at, :datetime
+    configure :updated_at, :datetime
+    configure :identifier, :string
+    configure :amount, :integer
+    configure :interval, :string
+    configure :livemode, :boolean
+    configure :trial_period_days, :integer   #   # Sections:
+    list do
+      field :name
+      field :identifier
+      field :amount
+      field :livemode
+      field :trial_period_days
+      field :visible
+    end
+  end
   # config.model Repository do
   #   # Found associations:
   #     configure :user_repositories, :has_many_association
