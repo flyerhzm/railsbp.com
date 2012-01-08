@@ -4,9 +4,10 @@ describe Repository do
   it { should have_many(:builds) }
   it { should have_many(:user_repositories) }
   it { should have_many(:users) }
+  it { should have_many(:owners) }
   it { should validate_presence_of(:github_name) }
 
-  context "stub sync_githbub" do
+  context "stub sync_github" do
     include FakeFS::SpecHelpers
 
     it { should validate_uniqueness_of(:github_name) }
@@ -19,12 +20,14 @@ describe Repository do
         File.open(Rails.root.join("config/rails_best_practices.yml"), "w") { |f|
           f.write "RemoveUnusedMethods: {}\n"
         }
-        User.current = Factory(:user)
+        @owner = Factory(:user)
+        User.current = @owner
         @repository = Factory(:repository,
                         github_name: "railsbp/railsbp.com",
                         git_url: "git://github.com/railsbp/railsbp.com.git",
                         ssh_url: "git@github.com:railsbp/railsbp.com.git"
                       )
+        @repository.owners << @owner
       end
     end
     subject { @repository }
@@ -44,6 +47,12 @@ describe Repository do
       it "should create a build and call proxy_analyze" do
         Build.any_instance.expects(:proxy_analyze)
         lambda { subject.generate_proxy_build({"id" => "987654321", "message" => "commit message"}, []) }.should change(subject.builds, :count).by(1)
+      end
+    end
+
+    context "owner" do
+      it "should equal to @owner" do
+        subject.owner.should == @owner
       end
     end
 
@@ -93,18 +102,27 @@ describe Repository do
 
       subject { @repository.reload }
 
-      its(:users) { should be_include(@ben) }
-      its(:users) { should be_include(User.find_by_github_uid(10122)) }
+      it "should include existed user" do
+        subject.users.should be_include(@ben)
+      end
+
+      it "should include new created user" do
+        subject.users.should be_include(User.find_by_github_uid(10122))
+      end
     end
 
     context "#add_collaborator" do
       before do
         collaborator = File.read(Rails.root.join("spec/fixtures/collaborator.json").to_s)
         stub_request(:get, "https://api.github.com/users/flyerhzm").to_return(body: collaborator)
-        @repository.add_collaborator("flyerhzm")
       end
 
-      its(:users) { should be_include(User.find_by_github_uid(66836)) }
+      it "should include new created user and owned by user" do
+        @repository.add_collaborator("flyerhzm")
+        user = User.find_by_github_uid(66836)
+        @repository.users.should be_include(user)
+        @repository.owners.should == [@owner]
+      end
     end
 
     context "#collaborator_ids" do
@@ -116,7 +134,7 @@ describe Repository do
         @repository.users << @scott
       end
 
-      its(:collaborator_ids) { should == [@flyerhzm.id, @scott.id] }
+      its(:collaborator_ids) { should == [@owner.id, @flyerhzm.id, @scott.id] }
     end
 
     context "allow_privacy?" do

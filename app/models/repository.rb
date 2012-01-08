@@ -3,6 +3,7 @@ require 'authorization_exception'
 class Repository < ActiveRecord::Base
   has_many :user_repositories
   has_many :users, through: :user_repositories, uniq: true
+  has_many :owners, through: :user_repositories, conditions: ["user_repositories.own = ?", true], source: :user
   has_many :builds, dependent: :destroy
 
   validates :github_name, presence: true, uniqueness: true
@@ -13,6 +14,10 @@ class Repository < ActiveRecord::Base
   before_save :set_privacy
 
   scope :visible, where(:visible => true)
+
+  def owner
+    owners.first
+  end
 
   def clone_url
     private? ? ssh_url : git_url
@@ -68,7 +73,7 @@ class Repository < ActiveRecord::Base
 
   def add_collaborator_if_necessary(user)
     unless collaborator_ids.include?(user.id)
-      self.users << user
+      self.user_repositories.create(user: user, own: false)
     end
   end
 
