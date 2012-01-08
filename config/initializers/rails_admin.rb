@@ -194,8 +194,7 @@ RailsAdmin.config do |config|
   #   update do; end
   # end
   config.model Plan do
-    # Found associations:
-    configure :users, :has_many_association   #   # Found columns:
+    configure :users, :has_many_association
     configure :id, :integer
     configure :name, :string
     configure :created_at, :datetime
@@ -204,7 +203,8 @@ RailsAdmin.config do |config|
     configure :amount, :integer
     configure :interval, :string
     configure :livemode, :boolean
-    configure :trial_period_days, :integer   #   # Sections:
+    configure :trial_period_days, :integer
+    configure :allow_privacy, :boolean
     list do
       field :name
       field :identifier
@@ -212,6 +212,7 @@ RailsAdmin.config do |config|
       field :livemode
       field :trial_period_days
       field :visible
+      field :allow_privacy
     end
   end
   # config.model Repository do

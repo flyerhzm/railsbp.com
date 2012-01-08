@@ -40,6 +40,8 @@ class User < ActiveRecord::Base
 
   before_create :init_plan
 
+  delegate :allow_privacy?, :to => :plan
+
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
       if user.github_token.blank?
