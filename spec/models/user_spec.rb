@@ -13,7 +13,10 @@ describe User do
       @paid_plan = Factory(:plan, amount: 1000)
     end
     subject { Factory(:user) }
-    its(:plan) { should == @free_plan }
+
+    it "should have a free plan by default" do
+      subject.plan.free?
+    end
   end
 
   context "aasm_state" do
@@ -150,6 +153,20 @@ describe User do
         UserMailer.expects(:delay).never
         user.notify_user_unpay
       end
+    end
+  end
+
+  context "allow_privacy?" do
+    context "public_plan" do
+      let(:public_plan) { Factory(:plan, allow_privacy: false) }
+      subject { Factory(:user).tap { |user| user.update_attribute(:plan, public_plan) } }
+      its(:allow_privacy?) { should == false }
+    end
+
+    context "privcate_plan" do
+      let(:private_plan) { Factory(:plan, allow_privacy: true) }
+      subject { Factory(:user).tap { |user| user.update_attribute(:plan, private_plan) } }
+      its(:allow_privacy?) { should == true }
     end
   end
 end

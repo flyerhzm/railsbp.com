@@ -22,6 +22,8 @@ describe RepositoryCell do
 
     context "renderding public" do
       before do
+        plan = Factory(:plan, allow_privacy: true)
+        User.current = Factory(:user).tap { |user| user.update_attribute(:plan, plan) }
         public_repository = Factory(:repository, name: "public", visible: true)
         private_repository = Factory(:repository, name: "private", visible: false)
         last_build = Factory(:build, repository: public_repository, duration: 20)

@@ -2,8 +2,14 @@
 
 FactoryGirl.define do
   factory :plan do
-      name "MyString"
-      amount "9.99"
-      interval "month"
-    end
+    name "Basic"
+    amount "9.99"
+    interval "month"
+  end
+
+  factory :free_plan, parent: :plan do
+    name "Free"
+    amount "0.00"
+    interval "month"
+  end
 end

@@ -8,8 +8,8 @@ describe Plan do
       @free_plan = Factory(:plan, amount: 0)
       @paid_plan = Factory(:plan, amount: 1000)
     end
-    subject { Plan.free }
-    it { should == [@free_plan] }
+    subject { Plan.free.last }
+    it { should == @free_plan }
   end
 
   context "#free?" do

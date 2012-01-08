@@ -10,6 +10,7 @@ class Repository < ActiveRecord::Base
 
   before_create :reset_authentication_token, :sync_github
   after_create :copy_config_file
+  before_save :set_privacy
 
   scope :visible, where(:visible => true)
 
@@ -99,5 +100,11 @@ class Repository < ActiveRecord::Base
     def copy_config_file
       FileUtils.mkdir_p(config_path) unless File.exist?(config_path)
       FileUtils.cp(default_config_file_path, config_file_path)
+    end
+
+    def set_privacy
+      unless User.current.allow_privacy?
+        self.visible = true
+      end
     end
 end

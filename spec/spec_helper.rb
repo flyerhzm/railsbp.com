@@ -45,6 +45,7 @@ Spork.prefork do
 
     config.before(:each) do
       DatabaseCleaner.start
+      Factory(:free_plan)
     end
 
     config.after(:each) do

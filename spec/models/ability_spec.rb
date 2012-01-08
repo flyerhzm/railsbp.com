@@ -5,6 +5,8 @@ describe Ability do
 
   context "new user" do
     before do
+      plan = Factory(:plan, allow_privacy: true)
+      User.current = Factory(:user).tap { |user| user.update_attribute(:plan, plan) }
       @visible_repository = Factory(:repository, visible: true)
       @private_repository = Factory(:repository, visible: false)
       @ability = Ability.new(nil)

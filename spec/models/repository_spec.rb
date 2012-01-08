@@ -6,7 +6,7 @@ describe Repository do
   it { should have_many(:users) }
   it { should validate_presence_of(:github_name) }
 
-  context "stub sync_githbu" do
+  context "stub sync_githbub" do
     include FakeFS::SpecHelpers
 
     it { should validate_uniqueness_of(:github_name) }
@@ -117,6 +117,32 @@ describe Repository do
       end
 
       its(:collaborator_ids) { should == [@flyerhzm.id, @scott.id] }
+    end
+
+    context "allow_privacy?" do
+      context "public_plan" do
+        before do
+          public_plan = Factory(:plan, allow_privacy: false)
+          user = Factory(:user).tap { |user| user.update_attribute(:plan, public_plan) }
+          User.current = user
+        end
+        subject { Factory(:repository, visible: false) }
+        it "should set repository#visible to be true" do
+          subject.visible.should == true
+        end
+      end
+
+      context "private_plan" do
+        before do
+          private_plan = Factory(:plan, allow_privacy: true)
+          user = Factory(:user).tap { |user| user.update_attribute(:plan, private_plan) }
+          User.current = user
+        end
+        subject { Factory(:repository, visible: false) }
+        it "should allow repository#visible to be false" do
+          subject.visible.should == false
+        end
+      end
     end
   end
 

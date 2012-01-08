@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe BuildCell do
+  before { Repository.any_instance.stubs(:sync_github) }
   context "cell rendering" do
     context "rendering tabs" do
       let(:user) { Factory(:user) }
@@ -11,21 +12,21 @@ describe BuildCell do
       context "current" do
         subject { render_cell(:build, :tabs, "current", repository) }
 
-        it { should have_link("Configure") }
+        it { should have_link("Edit") }
         it { should have_selector("li.active", :content => "Current") }
       end
 
       context "history" do
         subject { render_cell(:build, :tabs, "history", repository) }
 
-        it { should have_link("Configure") }
+        it { should have_link("Edit") }
         it { should have_selector("li.active", :content => "Current") }
       end
 
       context "build" do
         subject { render_cell(:build, :tabs, "history", repository, build) }
 
-        it { should have_link("Configure") }
+        it { should have_link("Edit") }
         it { should have_selector("li.active", :content => "Build") }
       end
     end
