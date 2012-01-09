@@ -44,19 +44,36 @@ describe RepositoriesController do
   end
 
   context "GET :new" do
-    it "should assign repository" do
-      user = Factory(:user)
+    let(:plan) { Factory(:plan, allow_repositories_count: 1) }
+    it "should assign repository if allow_repositories_count greater than own_repositories_count" do
+      user = Factory(:user).tap do |user|
+        user.plan = plan
+        user.own_repositories_count = 0
+        user.save!
+      end
       sign_in user
       get :new
       response.should be_ok
       assigns(:repository).should_not be_nil
     end
+
+    it "should redirect_to root_url if allow_repositories_count less than or equal to own_repositories_count" do
+      user = Factory(:user).tap do |user|
+        user.plan = plan
+        user.own_repositories_count = 1
+        user.save!
+      end
+      sign_in user
+      get :new
+      response.should redirect_to(root_url)
+    end
   end
 
   context "POST :create" do
+    let(:plan) { Factory(:plan, allow_repositories_count: 1) }
     before do
       Repository.any_instance.stubs(:sync_github)
-      user = Factory(:user, nickname: "flyerhzm")
+      user = Factory(:user, nickname: "flyerhzm").tap { |user| user.update_attribute(:plan, plan) }
       sign_in user
     end
 

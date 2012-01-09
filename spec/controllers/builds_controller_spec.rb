@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe BuildsController do
-  before { Repository.any_instance.stubs(:sync_github).returns(true) }
+  before do
+    Repository.any_instance.stubs(:sync_github).returns(true)
+    User.current = Factory(:user)
+  end
+
   let(:build) { Factory(:build) }
 
   context "GET :index" do

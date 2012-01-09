@@ -205,6 +205,7 @@ RailsAdmin.config do |config|
     configure :livemode, :boolean
     configure :trial_period_days, :integer
     configure :allow_privacy, :boolean
+    configure :allow_repositories_count, :integer
     list do
       field :name
       field :identifier
@@ -213,6 +214,7 @@ RailsAdmin.config do |config|
       field :trial_period_days
       field :visible
       field :allow_privacy
+      field :allow_repositories_count
     end
   end
   # config.model Repository do

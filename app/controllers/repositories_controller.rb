@@ -3,6 +3,7 @@ class RepositoriesController < ApplicationController
   before_filter :authenticate_user!, except: [:show, :sync, :sync_proxy]
   before_filter :set_current_user, only: [:create]
   before_filter :load_repository, only: [:show, :edit, :update]
+  before_filter :check_allow_repositories_count, only: [:new, :create]
   respond_to :json, :html
 
   def index
@@ -18,15 +19,19 @@ class RepositoriesController < ApplicationController
   end
 
   def new
-    @repository = Repository.new
+    if check_allow_repositories_count
+      @repository = Repository.new
+    end
   end
 
   def create
-    @repository = current_user.add_repository(params[:repository][:github_name])
-    if @repository.valid?
-      redirect_to [:edit, @repository], notice: "Repository created successfully."
-    else
-      render :new
+    if check_allow_repositories_count
+      @repository = current_user.add_repository(params[:repository][:github_name])
+      if @repository.valid?
+        redirect_to [:edit, @repository], notice: "Repository created successfully."
+      else
+        render :new
+      end
     end
   rescue Octokit::NotFound
     flash[:error] = "There is no such repository or you don't have access to such repository on githbub"
@@ -85,5 +90,14 @@ class RepositoriesController < ApplicationController
   protected
     def load_repository
       @repository = Repository.find(params[:id])
+    end
+
+    def check_allow_repositories_count
+      if current_user.allow_repositories_count <= current_user.own_repositories_count
+        flash[:error] = "You are not authorized to create a new repository, please upgrade your plan."
+        redirect_to root_url
+        return false
+      end
+      true
     end
 end

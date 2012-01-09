@@ -3,8 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   rescue_from CanCan::AccessDenied do |exception|
-    flash[:error] = "Access denied."
-    redirect_to '/'
+    redirect_to '/', alert: exception.message
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exception|

@@ -2,4 +2,11 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  unauthorized:
+    read:
+      repository: "You are not authorized to view this repository."
+    update:
+      repository: "You are not authorized to update this repository."
+    manage:
+      all: "You are not authorized to %{action} %{subject}."
+
