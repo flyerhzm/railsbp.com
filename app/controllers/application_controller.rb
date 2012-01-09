@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_filter :set_current_user
   helper_method :current_repository
   protect_from_forgery
 

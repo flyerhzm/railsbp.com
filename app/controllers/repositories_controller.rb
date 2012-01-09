@@ -1,7 +1,6 @@
 class RepositoriesController < ApplicationController
   load_and_authorize_resource except: [:sync, :sync_proxy]
   before_filter :authenticate_user!, except: [:show, :sync, :sync_proxy]
-  before_filter :set_current_user, only: [:create]
   before_filter :load_repository, only: [:show, :edit, :update]
   before_filter :check_allow_repositories_count, only: [:new, :create]
   respond_to :json, :html

@@ -16,7 +16,6 @@ describe RepositoriesController do
 
     it "should get repositories if user sync_repos is true" do
       user = Factory(:user, sync_repos: true)
-      User.current = user
       repo1 = Factory(:repository)
       repo2 = Factory(:repository)
       user.repositories << repo1

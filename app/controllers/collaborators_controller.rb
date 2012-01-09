@@ -1,6 +1,5 @@
 class CollaboratorsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :set_current_user, only: [:sync, :create]
   before_filter :load_repository
 
   def index
