@@ -71,6 +71,8 @@ class Build < ActiveRecord::Base
   handle_asynchronously :analyze
 
   def proxy_analyze
+    run!
+    start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     File.open(analyze_file, 'w+') do |file|
       eruby = Erubis::Eruby.new(template_file)
@@ -81,5 +83,10 @@ class Build < ActiveRecord::Base
         :last_commit_id => last_commit_id
       )
     end
+    end_time = Time.now
+    self.warning_count = warnings.size
+    self.duration = end_time - start_time
+    self.finished_at = end_time
+    complete!
   end
 end

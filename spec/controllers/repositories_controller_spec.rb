@@ -156,7 +156,7 @@ describe RepositoriesController do
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       errors = ActiveSupport::JSON.decode(proxy_success_json)["errors"]
       repository.expects(:generate_proxy_build).with(last_commit, errors)
-      post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: last_commit, ref: "refs/heads/master", result: proxy_success_json
+      post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: ActiveSupport::JSON.encode(last_commit), ref: "refs/heads/master", result: proxy_success_json
       response.should be_ok
       response.body.should == "success"
     end
@@ -164,13 +164,13 @@ describe RepositoriesController do
     it "should not generate build for develop branch" do
       repository = Factory.stub(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: last_commit, ref: "refs/heads/develop", result: proxy_success_json
+      post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: ActiveSupport::JSON.encode(last_commit), ref: "refs/heads/develop", result: proxy_success_json
       response.should be_ok
       response.body.should == "skip"
     end
 
     it "should not generate build if authentication_token does not exist" do
-      post :sync_proxy, repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: last_commit, ref: "refs/heads/develop", result: proxy_success_json
+      post :sync_proxy, repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: ActiveSupport::JSON.encode(last_commit), ref: "refs/heads/develop", result: proxy_success_json
       response.should be_ok
       response.body.should == "not authenticate"
     end
@@ -178,7 +178,7 @@ describe RepositoriesController do
     it "should not generate build if authentication_token does not match" do
       repository = Factory.stub(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      post :sync_proxy, token: "987654321", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: last_commit, ref: "refs/heads/develop", result: proxy_success_json
+      post :sync_proxy, token: "987654321", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: ActiveSupport::JSON.encode(last_commit), ref: "refs/heads/develop", result: proxy_success_json
       response.should be_ok
       response.body.should == "not authenticate"
     end
@@ -188,7 +188,7 @@ describe RepositoriesController do
       repository = Factory.stub(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       lambda {
-        post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: last_commit, ref: "refs/heads/master", error: Marshal.dump(error)
+        post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: ActiveSupport::JSON.encode(last_commit), ref: "refs/heads/master", error: Marshal.dump(error)
       }.should raise_error
     end
   end
