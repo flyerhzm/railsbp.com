@@ -46,7 +46,7 @@ class Build < ActiveRecord::Base
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     FileUtils.cd(analyze_path)
-    g = Git.clone(repository.clone_url, repository.name)
+    g = Git.clone(repository.clone_url, repository.name, depth: 10)
     Dir.chdir(repository.name) { g.reset_hard(last_commit_id) }
     rails_best_practices = RailsBestPractices::Analyzer.new("#{analyze_path}/#{repository.name}",
                                                             "format"         => "html",
