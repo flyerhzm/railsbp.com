@@ -79,7 +79,8 @@ class RepositoriesController < ApplicationController
       raise Marshal.load(params[:error])
     elsif params[:ref] =~ /#{repository.branch}$/
       errors = ActiveSupport::JSON.decode(params[:result])["errors"]
-      repository.generate_proxy_build(params[:last_commit], errors)
+      last_commit = ActiveSupport::JSON.decode(params[:last_commit])
+      repository.generate_proxy_build(last_commit, errors)
       render text: "success"
     else
       render text: "skip"
