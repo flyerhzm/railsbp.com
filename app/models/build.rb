@@ -74,10 +74,14 @@ class Build < ActiveRecord::Base
     run!
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
+    errors = []
+    warnings.each do |warning|
+      errors << RailsBestPractices::Core::Error.new(warning['file'], warning['line'], warning['message'], warning['type'], warning['url'])
+    end
     File.open(analyze_file, 'w+') do |file|
       eruby = Erubis::Eruby.new(File.read(template_file))
       file.puts eruby.evaluate(
-        :errors         => warnings,
+        :errors         => errors,
         :github         => true,
         :github_name    => repository.github_name,
         :last_commit_id => last_commit_id
