@@ -26,7 +26,7 @@ category.configurations.create(name: "LawOfDemeterCheck", description: "Law of d
 category.configurations.create(name: "UseObserverCheck", description: "Use observer", url: "http://rails-bestpractices.com/posts/19-use-observer")
 category.configurations.create(name: "UseQueryAttributeCheck", description: "Use query attribute", url: "http://rails-bestpractices.com/posts/56-use-query-attribute")
 configuration = category.configurations.create(name: "RemoveUnusedMethodsInModelsCheck", description: "Remove unused methods in models")
-configuration.parameters.create(name: "except_methods", kind: "array", value: [], description: "except methods")
+configuration.parameters.create(name: "except_methods", kind: "array", value: "", description: "except methods")
 
 category = Category.create(name: "Mailer")
 category.configurations.create(name: "UseMultipartAlternativeAsContentTypeOfEmailCheck", description: "Use multipart alternative as content type of email", url: "http://rails-bestpractices.com/posts/41-use-multipart-alternative-as-content_type-of-email")
@@ -41,12 +41,12 @@ configuration = category.configurations.create(name: "UseBeforeFilterCheck", des
 configuration.parameters.create(name: "customize_count", kind: "integer", value: 2, description: "customize count")
 category.configurations.create(name: "SimplifyRenderInControllersCheck", description: "Simplify render in controllers", url: "http://rails-bestpractices.com/posts/62-simplify-render-in-controllers")
 configuration = category.configurations.create(name: "RemoveUnusedMethodsInControllersCheck", description: "Remove unused methods in controllers")
-configuration.parameters.create(name: "except_methods", kind: "array", value: [], description: "except methods")
+configuration.parameters.create(name: "except_methods", kind: "array", value: "", description: "except methods")
 
 category = Category.create(name: "Helper")
 category.configurations.create(name: "RemoveEmptyHelpersCheck", description: "Remove empty helpers", url: "http://rails-bestpractices.com/posts/72-remove-empty-helpers")
 configuration = category.configurations.create(name: "RemoveUnusedMethodsInHelpersCheck", description: "Remove unused methods in helpers")
-configuration.parameters.create(name: "except_methods", kind: "array", value: [], description: "except methods")
+configuration.parameters.create(name: "except_methods", kind: "array", value: "", description: "except methods")
 
 category = Category.create(name: "View")
 category.configurations.create(name: "MoveCodeIntoControllerCheck", description: "Move code into controller", url: "http://rails-bestpractices.com/posts/24-move-code-into-controller")

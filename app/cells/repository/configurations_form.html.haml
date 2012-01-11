@@ -1,19 +1,20 @@
 = form_for @repository, url: [@repository, :configs], method: :put do |form|
   %fieldset
+    - index = 0
     - @categories.each do |category|
       .subtitle= category.name
       .input
         %ul.inputs-list
           - category.configurations.each do |configuration|
+            - index += 1
             %li
               %label
-                = check_box_tag "repository[configs][][name]", configuration.name, !@configs[configuration.name].nil?
+                = check_box_tag "repository[configs][#{index}][name]", configuration.name, @configs[configuration.name].present?
                 %span= configuration.description
-              - if @configs[configuration.name].present?
-                - @configs[configuration.name].each do |key, value|
-                  %label
-                    %span= "#{key}: "
-                    = text_field_tag "repository[configs][][#{key}]", value
-                    %span.description= configuration.parameters.detect { |parameter| parameter.name == key }.description
+              - configuration.parameters.each do |parameter|
+                %label
+                  %span= "#{parameter.name}: "
+                  = text_field_tag "repository[configs][#{index}][#{parameter.name}]", parameter.kind == "array" ? (@configs[configuration.name].try(:[], parameter.name) || parameter.value).join(", ") : (@configs[configuration.name].try(:[], parameter.name) || parameter.value)
+                  %span.description= parameter.description
   .actions
     = form.submit "Save Configurations", :class => "btn primary"

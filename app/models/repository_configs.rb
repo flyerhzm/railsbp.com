@@ -7,8 +7,9 @@ class RepositoryConfigs
 
   def write(configs)
     result = {}
-    configs.each do |config|
+    configs.each do |_, config|
       config_name = config.delete("name")
+      next unless config_name
       result[config_name] = {}
       config.each do |key, value|
         if key =~ /_count$/
