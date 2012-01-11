@@ -76,7 +76,7 @@ class RepositoriesController < ApplicationController
     render text: "not authenticate" and return unless repository.authentication_token == params[:token]
 
     if params[:error].present?
-      raise Marshal.load(params[:error])
+      raise Exception.new(params[:error])
     elsif params[:ref] =~ /#{repository.branch}$/
       errors = ActiveSupport::JSON.decode(params[:result])["errors"]
       last_commit = ActiveSupport::JSON.decode(params[:last_commit])
