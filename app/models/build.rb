@@ -77,7 +77,7 @@ class Build < ActiveRecord::Base
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     errors = []
     warnings.each do |warning|
-      errors << RailsBestPractices::Core::Error.new(warning['file'], warning['line'], warning['message'], warning['type'], warning['url'])
+      errors << RailsBestPractices::Core::Error.new(warning['short_filename'], warning['line_number'], warning['message'], warning['type'], warning['url'])
     end
     File.open(analyze_file, 'w+') do |file|
       eruby = Erubis::Eruby.new(File.read(template_file))
