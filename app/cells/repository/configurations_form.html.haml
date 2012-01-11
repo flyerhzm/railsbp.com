@@ -9,7 +9,7 @@
             - index += 1
             %li
               %label
-                = check_box_tag "repository[configs][#{index}][name]", configuration.name, @configs[configuration.name].present?
+                = check_box_tag "repository[configs][#{index}][name]", configuration.name, !@configs[configuration.name].nil?
                 %span= configuration.description
               - configuration.parameters.each do |parameter|
                 %label
