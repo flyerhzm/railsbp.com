@@ -75,7 +75,7 @@ class Build < ActiveRecord::Base
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     File.open(analyze_file, 'w+') do |file|
-      eruby = Erubis::Eruby.new(template_file)
+      eruby = Erubis::Eruby.new(File.read(template_file))
       file.puts eruby.evaluate(
         :errors         => warnings,
         :github         => true,
