@@ -15,6 +15,8 @@
       %th Plan
       %th Price
       %th Trial Period
+      %th Privacy
+      %th Repositories Count
       %th
     - @plans.each do |plan|
       %tr
@@ -22,6 +24,8 @@
           %b= plan.name
         %td #{number_to_currency(plan.amount / 100.0)}/#{plan.interval}
         %td #{plan.trial_period_days} Days
+        %td #{plan.allow_privacy}
+        %td #{plan.allow_repositories_count}
         %td
           - if current_user.plan == plan
             Your Plan
