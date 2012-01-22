@@ -2,6 +2,7 @@
 db/*.sqlite3
 log/*.log
 tmp/
+builds/
 .sass-cache/
 .rvmrc
 config/database.yml

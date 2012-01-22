@@ -128,15 +128,15 @@ ActiveRecord::Schema.define(:version => 20120109023521) do
     t.string   "ssh_url"
     t.string   "github_name"
     t.integer  "builds_count",         :default => 0
-    t.string   "branch",               :default => "master"
+    t.string   "branch",               :default => "master", :null => false
     t.string   "authentication_token"
     t.boolean  "visible",              :default => false,    :null => false
   end
 
   create_table "user_repositories", :force => true do |t|
-    t.integer "repository_id"
     t.integer "user_id"
-    t.boolean "own",           :default => true
+    t.integer "repository_id"
+    t.boolean "own",           :default => true, :null => false
   end
 
   create_table "users", :force => true do |t|

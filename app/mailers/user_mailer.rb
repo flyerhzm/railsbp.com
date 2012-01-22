@@ -22,4 +22,12 @@ class UserMailer < ActionMailer::Base
     mail(:to => @user.email,
          :subject => "[Railsbp] Payment Failed")
   end
+
+  def notify_build_success(build_id)
+    @build = Build.find(build_id)
+    @repository = @build.repository
+
+    mail(:to => @build.recipient_emails,
+         :subject => "[Railsbp] #{@repository.github_name} build ##{@build.position}, warnings count #{@build.warning_count}")
+  end
 end

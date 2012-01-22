@@ -41,6 +41,10 @@ class Build < ActiveRecord::Base
     self.position = repository.builds_count + 1
   end
 
+  def recipient_emails
+    repository.users.select { |user| user.email !~ /fakemail.com$/ }.map(&:email)
+  end
+
   def analyze
     run!
     start_time = Time.now
@@ -48,7 +52,7 @@ class Build < ActiveRecord::Base
     FileUtils.cd(analyze_path)
     g = Git.clone(repository.clone_url, repository.name, depth: 10)
     Dir.chdir(repository.name) { g.reset_hard(last_commit_id) }
-    FileUtils.cp(repository.config_file_path, "configs")
+    FileUtils.cp(repository.config_file_path, "configs/rails_best_practices.yml")
     rails_best_practices = RailsBestPractices::Analyzer.new("#{analyze_path}/#{repository.name}",
                                                             "format"         => "html",
                                                             "silent"         => true,

@@ -5,6 +5,11 @@ describe Build do
 
   it { should belong_to(:repository) }
 
+  before do
+    User.current = Factory(:user)
+    Repository.any_instance.stubs(:sync_github)
+  end
+
   context "#short_commit_id" do
     before { Repository.any_instance.stubs(:sync_github).returns(true) }
     subject { Factory(:build, :last_commit_id => "1234567890") }
@@ -50,7 +55,7 @@ describe Build do
       FileUtils.expects(:mkdir_p).with(path)
       FileUtils.expects(:cd).with(path)
 
-      Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
+      Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com", depth: 10)
       Dir.expects(:chdir).with("railsbp.com")
 
       rails_best_practices = mock
@@ -71,11 +76,29 @@ describe Build do
       Repository.any_instance.stubs(:sync_github).returns(true)
       repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
+      @build.warnings = [{"short_filename" => "app/models/user.rb", "line_number" => "10", "message" => "use scope", "type" => "RailsBestPractices::Review::UseScope"}]
       @build.proxy_analyze
     end
 
     it "should analyze proxy" do
       File.exist?(@build.analyze_file)
+    end
+  end
+
+  context "recipients" do
+    before do
+      @user1 = Factory(:user, email: "user1@gmail.com")
+      @user2 = Factory(:user, email: "user2@gmail.com")
+      @fake_user = Factory(:user, email: "user@fakemail.com")
+      @repository = Factory(:repository)
+      @repository.users << @user1
+      @repository.users << @user2
+      @repository.users << @fake_user
+      @build = Factory(:build, repository: @repository)
+    end
+
+    it "should return non fakemail.com users" do
+      @build.recipient_emails.should == ["user1@gmail.com", "user2@gmail.com"]
     end
   end
 end
