@@ -52,7 +52,7 @@ class Build < ActiveRecord::Base
     FileUtils.cd(analyze_path)
     g = Git.clone(repository.clone_url, repository.name, depth: 10)
     Dir.chdir(repository.name) { g.reset_hard(last_commit_id) }
-    FileUtils.cp(repository.config_file_path, "configs/rails_best_practices.yml")
+    FileUtils.cp(repository.config_file_path, "config/rails_best_practices.yml")
     rails_best_practices = RailsBestPractices::Analyzer.new("#{analyze_path}/#{repository.name}",
                                                             "format"         => "html",
                                                             "silent"         => true,
