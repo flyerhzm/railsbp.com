@@ -68,7 +68,6 @@ class Build < ActiveRecord::Base
                                                            )
     rails_best_practices.analyze
     rails_best_practices.output
-    FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
     end_time = Time.now
     self.warning_count = rails_best_practices.runner.errors.size
     self.duration = end_time - start_time
@@ -76,6 +75,8 @@ class Build < ActiveRecord::Base
     complete!
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e)
+  ensure
+    FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
   handle_asynchronously :analyze
 
