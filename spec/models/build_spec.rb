@@ -6,19 +6,17 @@ describe Build do
   it { should belong_to(:repository) }
 
   before do
-    User.current = Factory(:user)
+    Repository.any_instance.stubs(:set_privacy)
     Repository.any_instance.stubs(:sync_github)
   end
 
   context "#short_commit_id" do
-    before { Repository.any_instance.stubs(:sync_github).returns(true) }
     subject { Factory(:build, :last_commit_id => "1234567890") }
     its(:short_commit_id) { should == "1234567" }
   end
 
   context "#analyze_path" do
     before do
-      Repository.any_instance.stubs(:sync_github).returns(true)
       @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
@@ -27,7 +25,6 @@ describe Build do
 
   context "#analyze_file" do
     before do
-      Repository.any_instance.stubs(:sync_github).returns(true)
       @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
@@ -35,14 +32,12 @@ describe Build do
   end
 
   context "#templae_file" do
-    before { Repository.any_instance.stubs(:sync_github).returns(true) }
     subject { @build = Factory(:build) }
     its(:template_file) { should == Rails.root.join("app/views/builds/_rbp.html.erb").to_s }
   end
 
   context "#analyze" do
     before do
-      Repository.any_instance.stubs(:sync_github).returns(true)
       repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
       @build.analyze
@@ -73,7 +68,6 @@ describe Build do
 
   context "#proxy_analyze" do
     before do
-      Repository.any_instance.stubs(:sync_github).returns(true)
       repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
       @build.warnings = [{"short_filename" => "app/models/user.rb", "line_number" => "10", "message" => "use scope", "type" => "RailsBestPractices::Review::UseScope"}]
@@ -100,5 +94,13 @@ describe Build do
     it "should return non fakemail.com users" do
       @build.recipient_emails.should == ["user1@gmail.com", "user2@gmail.com"]
     end
+  end
+
+  context "config_directory_path" do
+    before do
+      @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+    end
+    subject { @build = @repository.builds.create(last_commit_id: "987654321") }
+    its(:config_directory_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/config").to_s }
   end
 end
