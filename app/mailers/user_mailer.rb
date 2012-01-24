@@ -1,4 +1,16 @@
 class UserMailer < ActionMailer::Base
+  if Rails.env.production?
+    options = YAML.load_file("#{RAILS_ROOT}/config/mailers.yml")['production']['notification']
+    self.smtp_settings = {
+      :address        => options["address"],
+      :port           => options["port"],
+      :domain         => options["domain"],
+      :authentication => options["authentication"],
+      :user_name      => options["user_name"],
+      :password       => options["password"]
+    }
+  end
+
   default from: "<Railsbp.com> notification@railsbp.com"
 
   def notify_payment_success(invoice_id)
