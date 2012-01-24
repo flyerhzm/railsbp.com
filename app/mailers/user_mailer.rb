@@ -1,6 +1,6 @@
 class UserMailer < ActionMailer::Base
   if Rails.env.production?
-    options = YAML.load_file("#{RAILS_ROOT}/config/mailers.yml")['production']['notification']
+    options = YAML.load_file("#{Rails.root}/config/mailers.yml")['production']['notification']
     self.smtp_settings = {
       :address        => options["address"],
       :port           => options["port"],
