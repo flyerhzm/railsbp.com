@@ -10,7 +10,7 @@
             %li
               %label
                 = check_box_tag "repository[configs][#{index}][name]", configuration.name, !@configs[configuration.name].nil?
-                %span= configuration.description
+                = link_to configuration.description, configuration.url, target: "_blank"
               - configuration.parameters.each do |parameter|
                 %label
                   %span= "#{parameter.name}: "
