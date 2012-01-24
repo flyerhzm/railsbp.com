@@ -70,7 +70,9 @@ describe User do
         subject.update_plan(basic_plan)
       end
       its(:aasm_state) { should == "trial" }
-      its(:plan) { should == basic_plan }
+      it "should be basic plan" do
+        subject.plan == basic_plan
+      end
     end
 
     context "basic to free" do
@@ -83,12 +85,15 @@ describe User do
         subject.update_plan(free_plan)
       end
       its(:aasm_state) { should == "unpaid" }
-      its(:plan) { should == free_plan }
+      it "should be free plan" do
+        subject.plan == free_plan
+      end
     end
   end
 
   context "#add_repository" do
     before do
+      Repository.any_instance.stubs(:set_privacy)
       Repository.any_instance.stubs(:sync_github)
       @user = Factory(:user, nickname: "flyerhzm", github_uid: 66836)
       @repository = Factory(:repository, github_name: "flyerhzm/old")
