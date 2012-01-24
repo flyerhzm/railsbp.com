@@ -11,7 +11,7 @@ class UserMailer < ActionMailer::Base
     }
   end
 
-  default from: "<Railsbp.com> notification@railsbp.com"
+  default from: "notification@railsbp.com"
 
   def notify_payment_success(invoice_id)
     @invoice = Invoice.find(invoice_id)
