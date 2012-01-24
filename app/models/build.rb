@@ -73,6 +73,7 @@ class Build < ActiveRecord::Base
     self.duration = end_time - start_time
     self.finished_at = end_time
     complete!
+    UserMailer.notify_build_success(self.id).deliver
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e)
   ensure
@@ -102,5 +103,6 @@ class Build < ActiveRecord::Base
     self.duration = end_time - start_time
     self.finished_at = end_time
     complete!
+    UserMailer.notify_build_success(self.id).deliver
   end
 end
