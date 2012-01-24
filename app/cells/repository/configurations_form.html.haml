@@ -14,7 +14,10 @@
               - configuration.parameters.each do |parameter|
                 %label
                   %span= "#{parameter.name}: "
-                  = text_field_tag "repository[configs][#{index}][#{parameter.name}]", parameter.kind == "array" ? (@configs[configuration.name].try(:[], parameter.name) || parameter.value).join(", ") : (@configs[configuration.name].try(:[], parameter.name) || parameter.value)
+                  - if parameter.kind == "array"
+                    = text_area_tag "repository[configs][#{index}][#{parameter.name}]", (@configs[configuration.name].try(:[], parameter.name) || parameter.value).join(", "), class: "textarea repository-config"
+                  - else
+                    = text_field_tag "repository[configs][#{index}][#{parameter.name}]", (@configs[configuration.name].try(:[], parameter.name) || parameter.value), class: "string span1"
                   %span.description= parameter.description
   .actions
     = form.submit "Save Configurations", :class => "btn primary"
