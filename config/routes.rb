@@ -10,7 +10,11 @@ RailsbpCom::Application.routes.draw do
   end
   resources :repositories do
     resources :builds
-    resource :configs
+    resource :configs do
+      collection do
+        put :sync
+      end
+    end
     resources :collaborators do
       collection do
         put :sync
