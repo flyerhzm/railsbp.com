@@ -1,3 +1,13 @@
+# == Schema Information
+#
+# Table name: user_repositories
+#
+#  id            :integer(4)      not null, primary key
+#  user_id       :integer(4)
+#  repository_id :integer(4)
+#  own           :boolean(1)      default(TRUE), not null
+#
+
 class UserRepository < ActiveRecord::Base
   belongs_to :user
   belongs_to :repository

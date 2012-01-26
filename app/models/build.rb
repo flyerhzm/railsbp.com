@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: builds
+#
+#  id                  :integer(4)      not null, primary key
+#  warning_count       :integer(4)
+#  repository_id       :integer(4)
+#  aasm_state          :string(255)
+#  created_at          :datetime
+#  updated_at          :datetime
+#  last_commit_id      :string(255)
+#  last_commit_message :text
+#  position            :integer(4)
+#  duration            :integer(4)      default(0)
+#  finished_at         :datetime
+#
+
 class Build < ActiveRecord::Base
   include AASM
 

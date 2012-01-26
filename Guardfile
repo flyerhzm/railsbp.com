@@ -59,3 +59,7 @@ end
 guard 'delayed', :environment => 'development' do
   watch(%r{^app/models/(.+)\.rb})
 end
+
+guard 'annotate', :run_at_start => false do
+  watch( 'db/schema.rb' )
+end

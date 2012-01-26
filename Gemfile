@@ -52,11 +52,13 @@ end
 group :develop do
   gem 'thin'
   gem 'rb-fsevent'
+  gem 'annotate', :git => "git://github.com/ctran/annotate_models.git"
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rails'
   gem 'guard-livereload'
   gem 'guard-delayed'
+  gem 'guard-annotate'
 
   # Deploy with Capistrano
   gem 'capistrano'

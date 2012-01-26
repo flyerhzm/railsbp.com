@@ -1,3 +1,27 @@
+# == Schema Information
+#
+# Table name: repositories
+#
+#  id                   :integer(4)      not null, primary key
+#  git_url              :string(255)
+#  name                 :string(255)
+#  description          :string(255)
+#  private              :boolean(1)
+#  fork                 :boolean(1)
+#  pushed_at            :datetime
+#  created_at           :datetime
+#  updated_at           :datetime
+#  github_id            :integer(4)
+#  html_url             :string(255)
+#  ssh_url              :string(255)
+#  github_name          :string(255)
+#  builds_count         :integer(4)      default(0)
+#  branch               :string(255)     default("master"), not null
+#  authentication_token :string(255)
+#  visible              :boolean(1)      default(FALSE), not null
+#  update_configs_url   :string(255)
+#
+
 require 'authorization_exception'
 
 class Repository < ActiveRecord::Base

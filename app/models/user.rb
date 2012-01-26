@@ -1,3 +1,31 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :integer(4)      not null, primary key
+#  email                  :string(255)     default(""), not null
+#  encrypted_password     :string(128)     default(""), not null
+#  reset_password_token   :string(255)
+#  reset_password_sent_at :datetime
+#  remember_created_at    :datetime
+#  sign_in_count          :integer(4)      default(0)
+#  current_sign_in_at     :datetime
+#  last_sign_in_at        :datetime
+#  current_sign_in_ip     :string(255)
+#  last_sign_in_ip        :string(255)
+#  created_at             :datetime
+#  updated_at             :datetime
+#  github_uid             :integer(4)
+#  nickname               :string(255)
+#  name                   :string(255)
+#  github_token           :string(255)
+#  sync_repos             :boolean(1)      default(FALSE)
+#  stripe_customer_token  :string(255)
+#  plan_id                :integer(4)
+#  aasm_state             :string(255)
+#  own_repositories_count :integer(4)      default(0), not null
+#
+
 class User < ActiveRecord::Base
   include AASM
   include Gravtastic
