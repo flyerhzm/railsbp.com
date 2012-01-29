@@ -26,6 +26,8 @@ RailsbpCom::Application.routes.draw do
 
   post "stripe" => "stripe#handle"
 
+  match 'page/:name' => 'pages#show', :as => :page
+
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   # The priority is based upon order of creation:
