@@ -4,7 +4,6 @@ class HeaderCell < Cell::Rails
     @user = user
     @repository = repository
     @repositories = @user.try(:repositories)
-    @repository = @repositories.first if @repository.nil? && @repositories.present?
     render
   end
 

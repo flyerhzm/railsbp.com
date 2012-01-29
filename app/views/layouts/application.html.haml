@@ -6,7 +6,7 @@
     = csrf_meta_tags
     = tag :meta, :name => "stripe-key", :content => STRIPE_PUBLIC_KEY
   %body
-    = render_cell :header, :display, current_user, current_repository
+    = render_cell :header, :display, current_user, @repository
     %section#flash
       .container-fluid
         = notice_message

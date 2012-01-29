@@ -14,7 +14,6 @@ class RepositoriesController < ApplicationController
   end
 
   def show
-    set_current_repository(@repository)
   end
 
   def new

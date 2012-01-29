@@ -1,4 +1,4 @@
-= link_to 'Edit', edit_repository_path(@repository), :class => "edit btn primary"
+= link_to 'Edit Repository', [:edit, @repository], :class => "edit btn primary"
 %ul.tabs
   %li{:class => @active_class_name == "current" ? "active" : ""}= link_to "Current", repository_path(@repository)
   %li{:class => @active_class_name == "history" ? "active" : ""}= link_to "History", repository_builds_path(@repository)

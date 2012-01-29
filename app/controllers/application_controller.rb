@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   before_filter :set_current_user
-  helper_method :current_repository
   protect_from_forgery
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -17,14 +16,6 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     User.current = current_user
-  end
-
-  def current_repository
-    Repository.find(session[:repository_id]) if session[:repository_id]
-  end
-
-  def set_current_repository(repository)
-    session[:repository_id] = repository.id
   end
 
   protected
