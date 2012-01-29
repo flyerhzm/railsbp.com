@@ -12,4 +12,13 @@
 //= require bootstrap-alerts
 //= require bootstrap-buttons
 //= require highstock
-//= require_tree .
+//= require railsbp_bootstrap
+//
+//= require builds
+//= require collaborators
+//= require configs
+//= require contacts
+//= require home
+//= require pages
+//= require plans
+//= require repositories
