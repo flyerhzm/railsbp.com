@@ -34,6 +34,13 @@
           - else
             = link_to "Upgrade", update_plan_path(:plan_id => plan.id), :class => "btn primary", :confirm => "Are you sure to upgrade your plan?", :method => :put
 
+  .alert-message.block-message.info
+    %h4 We also offer some larger plans and extra services
+    %ul
+      %li Implement checks according to your team code guideline.
+      %li Install railsbp.com in your own server
+    %p Please use the #{link_to "Contact Page", new_contact_path} or send an email to #{link_to "contact-us@railsbp.com", "mailto:contact-us@railsbp.com"}.
+
 #creditCardFormModal.hidden.modal
   .modal-header
     = link_to "x", "#", :class => "close"

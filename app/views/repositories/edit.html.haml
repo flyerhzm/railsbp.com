@@ -16,9 +16,9 @@
   = form.input :ssh_url, input_html: {class: "span5"}
   = form.input :branch, input_html: {class: "span5"}
   - if current_user.allow_privacy?
-    = form.input :visible, hint: "if the repository is available to everyone"
+    = form.input :visible, label: "Visibility", hint: "if the repository is available to everyone"
   - else
-    = form.input :visible, input_html: { disabled: "disabled", checked: true }, hint: "#{link_to('upgrade your plan', plans_path)} to set non public repository".html_safe
+    = form.input :visible, label: "Visibility", input_html: { disabled: "disabled", checked: true }, hint: "#{link_to('upgrade your plan', plans_path)} to set non public repository".html_safe
   - if @repository.private?
     = form.input :update_configs_url, input_html: {class: "span5"}
   .actions
