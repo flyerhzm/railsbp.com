@@ -11,6 +11,7 @@
 //= require bootstrap-dropdown
 //= require bootstrap-alerts
 //= require bootstrap-buttons
+//= require bootstrap-twipsy
 //= require highstock
 //= require railsbp_bootstrap
 //
