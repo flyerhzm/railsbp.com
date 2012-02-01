@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120126054907) do
+ActiveRecord::Schema.define(:version => 20120201045823) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -141,8 +141,8 @@ ActiveRecord::Schema.define(:version => 20120126054907) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "email",                                 :default => "",    :null => false
-    t.string   "encrypted_password",     :limit => 128, :default => "",    :null => false
+    t.string   "email",                                 :default => "", :null => false
+    t.string   "encrypted_password",     :limit => 128, :default => "", :null => false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -157,11 +157,10 @@ ActiveRecord::Schema.define(:version => 20120126054907) do
     t.string   "nickname"
     t.string   "name"
     t.string   "github_token"
-    t.boolean  "sync_repos",                            :default => false
     t.string   "stripe_customer_token"
     t.integer  "plan_id"
     t.string   "aasm_state"
-    t.integer  "own_repositories_count",                :default => 0,     :null => false
+    t.integer  "own_repositories_count",                :default => 0,  :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

@@ -19,7 +19,6 @@
 #  nickname               :string(255)
 #  name                   :string(255)
 #  github_token           :string(255)
-#  sync_repos             :boolean(1)      default(FALSE)
 #  stripe_customer_token  :string(255)
 #  plan_id                :integer(4)
 #  aasm_state             :string(255)
