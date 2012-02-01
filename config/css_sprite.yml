@@ -1,0 +1,5 @@
+engine: css.sass
+image_path: app/assets/images
+stylesheet_path: app/assets/stylesheets
+css_images_path: assets
+disable_optimization: true

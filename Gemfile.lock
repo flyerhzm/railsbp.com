@@ -102,6 +102,10 @@ GEM
     coffee-script-source (1.1.2)
     colored (1.2)
     crack (0.3.1)
+    css_sprite (1.5.0)
+      mocha
+      rmagick
+      rspec
     cucumber (1.1.0)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.2)
@@ -282,6 +286,7 @@ GEM
     remotipart (1.0.1)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    rmagick (2.13.1)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -361,6 +366,7 @@ DEPENDENCIES
   cells
   ckeditor
   coffee-rails (~> 3.1.1)
+  css_sprite
   cucumber
   cucumber-rails
   database_cleaner

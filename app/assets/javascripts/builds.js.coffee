@@ -12,12 +12,12 @@ $ ->
       checksPanel.append($("<li><input id='"+check+"' type='checkbox' value='"+check+"' /><label for='"+check+"'>"+check+"</label></li>"))
     )
     $("#customizeChecks").click ->
-      if $(this).hasClass("active")
+      if $(this).hasClass("minus_icon")
         checksPanel.hide()
-        $(this).removeClass("active")
+        $(this).removeClass("minus_icon").addClass("plus_icon")
       else
         checksPanel.show()
-        $(this).addClass("active")
+        $(this).addClass("minus_icon").removeClass("plus_icon")
       return false
     $("input[type=checkbox]").prop("checked", true)
     $("input[type=checkbox]").click ->

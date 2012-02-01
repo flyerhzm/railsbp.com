@@ -28,6 +28,7 @@ role :delayed_job, 'db.railsbp.com'
 set :delayed_job_server_role, :delayed_job
 
 before "deploy:assets:precompile", "config:init"
+before "deploy:assets:precompile", "assets:init"
 
 before "deploy:restart", "delayed_job:stop"
 after  "deploy:restart", "delayed_job:start"
@@ -44,6 +45,12 @@ namespace :config do
     run "ln -nfs #{shared_path}/config/initializers/action_mailer.rb #{release_path}/config/initializers/action_mailer.rb"
     run "ln -nfs #{shared_path}/builds #{release_path}/builds"
     run "cd #{release_path}; bundle exec rails_best_practices -g"
+  end
+end
+
+namespace :assets do
+  task :init, :roles => :app do
+    run "cd #{release_path}; #{rake} RAILS_ENV=#{rails_env} css_sprite:build"
   end
 end
 

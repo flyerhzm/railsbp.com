@@ -27,6 +27,7 @@ gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
 gem 'ckeditor'
 gem 'typhoeus'
 gem 'meta-tags', :require => 'meta_tags'
+gem 'css_sprite'
 
 # Gems used only for assets and not required
 # in production environments by default.
