@@ -3,15 +3,6 @@ class RepositoriesController < ApplicationController
   before_filter :authenticate_user!, except: [:show, :sync, :sync_proxy]
   before_filter :load_repository, only: [:show, :edit, :update]
   before_filter :check_allow_repositories_count, only: [:new, :create]
-  respond_to :json, :html
-
-  def index
-    if current_user.sync_repos?
-      respond_with(current_user.repositories)
-    else
-      respond_with(error: "not_ready")
-    end
-  end
 
   def show
   end
