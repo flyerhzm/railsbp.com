@@ -105,6 +105,10 @@ class Repository < ActiveRecord::Base
     user_repositories.map(&:user_id)
   end
 
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+
   protected
     def reset_authentication_token
       self.authentication_token = Devise.friendly_token

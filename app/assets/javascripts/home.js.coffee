@@ -1,2 +1,2 @@
-$ ->
-  $("#loading").spin "large"
+#$ ->
+  #$("#loading").spin "large"
