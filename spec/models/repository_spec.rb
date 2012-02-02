@@ -94,6 +94,7 @@ describe Repository do
         @ben = Factory(:user, github_uid: 149420)
         @repository.users << @flyerhzm
         @repository.users << @scott
+        User.current = @flyerhzm
         collaborators = File.read(Rails.root.join("spec/fixtures/collaborators.json").to_s)
         stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com/collaborators").to_return(body: collaborators)
         @repository.sync_collaborators

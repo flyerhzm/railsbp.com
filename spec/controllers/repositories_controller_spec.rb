@@ -33,7 +33,7 @@ describe RepositoriesController do
       assigns(:repository).should_not be_nil
     end
 
-    it "should redirect_to root_url if allow_repositories_count less than or equal to own_repositories_count" do
+    it "should redirect_to plans_path if allow_repositories_count less than or equal to own_repositories_count" do
       user = Factory(:user).tap do |user|
         user.plan = plan
         user.own_repositories_count = 1
@@ -41,7 +41,7 @@ describe RepositoriesController do
       end
       sign_in user
       get :new
-      response.should redirect_to(root_url)
+      response.should redirect_to(plans_path)
     end
   end
 
@@ -54,6 +54,7 @@ describe RepositoriesController do
     end
 
     it "should redirect to show if success" do
+      Repository.any_instance.stubs(:name).returns("railsbp.com")
       post :create, repository: {github_name: "flyerhzm/railsbp.com"}
       repository = assigns(:repository)
       response.should redirect_to(edit_repository_path(repository))

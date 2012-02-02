@@ -20,6 +20,7 @@
 #  authentication_token :string(255)
 #  visible              :boolean(1)      default(FALSE), not null
 #  update_configs_url   :string(255)
+#  collaborators_count  :integer(4)      default(0), not null
 #
 
 require 'authorization_exception'
@@ -74,7 +75,7 @@ class Repository < ActiveRecord::Base
   end
 
   def sync_collaborators
-    Delayed::Job.enqueue(DelayedJob::SyncCollaborators.new(self.id, User.current.github_token))
+    Delayed::Job.enqueue(DelayedJob::SyncCollaborators.new(self.id, User.current.id))
   end
 
   def delete_collaborator(user_id)

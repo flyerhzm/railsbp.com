@@ -206,6 +206,7 @@ RailsAdmin.config do |config|
     configure :trial_period_days, :integer
     configure :allow_privacy, :boolean
     configure :allow_repositories_count, :integer
+    configure :allow_collaborators_count, :integer
     list do
       field :name
       field :identifier
@@ -215,6 +216,7 @@ RailsAdmin.config do |config|
       field :visible
       field :allow_privacy
       field :allow_repositories_count
+      field :allow_collaborators_count
     end
   end
   # config.model Repository do

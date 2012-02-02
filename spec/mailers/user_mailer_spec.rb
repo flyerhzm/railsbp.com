@@ -51,6 +51,6 @@ describe UserMailer do
     it { should deliver_to("user1@gmail.com, user2@gmail.com") }
     it { should have_subject("[Railsbp] flyerhzm/test build #1, warnings count 10") }
     it { should have_body_text("flyerhzm/test build successfully.") }
-    it { should have_body_text("<a href=\"http://localhost:3000/repositories/#{@repository.id}/builds/#{@build.id}\">View result here</a>") }
+    it { should have_body_text("<a href=\"http://localhost:3000/repositories/#{@repository.to_param}/builds/#{@build.id}\">View result here</a>") }
   end
 end

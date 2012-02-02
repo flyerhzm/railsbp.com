@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120201045823) do
+ActiveRecord::Schema.define(:version => 20120202031310) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -92,13 +92,14 @@ ActiveRecord::Schema.define(:version => 20120201045823) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "identifier"
-    t.integer  "amount",                   :default => 0
+    t.integer  "amount",                    :default => 0
     t.string   "interval"
-    t.boolean  "livemode",                 :default => false
-    t.integer  "trial_period_days",        :default => 0
-    t.boolean  "visible",                  :default => false, :null => false
-    t.boolean  "allow_privacy",            :default => false, :null => false
-    t.integer  "allow_repositories_count", :default => 0,     :null => false
+    t.boolean  "livemode",                  :default => false
+    t.integer  "trial_period_days",         :default => 0
+    t.boolean  "visible",                   :default => false, :null => false
+    t.boolean  "allow_privacy",             :default => false, :null => false
+    t.integer  "allow_repositories_count",  :default => 0,     :null => false
+    t.integer  "allow_collaborators_count", :default => 0,     :null => false
   end
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -132,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20120201045823) do
     t.string   "authentication_token"
     t.boolean  "visible",              :default => false,    :null => false
     t.string   "update_configs_url"
+    t.integer  "collaborators_count",  :default => 0,        :null => false
   end
 
   create_table "user_repositories", :force => true do |t|

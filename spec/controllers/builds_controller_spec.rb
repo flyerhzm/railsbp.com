@@ -3,7 +3,7 @@ require 'spec_helper'
 describe BuildsController do
   before do
     Repository.any_instance.stubs(:sync_github).returns(true)
-    User.current = Factory(:user)
+    Repository.any_instance.stubs(:set_privacy).returns(true)
   end
 
   let(:build) { Factory(:build) }
