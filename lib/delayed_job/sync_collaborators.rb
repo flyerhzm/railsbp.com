@@ -7,11 +7,8 @@ class DelayedJob::SyncCollaborators
   def perform
     repository = Repository.find(@repository_id)
     user = User.find(@user_id)
-    puts "+++++++++++++++++"
-    p repository
-    p user
-
     User.current = user
+
     client = Octokit::Client.new(oauth_token: user.github_token)
     client.collaborators(repository.github_name).each do |collaborator|
       unless user = User.where(github_uid: collaborator.id).first
