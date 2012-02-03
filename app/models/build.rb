@@ -81,7 +81,7 @@ class Build < ActiveRecord::Base
                                                             "with-github"    => true,
                                                             "github-name"    => repository.github_name,
                                                             "last-commit-id" => last_commit_id,
-                                                            "git"            => true,
+                                                            "with-git"       => true,
                                                             "template"       => template_file
                                                            )
     rails_best_practices.analyze
