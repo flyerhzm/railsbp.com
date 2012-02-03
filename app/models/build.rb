@@ -135,7 +135,7 @@ class Build < ActiveRecord::Base
   end
 
   protected
-    def remove_analyze_path
+    def remove_analyze_file
       FileUtils.rm(analyze_file)
     end
 end
