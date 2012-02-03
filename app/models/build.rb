@@ -21,6 +21,7 @@ class Build < ActiveRecord::Base
   belongs_to :repository, :counter_cache => true
 
   before_create :set_position
+  after_destroy :remove_analyze_file
 
   attr_accessor :warnings
 
@@ -132,4 +133,9 @@ class Build < ActiveRecord::Base
     complete!
     UserMailer.notify_build_success(self.id).deliver
   end
+
+  protected
+    def remove_analyze_path
+      FileUtils.rm(analyze_file)
+    end
 end
