@@ -50,7 +50,7 @@ describe Build do
       FileUtils.expects(:mkdir_p).with(path)
       FileUtils.expects(:cd).with(path)
 
-      Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com", depth: 10)
+      Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
       Dir.expects(:chdir).with("railsbp.com")
 
       rails_best_practices = mock
