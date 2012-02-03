@@ -136,6 +136,6 @@ class Build < ActiveRecord::Base
 
   protected
     def remove_analyze_file
-      FileUtils.rm(analyze_file)
+      FileUtils.rm(analyze_file) if File.exist?(analyze_file)
     end
 end
