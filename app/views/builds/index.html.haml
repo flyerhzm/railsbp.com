@@ -4,6 +4,8 @@
 
 = render_cell :build, :tabs, "history", @repository
 
+= render_cell :build, :history_links, @repository, params[:count]
+
 #history
   - if @builds.present?
     #buildsChart{ data: { categories: @builds.map(&:position), data: @builds.map(&:warning_count), repository: @repository.github_name } }

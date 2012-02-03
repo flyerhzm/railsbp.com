@@ -5,6 +5,11 @@ class BuildCell < Cell::Rails
     render
   end
 
+  def history_links(repository, builds_count)
+    @repository, @builds_count = repository, builds_count || 10
+    render
+  end
+
   def content(repository, build=nil)
     @repository, @build = repository, build
     @build ||= @repository.builds.last

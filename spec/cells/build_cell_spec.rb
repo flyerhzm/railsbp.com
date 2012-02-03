@@ -1,13 +1,14 @@
 require 'spec_helper'
 
 describe BuildCell do
-  before { Repository.any_instance.stubs(:sync_github) }
+  before do
+    Repository.any_instance.stubs(:sync_github)
+    Repository.any_instance.stubs(:set_privacy)
+  end
   context "cell rendering" do
     context "rendering tabs" do
-      let(:user) { Factory(:user) }
       let(:repository) { Factory(:repository) }
       let(:build) { Factory(:build, :repository => repository) }
-      before { User.current = user }
 
       context "current" do
         subject { render_cell(:build, :tabs, "current", repository) }
@@ -31,12 +32,38 @@ describe BuildCell do
       end
     end
 
+    context "rendering history_links" do
+      let(:repository) { Factory(:repository) }
+
+      context "last" do
+        subject { render_cell(:build, :history_links, repository, nil) }
+
+        it { should have_selector("a.active", :content => "Last 10 Builds") }
+      end
+
+      context "last 10" do
+        subject { render_cell(:build, :history_links, repository, 10) }
+
+        it { should have_selector("a.active", :content => "Last 10 Builds") }
+      end
+
+      context "last 50" do
+        subject { render_cell(:build, :history_links, repository, 50) }
+
+        it { should have_selector("a.active", :content => "Last 50 Builds") }
+      end
+
+      context "last 100" do
+        subject { render_cell(:build, :history_links, repository, 100) }
+
+        it { should have_selector("a.active", :content => "Last 100 Builds") }
+      end
+    end
+
     context "rendering content" do
-      let(:user) { Factory(:user) }
       let(:repository) { Factory(:repository) }
       let(:build) { Factory(:build, :repository => repository, :warning_count => 10).tap { |build| build.run!; build.complete! } }
       before do
-        User.current = user
         File.stubs(:read).returns("")
       end
 
@@ -63,6 +90,7 @@ describe BuildCell do
     subject { cell(:build) }
 
     it { should respond_to(:tabs) }
+    it { should respond_to(:history_links) }
     it { should respond_to(:content) }
   end
 end

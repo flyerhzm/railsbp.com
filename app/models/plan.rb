@@ -15,6 +15,7 @@
 #  allow_privacy             :boolean(1)      default(FALSE), not null
 #  allow_repositories_count  :integer(4)      default(0), not null
 #  allow_collaborators_count :integer(4)      default(0), not null
+#  allow_builds_count        :integer(4)      default(0), not null
 #
 
 class Plan < ActiveRecord::Base

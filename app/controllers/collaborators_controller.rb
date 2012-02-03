@@ -30,8 +30,8 @@ class CollaboratorsController < ApplicationController
     end
 
     def check_allow_collaborators_count
-      if current_user.allow_collaborators_count <= @repository.collaborators_count
-        flash[:error] = "Your current plan can only create #{current_user.allow_collaborators_count} collaborators, please upgrade your plan."
+      if @repository.owner.allow_collaborators_count <= @repository.collaborators_count
+        flash[:error] = "Your current plan can only create #{@repository.owner.allow_collaborators_count} collaborators, please upgrade your plan."
         redirect_to plans_path
         return false
       end
@@ -43,8 +43,8 @@ class CollaboratorsController < ApplicationController
       github_collaborators = client.collaborators(@repository.github_name)
       total_count = github_collaborators.count
       existing_count = @repository.users.where(github_uid: github_collaborators.map(&:id)).count
-      if current_user.allow_collaborators_count <= @repository.collaborators_count + total_count - existing_count
-        flash[:error] = "Your current plan can only create #{current_user.allow_collaborators_count} collaborators, please upgrade your plan."
+      if @repository.owner.allow_collaborators_count <= @repository.collaborators_count + total_count - existing_count
+        flash[:error] = "Your current plan can only create #{@repository.owner.allow_collaborators_count} collaborators, please upgrade your plan."
         redirect_to plans_path
         return false
       end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120202031310) do
+ActiveRecord::Schema.define(:version => 20120202141108) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120202031310) do
     t.boolean  "allow_privacy",             :default => false, :null => false
     t.integer  "allow_repositories_count",  :default => 0,     :null => false
     t.integer  "allow_collaborators_count", :default => 0,     :null => false
+    t.integer  "allow_builds_count",        :default => 0,     :null => false
   end
 
   create_table "rails_admin_histories", :force => true do |t|

@@ -20,6 +20,7 @@
       %th Privacy
       %th Repositories Count
       %th Collaborators Count
+      %th Display Builds Count
       %th
     - @plans.each do |plan|
       %tr
@@ -30,6 +31,7 @@
         %td #{plan.allow_privacy}
         %td #{plan.allow_repositories_count}
         %td #{plan.allow_collaborators_count}
+        %td #{plan.allow_builds_count}
         %td
           - if current_user.plan == plan
             Your Plan
