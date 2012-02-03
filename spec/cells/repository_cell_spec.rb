@@ -2,7 +2,11 @@ require 'spec_helper'
 
 describe RepositoryCell do
   context "cell rendering" do
-    before { Repository.any_instance.stubs(:sync_github).returns(true) }
+    before do
+      Repository.any_instance.stubs(:sync_github)
+      Repository.any_instance.stubs(:set_privacy)
+    end
+
     context "rendering tabs" do
       subject { render_cell(:repository, :tabs, "configs", Factory(:repository)) }
 
@@ -12,9 +16,7 @@ describe RepositoryCell do
     end
 
     context "rendering configurations_form" do
-      let(:user) { Factory(:user) }
       let(:repository) { Factory(:repository) }
-      before { User.current = user }
       subject { render_cell(:repository, :configurations_form, repository) }
 
       it { should have_selector("form") }
@@ -22,8 +24,6 @@ describe RepositoryCell do
 
     context "renderding public" do
       before do
-        plan = Factory(:plan, allow_privacy: true)
-        User.current = Factory(:user).tap { |user| user.update_attribute(:plan, plan) }
         public_repository = Factory(:repository, name: "public", visible: true)
         private_repository = Factory(:repository, name: "private", visible: false)
         last_build = Factory(:build, repository: public_repository, duration: 20)
