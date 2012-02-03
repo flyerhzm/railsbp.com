@@ -81,6 +81,7 @@ class Build < ActiveRecord::Base
                                                             "with-github"    => true,
                                                             "github-name"    => repository.github_name,
                                                             "last-commit-id" => last_commit_id,
+                                                            "git"            => true,
                                                             "template"       => template_file
                                                            )
     rails_best_practices.analyze
@@ -104,7 +105,15 @@ class Build < ActiveRecord::Base
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     errors = []
     warnings.each do |warning|
-      errors << RailsBestPractices::Core::Error.new(warning['short_filename'], warning['line_number'], warning['message'], warning['type'], warning['url'])
+      errors << RailsBestPractices::Core::Error.new(
+        :filename => warning['short_filename'],
+        :line_number => warning['line_number'],
+        :message => warning['message'],
+        :type => warning['type'],
+        :url => warning['url'],
+        :git_commit => warning['git_commit'],
+        :git_username => warning['git_username']
+      )
     end
     File.open(analyze_file, 'w+') do |file|
       eruby = Erubis::Eruby.new(File.read(template_file))
@@ -112,7 +121,8 @@ class Build < ActiveRecord::Base
         :errors         => errors,
         :github         => true,
         :github_name    => repository.github_name,
-        :last_commit_id => last_commit_id
+        :last_commit_id => last_commit_id,
+        :git            => true
       )
     end
     end_time = Time.now

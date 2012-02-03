@@ -54,7 +54,7 @@ describe Build do
       Dir.expects(:chdir).with("railsbp.com")
 
       rails_best_practices = mock
-      RailsBestPractices::Analyzer.expects(:new).with(path + "/railsbp.com", "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "template" => template).returns(rails_best_practices)
+      RailsBestPractices::Analyzer.expects(:new).with(path + "/railsbp.com", "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "git" => true, "template" => template).returns(rails_best_practices)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
 
@@ -70,7 +70,7 @@ describe Build do
     before do
       repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
-      @build.warnings = [{"short_filename" => "app/models/user.rb", "line_number" => "10", "message" => "use scope", "type" => "RailsBestPractices::Review::UseScope"}]
+      @build.warnings = [{"short_filename" => "app/models/user.rb", "line_number" => "10", "message" => "use scope", "type" => "RailsBestPractices::Review::UseScope", "git_commit" => "1234567890", "git_usernmae" => "richard"}]
       @build.proxy_analyze
     end
 

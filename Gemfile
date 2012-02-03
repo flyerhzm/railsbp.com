@@ -6,7 +6,7 @@ gem 'rails', '3.1.3'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'rails_best_practices'
+gem 'rails_best_practices', :git => "git://github.com/railsbp/rails_best_practices.git"
 gem 'haml'
 gem 'simple_form', :git => "git://github.com/plataformatec/simple_form.git"
 gem 'omniauth'
