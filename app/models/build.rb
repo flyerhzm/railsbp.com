@@ -25,6 +25,8 @@ class Build < ActiveRecord::Base
 
   attr_accessor :warnings
 
+  scope :completed, where(:aasm_state => "completed")
+
   aasm do
     state :scheduled, initial: true
     state :running

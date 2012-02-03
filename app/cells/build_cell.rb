@@ -12,7 +12,7 @@ class BuildCell < Cell::Rails
 
   def content(repository, build=nil)
     @repository, @build = repository, build
-    @build ||= @repository.builds.last
+    @build ||= @repository.builds.completed.last
     render
   end
 
