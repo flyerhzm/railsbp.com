@@ -4,7 +4,7 @@
 
 = render_cell :build, :tabs, "history", @repository
 
-= render_cell :build, :history_links, @repository, params[:count]
+= render_cell :build, :history_links, @repository, builds_count
 
 #history
   - if @builds.present?

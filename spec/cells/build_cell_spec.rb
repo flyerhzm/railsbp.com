@@ -35,12 +35,6 @@ describe BuildCell do
     context "rendering history_links" do
       let(:repository) { Factory(:repository) }
 
-      context "last" do
-        subject { render_cell(:build, :history_links, repository, nil) }
-
-        it { should have_selector("a.active", :content => "Last 10 Builds") }
-      end
-
       context "last 10" do
         subject { render_cell(:build, :history_links, repository, 10) }
 

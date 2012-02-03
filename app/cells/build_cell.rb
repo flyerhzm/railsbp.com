@@ -6,7 +6,7 @@ class BuildCell < Cell::Rails
   end
 
   def history_links(repository, builds_count)
-    @repository, @builds_count = repository, builds_count || 10
+    @repository, @builds_count = repository, builds_count
     render
   end
 

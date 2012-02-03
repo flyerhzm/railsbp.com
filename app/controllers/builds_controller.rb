@@ -1,13 +1,14 @@
 class BuildsController < ApplicationController
   before_filter :load_repository
   before_filter :check_allow_builds_count, only: [:index]
+  helper_method :builds_count
 
   def index
     if params[:position]
       @build = @repository.builds.where(:position => params[:position]).first
       redirect_to repository_build_path(@repository, @build) and return
     end
-    @builds = @repository.builds.order("id desc").limit(count)
+    @builds = @repository.builds.order("id desc").limit(builds_count)
   end
 
   def show
@@ -15,8 +16,8 @@ class BuildsController < ApplicationController
   end
 
   protected
-    def count
-      params[:count] || 10
+    def builds_count
+      (params[:count] || 10).to_i
     end
 
     def load_repository
@@ -24,7 +25,7 @@ class BuildsController < ApplicationController
     end
 
     def check_allow_builds_count
-      if @repository.owner.allow_builds_count < count
+      if @repository.owner.allow_builds_count < builds_count
         flash[:error] = "Your current plan can only view last #{@repository.owner.allow_builds_count} builds, please upgrade your plan."
         redirect_to plans_path
         return false
