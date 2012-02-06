@@ -21,6 +21,7 @@
 #  visible              :boolean(1)      default(FALSE), not null
 #  update_configs_url   :string(255)
 #  collaborators_count  :integer(4)      default(0), not null
+#  last_build_at        :datetime
 #
 
 require 'authorization_exception'
@@ -34,7 +35,7 @@ class Repository < ActiveRecord::Base
   validates :github_name, presence: true, uniqueness: true
   validates :github_id, uniqueness: true
 
-  before_create :reset_authentication_token, :sync_github
+  before_create :reset_authentication_token, :sync_github, :touch_last_build_at
   after_create :copy_config_file
   before_save :set_privacy
 
@@ -134,6 +135,10 @@ class Repository < ActiveRecord::Base
     def copy_config_file
       FileUtils.mkdir_p(config_path) unless File.exist?(config_path)
       FileUtils.cp(default_config_file_path, config_file_path)
+    end
+
+    def touch_last_build_at
+      last_build_at = Time.now
     end
 
     def set_privacy
