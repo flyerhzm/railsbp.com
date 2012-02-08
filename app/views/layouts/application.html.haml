@@ -7,6 +7,7 @@
     = display_meta_tags site: "Railsbp", description: "rails best practices, code review, rails code analyze"
   %body
     = render_cell :header, :display, current_user, @repository
+    %section#share= render "shared/addthis"
     %section#flash
       .container-fluid
         = notice_message
@@ -22,4 +23,4 @@
             © Railsbp, 2012
             = link_to 'Terms of Service', page_path(name: "terms")
             = link_to 'Privacy Policy', page_path(name: "privacy")
-    = javascript_include_tag "application", "https://js.stripe.com/v1/", "payment"
+    = javascript_include_tag "application", "https://js.stripe.com/v1/", "payment", "http://s7.addthis.com/js/250/addthis_widget.js#pubid=flyerhzm"
