@@ -137,39 +137,12 @@ describe Repository do
 
       its(:collaborator_ids) { should == [@owner.id, @flyerhzm.id, @scott.id] }
     end
-
-    context "allow_privacy?" do
-      context "public_plan" do
-        before do
-          public_plan = Factory(:plan, allow_privacy: false)
-          user = Factory(:user).tap { |user| user.update_attribute(:plan, public_plan) }
-          User.current = user
-        end
-        subject { Factory(:repository, visible: false) }
-        it "should set repository#visible to be true" do
-          subject.visible.should == true
-        end
-      end
-
-      context "private_plan" do
-        before do
-          private_plan = Factory(:plan, allow_privacy: true)
-          user = Factory(:user).tap { |user| user.update_attribute(:plan, private_plan) }
-          User.current = user
-        end
-        subject { Factory(:repository, visible: false) }
-        it "should allow repository#visible to be false" do
-          subject.visible.should == false
-        end
-      end
-    end
   end
 
   context "#sync_github" do
     before do
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
       stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
-      User.current = Factory(:user)
     end
 
     subject { Factory(:repository, github_name: "railsbp/railsbp.com") }

@@ -8,6 +8,6 @@ builds/
 config/database.yml
 config/github.yml
 config/rails_best_practices.yml
-config/initializers/stripe.rb
 NERD_tree_1
 bin/
+coverage/

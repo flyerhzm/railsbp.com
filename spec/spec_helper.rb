@@ -11,6 +11,7 @@ Spork.prefork do
   require 'fakefs/spec_helpers'
   require 'email_spec'
   require "cancan/matchers"
+  require 'simplecov'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.
@@ -18,6 +19,8 @@ Spork.prefork do
 
   Devise.stretches = 1
   Rails.logger.level = 4
+
+  SimpleCov.start 'rails'
 
   RSpec.configure do |config|
     config.mock_with :mocha
@@ -45,7 +48,6 @@ Spork.prefork do
 
     config.before(:each) do
       DatabaseCleaner.start
-      Factory(:free_plan)
     end
 
     config.after(:each) do

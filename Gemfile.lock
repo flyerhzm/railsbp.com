@@ -289,8 +289,6 @@ GEM
     rdoc (3.12)
       json (~> 1.4)
     remotipart (1.0.1)
-    rest-client (1.6.7)
-      mime-types (>= 1.16)
     rmagick (2.13.1)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
@@ -323,13 +321,15 @@ GEM
       rubyzip
     sexp_processor (3.0.10)
     shoulda-matchers (1.0.0)
+    simplecov (0.5.4)
+      multi_json (~> 1.0.3)
+      simplecov-html (~> 0.5.3)
+    simplecov-html (0.5.3)
     spork (0.9.0.rc9)
     sprockets (2.0.3)
       hike (~> 1.2)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    stripe (1.5.25)
-      rest-client (~> 1.4)
     term-ansicolor (1.0.7)
     therubyracer (0.9.9)
       libv8 (~> 3.3.10)
@@ -415,8 +415,8 @@ DEPENDENCIES
   sass-rails (~> 3.1.4)
   shoulda-matchers
   simple_form!
+  simplecov
   spork (= 0.9.0.rc9)
-  stripe
   therubyracer
   thin
   typhoeus

@@ -26,10 +26,10 @@ RailsAdmin.config do |config|
 
   #  ==> Included models
   # Add all excluded models here:
-  # config.excluded_models = [Build, Category, Configuration, CreditCard, Invoice, Page, Parameter, Plan, Repository, User, UserRepository]
+  # config.excluded_models = [Build, Category, Configuration, Page, Parameter, Repository, User, UserRepository]
 
   # Add models here if you want to go 'whitelist mode':
-  # config.included_models = [Build, Category, Configuration, CreditCard, Invoice, Page, Parameter, Plan, Repository, User, UserRepository]
+  # config.included_models = [Build, Category, Configuration, Page, Parameter, Repository, User, UserRepository]
 
   # Application wide tried label methods for models' instances
   # config.label_methods << :description # Default is [:name, :title]
@@ -125,42 +125,6 @@ RailsAdmin.config do |config|
   #   create do; end
   #   update do; end
   # end
-  # config.model CreditCard do
-  #   # Found associations:
-  #     configure :user, :belongs_to_association   #   # Found columns:
-  #     configure :id, :integer
-  #     configure :last4, :string
-  #     configure :card_type, :string
-  #     configure :exp_month, :integer
-  #     configure :exp_year, :integer
-  #     configure :user_id, :integer         # Hidden
-  #     configure :created_at, :datetime
-  #     configure :updated_at, :datetime   #   # Sections:
-  #   list do; end
-  #   export do; end
-  #   show do; end
-  #   edit do; end
-  #   create do; end
-  #   update do; end
-  # end
-  # config.model Invoice do
-  #   # Found associations:
-  #     configure :user, :belongs_to_association   #   # Found columns:
-  #     configure :id, :integer
-  #     configure :total, :integer
-  #     configure :period_start, :integer
-  #     configure :period_end, :integer
-  #     configure :user_id, :integer         # Hidden
-  #     configure :raw, :text
-  #     configure :created_at, :datetime
-  #     configure :updated_at, :datetime   #   # Sections:
-  #   list do; end
-  #   export do; end
-  #   show do; end
-  #   edit do; end
-  #   create do; end
-  #   update do; end
-  # end
 
   config.model Page do
     configure :name, :string
@@ -193,34 +157,6 @@ RailsAdmin.config do |config|
   #   create do; end
   #   update do; end
   # end
-  config.model Plan do
-    configure :users, :has_many_association
-    configure :id, :integer
-    configure :name, :string
-    configure :created_at, :datetime
-    configure :updated_at, :datetime
-    configure :identifier, :string
-    configure :amount, :integer
-    configure :interval, :string
-    configure :livemode, :boolean
-    configure :trial_period_days, :integer
-    configure :allow_privacy, :boolean
-    configure :allow_repositories_count, :integer
-    configure :allow_collaborators_count, :integer
-    configure :allow_builds_count, :integer
-    list do
-      field :name
-      field :identifier
-      field :amount
-      field :livemode
-      field :trial_period_days
-      field :visible
-      field :allow_privacy
-      field :allow_repositories_count
-      field :allow_collaborators_count
-      field :allow_builds_count
-    end
-  end
   # config.model Repository do
   #   # Found associations:
   #     configure :user_repositories, :has_many_association

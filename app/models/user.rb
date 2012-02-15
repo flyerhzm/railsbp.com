@@ -19,34 +19,12 @@
 #  nickname               :string(255)
 #  name                   :string(255)
 #  github_token           :string(255)
-#  stripe_customer_token  :string(255)
-#  plan_id                :integer(4)
-#  aasm_state             :string(255)
 #  own_repositories_count :integer(4)      default(0), not null
 #
 
 class User < ActiveRecord::Base
-  include AASM
   include Gravtastic
   is_gravtastic
-
-  aasm do
-    state :unpaid, :initial => true
-    state :trial
-    state :paid
-
-    event :trial do
-      transitions to: :trial, from: [:unpaid, :trial, :paid]
-    end
-
-    event :pay, after: [:notify_user_pay] do
-      transitions to: :paid, from: [:unpaid, :trial, :paid]
-    end
-
-    event :unpay, after: [:notify_user_unpay] do
-      transitions to: :unpaid, from: [:paid, :trial]
-    end
-  end
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -63,11 +41,6 @@ class User < ActiveRecord::Base
   has_many :own_repositories, through: :user_repositories, source: :repository, conditions: ["own = ?", true]
   has_many :invoices
   has_one :credit_card
-  belongs_to :plan
-
-  before_create :init_plan
-
-  delegate :allow_privacy?, :allow_repositories_count, :allow_collaborators_count, :allow_builds_count, :to => :plan
 
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
@@ -100,55 +73,11 @@ class User < ActiveRecord::Base
     Thread.current[:user] = user
   end
 
-  def save_stripe_customer(params)
-    if self.stripe_customer_token?
-      update_stripe_customer(params)
-    else
-      create_stripe_customer(params)
-    end
-  end
-
   def add_repository(github_name)
     if own_repository?(github_name) || org_repository?(github_name)
       repository = self.repositories.create(github_name: github_name)
     else
       raise AuthorizationException.new("Seems you are not the owner or collaborator of this repository")
-    end
-  end
-
-  def update_plan(plan_id)
-    plan = Plan.find(plan_id)
-    customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-    customer.update_subscription(plan: plan.identifier)
-    self.plan = plan
-    if plan.free?
-      unpay!
-    elsif plan.has_trial?
-      trial!
-    else
-      save!
-    end
-  rescue Stripe::InvalidRequestError => e
-    logger.error "Stripe error while update plan: #{e.message}"
-    errors.add :base, "There was a problem when updating plan."
-    false
-  end
-
-  def notify_user_pay_failed
-    unless fakemail?
-      UserMailer.delay.notify_payment_failed(self.id)
-    end
-  end
-
-  def notify_user_pay
-    unless fakemail?
-      UserMailer.delay.notify_payment_success(self.invoices.last.id)
-    end
-  end
-
-  def notify_user_unpay
-    unless fakemail?
-      UserMailer.delay.notify_payment_final_failed(self.id)
     end
   end
 
@@ -164,50 +93,6 @@ class User < ActiveRecord::Base
       user.github_token = data.credentials.token
       user.name = data.info.name
       user.nickname = data.info.nickname
-    end
-
-    def create_stripe_customer(params)
-      stripe_params = {description: email, card: params[:stripe_card_token]}
-      if params[:plan_id].present?
-        plan = Plan.find(params[:plan_id])
-        stripe_params.merge(plan: plan.identifier)
-      end
-
-      customer = Stripe::Customer.create(description: email, card: params[:stripe_card_token])
-      self.stripe_customer_token = customer.id
-      self.plan = plan
-      save!
-      save_credit_card(customer)
-    rescue Stripe::InvalidRequestError => e
-      logger.error "Stripe error while creating customer: #{e.message}"
-      errors.add :base, "There was a problem with your credit card."
-      false
-    end
-
-    def update_stripe_customer(params)
-      customer = Stripe::Customer.retrieve(self.stripe_customer_token)
-      customer.card = params[:stripe_card_token]
-      customer.save
-      self.stripe_customer_token = customer.id
-      save!
-      save_credit_card(customer)
-    rescue Stripe::InvalidRequestError => e
-      logger.error "Stripe error while creating customer: #{e.message}"
-      errors.add :base, "There was a problem with your credit card."
-      false
-    end
-
-    def save_credit_card(customer)
-      credit_card = self.credit_card || self.build_credit_card
-      credit_card.last4 = customer.active_card.last4
-      credit_card.card_type = customer.active_card.type
-      credit_card.exp_month = customer.active_card.exp_month
-      credit_card.exp_year = customer.active_card.exp_year
-      credit_card.save
-    end
-
-    def init_plan
-      self.plan = Plan.free.first
     end
 
     def own_repository?(github_name)

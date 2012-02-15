@@ -37,7 +37,6 @@ class Repository < ActiveRecord::Base
 
   before_create :reset_authentication_token, :sync_github, :touch_last_build_at
   after_create :copy_config_file
-  before_save :set_privacy
 
   scope :visible, where(:visible => true)
 
@@ -139,11 +138,5 @@ class Repository < ActiveRecord::Base
 
     def touch_last_build_at
       last_build_at = Time.now
-    end
-
-    def set_privacy
-      unless User.current.allow_privacy?
-        self.visible = true
-      end
     end
 end

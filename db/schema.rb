@@ -37,16 +37,6 @@ ActiveRecord::Schema.define(:version => 20120206133815) do
     t.integer "category_id"
   end
 
-  create_table "credit_cards", :force => true do |t|
-    t.string   "last4"
-    t.string   "card_type"
-    t.integer  "exp_month"
-    t.integer  "exp_year"
-    t.integer  "user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
     t.integer  "attempts",   :default => 0
@@ -62,16 +52,6 @@ ActiveRecord::Schema.define(:version => 20120206133815) do
 
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
-  create_table "invoices", :force => true do |t|
-    t.integer  "total"
-    t.integer  "period_start"
-    t.integer  "period_end"
-    t.integer  "user_id"
-    t.text     "raw"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "pages", :force => true do |t|
     t.string   "name"
     t.text     "body"
@@ -85,22 +65,6 @@ ActiveRecord::Schema.define(:version => 20120206133815) do
     t.string  "value"
     t.string  "description"
     t.integer "configuration_id"
-  end
-
-  create_table "plans", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "identifier"
-    t.integer  "amount",                    :default => 0
-    t.string   "interval"
-    t.boolean  "livemode",                  :default => false
-    t.integer  "trial_period_days",         :default => 0
-    t.boolean  "visible",                   :default => false, :null => false
-    t.boolean  "allow_privacy",             :default => false, :null => false
-    t.integer  "allow_repositories_count",  :default => 0,     :null => false
-    t.integer  "allow_collaborators_count", :default => 0,     :null => false
-    t.integer  "allow_builds_count",        :default => 0,     :null => false
   end
 
   create_table "rails_admin_histories", :force => true do |t|
@@ -161,9 +125,6 @@ ActiveRecord::Schema.define(:version => 20120206133815) do
     t.string   "nickname"
     t.string   "name"
     t.string   "github_token"
-    t.string   "stripe_customer_token"
-    t.integer  "plan_id"
-    t.string   "aasm_state"
     t.integer  "own_repositories_count",                :default => 0,  :null => false
   end
 

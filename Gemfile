@@ -20,7 +20,6 @@ gem 'delayed_job'
 gem 'aasm'
 gem 'git'
 gem 'cells'
-gem 'stripe'
 gem 'exception_notification'
 gem 'cancan'
 gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
@@ -86,6 +85,8 @@ group :test do
   gem 'webmock'
   gem 'rspec-cells'
   gem 'email_spec'
+
+  gem 'simplecov', :require => false
 
   gem 'rails3-generators'
 

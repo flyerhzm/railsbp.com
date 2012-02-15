@@ -18,10 +18,7 @@
   = form.input :git_url, input_html: {class: "span5"}
   = form.input :ssh_url, input_html: {class: "span5"}
   = form.input :branch, input_html: {class: "span5"}, label: "Branch #{link_to '', '#', class: 'question_mark_icon', rel: 'twipsy', title: 'only when push codes to the branch will trigger railsbp service'}".html_safe
-  - if current_user.allow_privacy?
-    = form.input :visible, label: "Visibility #{link_to '', '#', class: 'question_mark_icon', rel: 'twipsy', title: 'analyze result is visible to everyone if check, otherwise it is accessible only by collaborators'}".html_safe, hint: "if the repository is visible to everyone"
-  - else
-    = form.input :visible, label: "Visibility #{link_to '', '#', class: 'question_mark_icon', rel: 'twipsy', title: 'analyze result is visible to everyone if check, otherwise it is accessible only by collaborators'}".html_safe, input_html: { disabled: "disabled", checked: true }, hint: "#{link_to('upgrade your plan', plans_path)} to set non public repository".html_safe
+  = form.input :visible, label: "Visibility #{link_to '', '#', class: 'question_mark_icon', rel: 'twipsy', title: 'analyze result is visible to everyone if check, otherwise it is accessible only by collaborators'}".html_safe, hint: "if the repository is visible to everyone"
   - if @repository.private?
     = form.input :update_configs_url, label: "Update configs url #{link_to '', '#', class: 'question_mark_icon', rel: 'twipsy', title: 'update configs url is used to update rails_best_practices.yml on proxy server'}".html_safe, input_html: {class: "span5"}
   .actions

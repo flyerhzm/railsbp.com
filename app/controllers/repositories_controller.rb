@@ -2,7 +2,6 @@ class RepositoriesController < ApplicationController
   load_and_authorize_resource except: [:sync, :sync_proxy]
   before_filter :authenticate_user!, except: [:show, :sync, :sync_proxy]
   before_filter :load_repository, only: [:show, :edit, :update]
-  before_filter :check_allow_repositories_count, only: [:new, :create]
 
   def show
   end
@@ -76,14 +75,5 @@ class RepositoriesController < ApplicationController
   protected
     def load_repository
       @repository = Repository.find(params[:id])
-    end
-
-    def check_allow_repositories_count
-      if current_user.allow_repositories_count <= current_user.own_repositories_count
-        flash[:error] = "Your current plan can only create #{current_user.allow_repositories_count} repositories, please upgrade your plan."
-        redirect_to plans_path
-        return false
-      end
-      true
     end
 end

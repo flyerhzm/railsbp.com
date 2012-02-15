@@ -17,7 +17,6 @@ describe HeaderCell do
     context "rendering display with current_user" do
       let(:user) { Factory(:user) }
       let(:repository) { Factory(:repository) }
-      before { User.current = user }
       subject { render_cell(:header, :display, user, repository) }
 
       it { should have_selector("h3", :content => "Railsbp") }
@@ -25,7 +24,7 @@ describe HeaderCell do
       it { should have_link("About") }
       it { should have_link("Contact") }
       it { should have_link(repository.name) }
-      it { should have_link("New Project") }
+      it { should have_link("Create Repository") }
       it { should have_link("Sign out") }
     end
   end

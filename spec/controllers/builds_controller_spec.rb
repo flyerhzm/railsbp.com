@@ -4,9 +4,7 @@ describe BuildsController do
   before do
     Repository.any_instance.stubs(:sync_github).returns(true)
     Repository.any_instance.stubs(:set_privacy).returns(true)
-    plan = Factory(:plan, allow_builds_count: 10)
     @user = Factory(:user)
-    @user.update_attribute(:plan, plan)
     @repository = Factory(:repository)
     @repository.users << @user
   end
