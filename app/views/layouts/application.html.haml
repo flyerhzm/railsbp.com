@@ -12,7 +12,9 @@
         = notice_message
     %section#primary
       .content
-        .well= yield
+        .well
+          .pledgie= render 'shared/pledgie'
+          = yield
     %footer.footer
       .inner
         .container
