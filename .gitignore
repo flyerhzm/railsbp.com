@@ -4,7 +4,6 @@ log/*.log
 tmp/
 builds/
 .sass-cache/
-.rvmrc
 config/database.yml
 config/github.yml
 config/rails_best_practices.yml
