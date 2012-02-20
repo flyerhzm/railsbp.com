@@ -97,8 +97,6 @@ class Build < ActiveRecord::Base
     self.repository.touch(:last_build_at)
     UserMailer.notify_build_success(self.id).deliver
   rescue => e
-    puts "=========="
-    p e
     ExceptionNotifier::Notifier.background_exception_notification(e)
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
