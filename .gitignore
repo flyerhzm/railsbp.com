@@ -6,7 +6,6 @@ builds/
 .sass-cache/
 config/database.yml
 config/github.yml
-config/rails_best_practices.yml
 NERD_tree_1
 bin/
 coverage/
