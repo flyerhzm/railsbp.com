@@ -11,7 +11,7 @@ set :rvm_ruby_string, 'ruby-1.9.2-p290@railsbp.com'
 set :rvm_type, :user
 
 set :application, "railsbp.com"
-set :repository,  "git@github.com:flyerhzm/railsbp.com.git"
+set :repository,  "git@github.com:railsbp/railsbp.com.git"
 set :rails_env, :production
 set :deploy_to, "/home/huangzhi/sites/railsbp.com/production"
 set :user, "huangzhi"
