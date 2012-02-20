@@ -19,16 +19,26 @@ Setup
 
 1. git clone repository
 
-2. copy all config/*.yml.example to config/*.yml, and change to what you want
+2. copy all config files and change to proper values
+
+    cp config/database.yml.example config/database.yml
+    cp config/githbu.yml.example config/github.yml
 
 3. setup database
 
     rake db:create && rake db:migrate && rake db:seed
 
-4. generate css sprite
+4. generate rails_best_practices config file
+
+    bundle exec rails_best_practices -g
+
+5. generate css sprite
 
     rake css_sprite:build
 
-5. start server
+6. start server
 
     rails s
+
+Be attention I can only promise rails_best_practices works well in ruby
+1.9.2-p290, so it would be better to run it on that ruby version.
