@@ -8,7 +8,7 @@ gem 'rails', '3.2.1'
 gem 'mysql2'
 gem 'rails_best_practices', :git => "git://github.com/railsbp/rails_best_practices.git"
 gem 'haml'
-gem 'simple_form', :git => "git://github.com/plataformatec/simple_form.git"
+gem 'simple_form'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'devise'
@@ -31,9 +31,9 @@ gem 'css_sprite'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
 end
 
 gem 'jquery-rails'
@@ -69,7 +69,7 @@ group :develop do
 end
 
 group :test do
-  gem 'spork', '0.9.0.rc9'
+  gem 'spork', '1.0.0.rc2'
   gem 'mocha'
   gem 'rspec'
   gem 'rspec-rails'
