@@ -37,5 +37,8 @@ RailsbpCom::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
+  # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
+  config.assets.allow_debugging = true
+
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end
