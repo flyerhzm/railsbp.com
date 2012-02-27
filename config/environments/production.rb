@@ -58,7 +58,7 @@ RailsbpCom::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  config.action_mailer.default_url_options = { :host => "railsbp.com", :protocol => "https" }
+  config.action_mailer.default_url_options = { :host => "railsbp.com", :protocol => "http" }
 
   config.middleware.use ExceptionNotifier,
     :email_prefix => "[railsbp.com] ",

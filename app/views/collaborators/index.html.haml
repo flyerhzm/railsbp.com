@@ -6,17 +6,17 @@
 
 .repository-info.clearfix
   .command
-    %p= link_to "Synchronize github collaborators", [:sync, @repository, :collaborators], :class => "btn primary", :method => :put
+    %p= link_to "Synchronize github collaborators", [:sync, @repository, :collaborators], class: "btn btn-primary", method: :put
     %br/
     %p Or add collaborator manually
-    = form_tag [@repository, :collaborators], :method => :post do
+    = form_tag [@repository, :collaborators], method: :post, class: "new_collaborator" do
       = text_field_tag "collaborator", ""
-      = submit_tag "Add", :class => "btn primary"
+      = submit_tag "Add", class: "btn btn-primary"
       %p input github name, like flyerhzm
   .collaborators
     %h3 Collaborators
     %ul
       - @collaborators.each do |user|
         %li
-          = link_to user.nickname, "https://github.com/#{user.nickname}", :class => "nickname"
-          = link_to "x", repository_collaborator_path(@repository, user), :method => :delete, :confirm => "Are you sure to remove collaborator #{user.nickname}"
+          = link_to user.nickname, "https://github.com/#{user.nickname}", class: "nickname"
+          = link_to "x", repository_collaborator_path(@repository, user), method: :delete, confirm: "Are you sure to remove collaborator #{user.nickname}"

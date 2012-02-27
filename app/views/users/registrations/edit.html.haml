@@ -4,7 +4,7 @@
 
 = render_cell :account, :tabs, "account"
 
-= simple_form_for @user, url: registration_path(@user), html: {method: :put}, wrapper: "inline" do |form|
-  = form.input :email, hint: "We promise we won't share your email with anyone. It's only used to receive payment receipt", input_html: {:class => "span5"}
-  .actions
-    = form.button :submit, :class => "primary"
+= simple_form_for @user, url: registration_path(@user), html: {class: "form-horizontal", method: :put} do |form|
+  = form.input :email, hint: "We promise we won't share your email with anyone. It's only used to receive payment receipt", input_html: {class: "span5"}
+  .form-actions
+    = form.submit class: "btn btn-primary"

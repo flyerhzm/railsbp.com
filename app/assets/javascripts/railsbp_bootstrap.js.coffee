@@ -1,13 +1,11 @@
 # $ ->
-#   $("body > .topbar").scrollSpy()
+#   $("body > .navbar").scrollSpy()
 $ ->
-  $(".tabs").tabs()
- $ ->
-   $("a[rel=twipsy]").twipsy live: true
+   $("a[rel=tooltip]").tooltip()
 # $ ->
 #   $("a[rel=popover]").popover offset: 10
 # $ ->
-#   $(".topbar-wrapper").dropdown()
+#   $(".navbar-wrapper").dropdown()
 $ ->
   $(".alert-message").alert()
 $ ->
@@ -27,8 +25,3 @@ $ ->
 
   $(".modal .close").click ->
     $(this).parents(".modal").toggle()
-$ ->
-  $(".btn").button "complete"
-
-$ ->
-  $('.topbar').dropdown()

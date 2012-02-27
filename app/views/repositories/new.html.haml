@@ -2,7 +2,7 @@
 
 %h2 Create Repository
 
-= simple_form_for @repository, wrapper: "inline" do |form|
-  = form.input :github_name, input_html: {:class => "span12"}, hint: "if github repository url is https://github.com/railsbp/railsbp.com, github name is railsbp/railsbp.com. You must be the owner of a repository or the collaboarator of a organization repository."
-  .actions
-    = form.button :submit, :class => "primary"
+= simple_form_for @repository, html: {class: "form-horizontal"} do |form|
+  = form.input :github_name, input_html: {:class => "span6"}, hint: "if github repository url is https://github.com/railsbp/railsbp.com, github name is railsbp/railsbp.com.<br/>You must be the owner of a repository or the collaboarator of a organization repository.".html_safe
+  .form-actions
+    = form.submit class: "btn-primary"

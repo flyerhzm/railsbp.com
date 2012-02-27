@@ -17,7 +17,7 @@ dd
 
 .edit.btn
   float: right
-  margin: 3px 20px 0 0
+  margin-right: 20px
 
 .repository-info
   padding: 10px 20px
@@ -50,21 +50,28 @@ dd
     font-size: 14px
     font-weight: bold
     margin: 10px 0 0 30px
+  .input
+    margin-left: 150px
   .inputs-list
+    margin-top: 5px
+    list-style: none
     li
       border-bottom: 1px solid #ddd
     label
       line-height: 30px
     input[type=checkbox]
       margin-top: 9px
+      float: left
+      margin-right: 10px
     input[type=text]
       height: 10px
+      display: inline-block
     span.description
       color: #aaa
       margin: 0 0 0 10px
-  .textarea.repository-config
-    width: 500px
-    margin-bottom: 10px
+    textarea
+      display: inline-block
+      margin-bottom: 10px
 
 ul.repositories
   list-style: none

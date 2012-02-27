@@ -6,12 +6,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-tabs
+//= require bootstrap-tab
 //= require bootstrap-modal
 //= require bootstrap-dropdown
-//= require bootstrap-alerts
-//= require bootstrap-buttons
-//= require bootstrap-twipsy
+//= require bootstrap-alert
+//= require bootstrap-button
+//= require bootstrap-tooltip
 //= require highstock
 //= require railsbp_bootstrap
 //
