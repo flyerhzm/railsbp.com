@@ -34,13 +34,10 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessor :stripe_card_token
 
   has_many :user_repositories
   has_many :repositories, through: :user_repositories, uniq: true
   has_many :own_repositories, through: :user_repositories, source: :repository, conditions: ["own = ?", true]
-  has_many :invoices
-  has_one :credit_card
 
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
