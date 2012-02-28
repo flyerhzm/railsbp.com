@@ -35,4 +35,4 @@ Any questions and suggestions are welcome, please contact me: flyerhzm@railsbp.c
     rails s
 
 Be attention I can only promise rails_best_practices works well in ruby
-1.9.2-p290, so it would be better to run it on that ruby version.
+1.9.2-p290 and 1.9.3-p125, so it would be better to run it on that ruby version.
