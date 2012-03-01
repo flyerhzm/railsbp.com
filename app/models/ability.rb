@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    if user.github_uid == 66836
+    if user.admin?
       can :access, :rails_admin
       can :manage, :all
     end
