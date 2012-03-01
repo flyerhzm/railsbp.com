@@ -107,7 +107,7 @@ class Repository < ActiveRecord::Base
   end
 
   def to_param
-    "#{id}-#{name.parameterize}"
+    "#{id}-#{github_name.parameterize}"
   end
 
   protected
