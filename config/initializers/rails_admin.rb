@@ -29,7 +29,7 @@ RailsAdmin.config do |config|
   # config.excluded_models = [Build, Category, Configuration, Page, Parameter, Repository, User, UserRepository]
 
   # Add models here if you want to go 'whitelist mode':
-  # config.included_models = [Build, Category, Configuration, Page, Parameter, Repository, User, UserRepository]
+  config.included_models = [Build, Category, Configuration, Page, Parameter, Repository, User, UserRepository, Delayed::Job]
 
   # Application wide tried label methods for models' instances
   # config.label_methods << :description # Default is [:name, :title]
