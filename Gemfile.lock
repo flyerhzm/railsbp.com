@@ -6,9 +6,9 @@ GIT
 
 GIT
   remote: git://github.com/railsbp/rails_best_practices.git
-  revision: a67d6ba359b00e9eda3940c9e3e2a8a51aff6c9a
+  revision: adc3c5e975abb431dfe35906b0c640e60248d3bb
   specs:
-    rails_best_practices (1.8.0)
+    rails_best_practices (1.9.0)
       activesupport
       colored
       erubis
@@ -313,7 +313,7 @@ GEM
       ffi (~> 1.0.9)
       json_pure
       rubyzip
-    sexp_processor (3.0.10)
+    sexp_processor (3.1.0)
     shoulda-matchers (1.0.0)
     simple_form (2.0.0)
       actionpack (~> 3.0)
