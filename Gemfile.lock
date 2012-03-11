@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/railsbp/rails_best_practices.git
-  revision: adc3c5e975abb431dfe35906b0c640e60248d3bb
+  revision: ceb243d5fde3c269d5476e0cb7e117dbfe8485f4
   specs:
     rails_best_practices (1.9.0)
       activesupport
