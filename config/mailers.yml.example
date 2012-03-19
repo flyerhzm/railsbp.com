@@ -1,0 +1,17 @@
+production:
+  common: &common
+    address: 'smtp.gmail.com'
+    port: 587
+    domain: 'rails-bestpractices.com'
+    authentication: 'plain'
+    tls: true
+
+  notification:
+    <<: *common
+    user_name: 'notification@railsbp.com'
+    password: ''
+
+  exception_notifier:
+    <<: *common
+    user_name: 'exception.notifier@railsbp.com'
+    password: ''

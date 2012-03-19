@@ -41,7 +41,6 @@ namespace :config do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/config/github.yml #{release_path}/config/github.yml"
     run "ln -nfs #{shared_path}/config/mailers.yml #{release_path}/config/mailers.yml"
-    run "ln -nfs #{shared_path}/config/initializers/action_mailer.rb #{release_path}/config/initializers/action_mailer.rb"
     run "ln -nfs #{shared_path}/builds #{release_path}/builds"
     run "cd #{release_path}; bundle exec rails_best_practices -g"
   end
