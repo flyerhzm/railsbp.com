@@ -1,4 +1,6 @@
 class ContactMailer < ActionMailer::Base
+  mailer_account "notification"
+
   def contact_us(contact)
     @message = contact.message
 

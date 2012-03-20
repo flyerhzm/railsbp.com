@@ -218,6 +218,7 @@ GEM
       metaclass (~> 0.0.1)
     multi_json (1.1.0)
     multipart-post (1.1.5)
+    multiple_mailers (1.1.0)
     mysql2 (0.3.11)
     net-scp (1.0.4)
       net-ssh (>= 1.99.1)
@@ -398,6 +399,7 @@ DEPENDENCIES
   launchy
   meta-tags
   mocha
+  multiple_mailers
   mysql2
   oa-core
   octokit

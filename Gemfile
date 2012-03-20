@@ -28,6 +28,7 @@ gem 'typhoeus'
 gem 'meta-tags', :require => 'meta_tags'
 gem 'css_sprite'
 gem 'whenever', :require => false
+gem 'multiple_mailers'
 
 # Gems used only for assets and not required
 # in production environments by default.
