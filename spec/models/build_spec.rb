@@ -64,6 +64,18 @@ describe Build do
       runner.expects(:errors).returns([])
       FileUtils.expects(:rm_rf).with(path + "/railsbp.com")
       work_off
+
+      @build.reload
+      @build.aasm_state.should == "completed"
+    end
+
+    it "should fail" do
+      File.expects(:exist?).raises()
+      ExceptionNotifier::Notifier.expects(:background_exception_notification)
+      work_off
+
+      @build.reload
+      @build.aasm_state.should == "failed"
     end
   end
 
@@ -77,6 +89,10 @@ describe Build do
 
     it "should analyze proxy" do
       File.exist?(@build.analyze_file)
+    end
+
+    it "should be completed state" do
+      @build.aasm_state.should == "completed"
     end
   end
 

@@ -31,6 +31,7 @@ class Build < ActiveRecord::Base
     state :scheduled, initial: true
     state :running
     state :completed
+    state :failed
 
     event :run do
       transitions to: :running, from: [:scheduled, :running]
@@ -38,6 +39,10 @@ class Build < ActiveRecord::Base
 
     event :complete do
       transitions to: :completed, from: :running
+    end
+
+    event :fail do
+      transitions to: :failed, from: :running
     end
   end
 
@@ -98,6 +103,7 @@ class Build < ActiveRecord::Base
     UserMailer.notify_build_success(self.id).deliver
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e)
+    fail!
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
