@@ -57,7 +57,8 @@ guard 'livereload' do
 end
 
 guard 'delayed', :environment => 'development' do
-  watch(%r{^app/models/(.+)\.rb})
+  watch('app/models/build.rb')
+  watch('app/models/repository.rb')
 end
 
 guard 'annotate', :run_at_start => false do
