@@ -44,38 +44,34 @@ describe Build do
     end
 
     it "should fetch remote git and analyze" do
-      path = Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s
-      template = Rails.root.join("app/views/builds/_rbp.html.erb").to_s
-      File.expects(:exist?).with(path).returns(false)
-      FileUtils.expects(:mkdir_p).with(path)
-      FileUtils.expects(:cd).with(path)
-
-      Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
-      Dir.expects(:chdir).with("railsbp.com")
-      FileUtils.expects(:cp).with(Rails.root.join("builds/flyerhzm/railsbp.com/rails_best_practices.yml").to_s, path + "/config")
-
-      rails_best_practices = mock
-      RailsBestPractices::Analyzer.expects(:new).with(path + "/railsbp.com", "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "with-git" => true, "template" => template).returns(rails_best_practices)
-      rails_best_practices.expects(:analyze)
-      rails_best_practices.expects(:output)
-
-      runner = mock
-      rails_best_practices.expects(:runner).returns(runner)
-      runner.expects(:errors).returns([])
-      FileUtils.expects(:rm_rf).with(path + "/railsbp.com")
-      work_off
+      build_analyze_success
 
       @build.reload
       @build.aasm_state.should == "completed"
     end
 
     it "should fail" do
-      File.expects(:exist?).raises()
-      ExceptionNotifier::Notifier.expects(:background_exception_notification)
-      work_off
+      build_analyze_failure
 
       @build.reload
       @build.aasm_state.should == "failed"
+    end
+  end
+
+  context "#rerun!" do
+    before do
+      repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      @build = repository.builds.create(last_commit_id: "987654321")
+      @build.aasm_state = "failed"
+      @build.save
+      @build.rerun!
+    end
+
+    it "should fetch remote git and analyze" do
+      build_analyze_success
+
+      @build.reload
+      @build.aasm_state.should == "completed"
     end
   end
 

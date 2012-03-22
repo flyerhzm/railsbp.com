@@ -44,6 +44,10 @@ class Build < ActiveRecord::Base
     event :fail do
       transitions to: :failed, from: :running
     end
+
+    event :rerun do
+      transitions to: :running, from: :failed
+    end
   end
 
   def short_commit_id
