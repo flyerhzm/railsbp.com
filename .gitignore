@@ -6,6 +6,7 @@ builds/
 .sass-cache/
 config/database.yml
 config/github.yml
+config/mailers.yml
 NERD_tree_1
 bin/
 coverage/

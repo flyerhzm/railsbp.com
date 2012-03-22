@@ -1,15 +1,5 @@
 class UserMailer < ActionMailer::Base
-  if Rails.env.production?
-    options = YAML.load_file("#{Rails.root}/config/mailers.yml")['production']['notification']
-    self.smtp_settings = {
-      :address        => options["address"],
-      :port           => options["port"],
-      :domain         => options["domain"],
-      :authentication => options["authentication"],
-      :user_name      => options["user_name"],
-      :password       => options["password"]
-    }
-  end
+  mailer_account "notification"
 
   default from: "notification@railsbp.com"
 

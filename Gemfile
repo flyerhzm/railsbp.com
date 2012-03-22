@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.2.1'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
@@ -28,6 +28,7 @@ gem 'typhoeus'
 gem 'meta-tags', :require => 'meta_tags'
 gem 'css_sprite'
 gem 'whenever', :require => false
+gem 'multiple_mailers'
 
 # Gems used only for assets and not required
 # in production environments by default.

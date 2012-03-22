@@ -29,15 +29,24 @@ class Build < ActiveRecord::Base
 
   aasm do
     state :scheduled, initial: true
-    state :running
+    state :running, enter: :analyze
     state :completed
+    state :failed
 
     event :run do
-      transitions to: :running, from: [:scheduled, :running]
+      transitions to: :running, from: :scheduled
     end
 
     event :complete do
-      transitions to: :completed, from: :running
+      transitions to: :completed, from: [:running, :scheduled]
+    end
+
+    event :fail do
+      transitions to: :failed, from: :running
+    end
+
+    event :rerun do
+      transitions to: :running, from: :failed
     end
   end
 
@@ -70,7 +79,6 @@ class Build < ActiveRecord::Base
   end
 
   def analyze
-    run!
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     FileUtils.cd(analyze_path)
@@ -98,13 +106,13 @@ class Build < ActiveRecord::Base
     UserMailer.notify_build_success(self.id).deliver
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e)
+    fail!
   ensure
     FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
   end
   handle_asynchronously :analyze
 
   def proxy_analyze
-    run!
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     errors = []
