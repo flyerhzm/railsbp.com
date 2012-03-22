@@ -63,7 +63,7 @@ class Repository < ActiveRecord::Base
   def generate_build(commit)
     build = self.builds.build(last_commit_id: commit["id"], last_commit_message: commit["message"])
     if build.save
-      build.analyze
+      build.run!
     end
   end
 

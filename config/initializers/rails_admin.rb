@@ -1,7 +1,61 @@
 # RailsAdmin config file. Generated on January 01, 2012 23:06
 # See github.com/sferik/rails_admin for more informations
+module RailsAdmin
+  module Config
+    module Actions
+      class Rerun < RailsAdmin::Config::Actions::Base
+        RailsAdmin::Config::Actions.register(self)
+
+        register_instance_option :visible? do
+          bindings[:object].respond_to? :rerun!
+        end
+
+        register_instance_option :member do
+          true
+        end
+
+        register_instance_option :http_methods do
+          [:get]
+        end
+
+        register_instance_option :authorization_key do
+          :rerun
+        end
+
+        register_instance_option :controller do
+          Proc.new do
+            @object.rerun!
+            redirect_to :back
+          end
+        end
+
+        register_instance_option :link_icon do
+          'icon-repeat'
+        end
+      end
+    end
+  end
+end
+
 
 RailsAdmin.config do |config|
+  config.actions do
+    # root actions
+    dashboard                     # mandatory
+    # collection actions
+    index                         # mandatory
+    new
+    export
+    history_index
+    bulk_delete
+    # member actions
+    show
+    edit
+    delete
+    history_show
+    show_in_app
+    rerun
+  end
 
   # If your default_local is different from :en, uncomment the following 2 lines and set your default locale here:
   # require 'i18n'

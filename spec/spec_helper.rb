@@ -43,6 +43,7 @@ Spork.prefork do
 
     config.include(EmailSpec::Helpers)
     config.include(EmailSpec::Matchers)
+    config.include(Support::BuildHelper)
 
     config.include Devise::TestHelpers, type: :controller
 
