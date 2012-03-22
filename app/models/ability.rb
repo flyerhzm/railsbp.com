@@ -14,6 +14,9 @@ class Ability
     can :create, Repository
     can :update, Repository, :id => user.own_repository_ids
 
+    can :read, Build, repository: { visible: true }
+    can :read, Build, repository: { id: user.repository_ids }
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)
