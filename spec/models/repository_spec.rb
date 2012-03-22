@@ -38,7 +38,7 @@ describe Repository do
 
     context "#generate_build" do
       it "should create a build and call analyze" do
-        Build.any_instance.expects(:analyze)
+        Build.any_instance.expects(:run!)
         lambda { subject.generate_build("id" => "987654321", "message" => "commit message") }.should change(subject.builds, :count).by(1)
       end
     end

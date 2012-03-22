@@ -36,11 +36,11 @@ describe Build do
     its(:template_file) { should == Rails.root.join("app/views/builds/_rbp.html.erb").to_s }
   end
 
-  context "#analyze" do
+  context "#run!" do
     before do
       repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
-      @build.analyze
+      @build.run!
     end
 
     it "should fetch remote git and analyze" do

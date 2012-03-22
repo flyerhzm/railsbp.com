@@ -29,16 +29,16 @@ class Build < ActiveRecord::Base
 
   aasm do
     state :scheduled, initial: true
-    state :running
+    state :running, enter: :analyze
     state :completed
     state :failed
 
     event :run do
-      transitions to: :running, from: [:scheduled, :running]
+      transitions to: :running, from: :scheduled
     end
 
     event :complete do
-      transitions to: :completed, from: :running
+      transitions to: :completed, from: [:running, :scheduled]
     end
 
     event :fail do
@@ -75,7 +75,6 @@ class Build < ActiveRecord::Base
   end
 
   def analyze
-    run!
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     FileUtils.cd(analyze_path)
@@ -110,7 +109,6 @@ class Build < ActiveRecord::Base
   handle_asynchronously :analyze
 
   def proxy_analyze
-    run!
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     errors = []
