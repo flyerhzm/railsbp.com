@@ -10,3 +10,7 @@ en:
     manage:
       all: "You are not authorized to %{action} %{subject}."
 
+  admin:
+    actions:
+      rerun:
+        menu: "Rerun"
