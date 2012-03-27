@@ -46,7 +46,7 @@ class Build < ActiveRecord::Base
     end
 
     event :rerun do
-      transitions to: :running, from: :failed
+      transitions to: :running, from: [:failed, :completed]
     end
   end
 

@@ -27,7 +27,7 @@
 require 'authorization_exception'
 
 class Repository < ActiveRecord::Base
-  has_many :user_repositories
+  has_many :user_repositories, dependent: :destroy
   has_many :users, through: :user_repositories, uniq: true
   has_many :owners, through: :user_repositories, conditions: ["user_repositories.own = ?", true], source: :user
   has_many :builds, dependent: :destroy
