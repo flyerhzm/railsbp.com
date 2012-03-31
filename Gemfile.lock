@@ -94,9 +94,6 @@ GEM
     childprocess (0.3.1)
       ffi (~> 1.0.6)
     chronic (0.6.7)
-    ckeditor (3.6.3)
-      mime-types (~> 1.16)
-      orm_adapter (~> 0.0.5)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -371,7 +368,6 @@ DEPENDENCIES
   capistrano_colors
   capybara
   cells
-  ckeditor
   coffee-rails
   css_sprite
   cucumber
