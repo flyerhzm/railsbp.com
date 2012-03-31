@@ -1,0 +1,102 @@
+<section class="page">
+<h2>
+	How it works</h2>
+<p>
+	<a href="#public_repository">public repository on github</a></p>
+<p>
+	<a href="#private_repository">private repository on github</a></p>
+<p>
+	<a name="public_repository"></a></p>
+<h3>
+	Public repository on github</h3>
+<p>
+	1. Sign in with Github. &nbsp; &nbsp;<a class="primary btn" href="/users/auth/github">Sign in with Github</a></p>
+<p>
+	&nbsp;</p>
+<p>
+	2. create a repository. &nbsp; &nbsp;<a href="/repositories/new">New Project</a></p>
+<p>
+	&nbsp;</p>
+<p>
+	3. copy repository token on edit repository page, see Figure 1</p>
+<p>
+	<img alt="" src="http://railsbp.com/assets/railsbp_repository_token.png?1330148900" style="width: 446px; height: 45px; " /></p>
+<p style="text-align: left; ">
+	<strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;Figure 1</strong></p>
+<p>
+	&nbsp;</p>
+<p>
+	4. set service hook on github. see Figure 2</p>
+<p>
+	&nbsp; &nbsp; 4.1. go to repository page on github</p>
+<p>
+	&nbsp; &nbsp; 4.2. click &#39;Admin&#39; -&gt; &#39;Service Hooks&#39;</p>
+<p>
+	&nbsp; &nbsp; 4.3. select &#39;Railsbp&#39; in &#39;AVAILABLE SERVICE HOOKS&#39;</p>
+<p>
+	&nbsp; &nbsp; 4.4. fill &quot;http://railsbp.com&quot; in Railsbp Url and paste repository token in token, check &quot;Active&quot; and click &quot;Update Settings&quot;</p>
+<p>
+	<img alt="" src="http://railsbp.com/assets/railsbp_github_hook.png?1330148900" style="width: 934px; height: 376px; " /></p>
+<p>
+	<strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Figure 2</strong></p>
+<p>
+	&nbsp;</p>
+<p>
+	5. then each time you push to github, railsbp will analyze your code quality automatically. See Figure 3</p>
+<p>
+	<img alt="" src="http://railsbp.com/assets/railsbp_basic_workflow.png?1330148900" /></p>
+<p>
+	<strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Figure 3</strong></p>
+<p>
+	&nbsp;</p>
+<p>
+	<a name="private_repository"></a></p>
+<h3>
+	Private repository on github</h3>
+<p>
+	1. Sign in with Github. &nbsp; &nbsp;<a class="primary btn" href="/users/auth/github">Sign in with Github</a></p>
+<p>
+	&nbsp;</p>
+<p>
+	2. create a repository. &nbsp; &nbsp;<a href="/repositories/new">New Project</a></p>
+<p>
+	&nbsp;</p>
+<p>
+	3. uncheck visibility and update configs url on edit repository page.</p>
+<p>
+	&nbsp;</p>
+<p>
+	4. copy repository token on edit repository page, see Figure 4</p>
+<p>
+	<img alt="" src="http://railsbp.com/assets/railsbp_repository_token.png?1330148900" style="width: 446px; height: 45px; " /></p>
+<p style="text-align: left; ">
+	<strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;Figure 4</strong></p>
+<div>
+	&nbsp;</div>
+<p>
+	5. setup proxy on your own server, check out <a href="https://github.com/railsbp/sinatra-proxy">sinatra-proxy</a>&nbsp;or <a href="https://github.com/railsbp/rails-proxy">rails-proxy</a>, paste the repository token to config/railsbp.yml</p>
+<p>
+	&nbsp;</p>
+<p>
+	6. set service hook on github. see Figure 5</p>
+<p>
+	&nbsp; &nbsp; 6.1. go to repository page on github</p>
+<p>
+	&nbsp; &nbsp; 6.2. click &#39;Admin&#39; -&gt; &#39;Service Hooks&#39;</p>
+<p>
+	&nbsp; &nbsp; 6.3. select &#39;Railsbp&#39; in &#39;AVAILABLE SERVICE HOOKS&#39;</p>
+<p>
+	&nbsp; &nbsp; 6.4. fill &quot;http://railsbp.com&quot; in Railsbp Url and paste repository token in token, check &quot;Active&quot; and click &quot;Update Settings&quot;&nbsp;</p>
+<p>
+	<img alt="" src="http://railsbp.com/assets/railsbp_private_github_hook.png?1330148900" /></p>
+<p>
+	<strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Figure 5</strong></p>
+<p>
+	&nbsp;</p>
+<p>
+	7. then each time you push to github, railsbp will analyze your code quality automatically. See Figure 6</p>
+<p>
+	<img alt="" src="http://railsbp.com/assets/railsbp_workflow_with_proxy.png?1330148900" /></p>
+<p>
+	<strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Figure 6</strong></p>
+</section>

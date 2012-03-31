@@ -29,6 +29,7 @@ gem 'meta-tags', :require => 'meta_tags'
 gem 'css_sprite'
 gem 'whenever', :require => false
 gem 'multiple_mailers'
+gem 'high_voltage'
 
 # Gems used only for assets and not required
 # in production environments by default.

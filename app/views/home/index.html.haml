@@ -2,4 +2,28 @@
 
 .fluid
   .sidebar= render_cell :repository, :public
-  .content= render_page "home-index"
+  .content
+    %h2 What's Raisbp?
+    %p
+      Railsbp is short for rails best practices, it provides online rails projects code quality check service. It works based on
+      = link_to "rails_best_practices", "https://github.com/railsbp/rails_best_practices", target: "_blank"
+      gem.
+    %h3 Why Railsbp?
+    %p Railsbp.com helps you to follow rails best practices and gives you some suggestions to improve your rails projects code quality.
+    %h3 Features
+    %p
+      %strong Automatic to analyze source codes.
+      Every time you push to github, the code check service will be executed for you.
+    %p
+      %strong Easy to share analyze result with collaborators.
+      You can easily share the analyze result to your team collaborators, then talk and discuss together.
+    %p
+      %strong Easy to track builds history.
+      Railsbp keeps each analyze result, you can track if your code quality is improved or not.
+    %p
+      %strong No worry about ruby version.
+      rails_best_practices gem doesn't work well for ruby 1.8.7, jruby, etc., but using railsbp.com, you don't need to worry about what ruby version you are developing your rails project.
+    %p
+      %strong Best support.
+      I'm the author of rails_best_practices gem, I can give you best support to use it for your rails projects.
+

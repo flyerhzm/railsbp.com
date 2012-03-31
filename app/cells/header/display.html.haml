@@ -6,9 +6,9 @@
         = link_to "Railsbp", root_path, class: 'brand'
       %ul.nav
         %li= link_to "Home", root_path
-        %li= link_to "How it works", page_path(name: "how-it-works")
-        %li= link_to "About", page_path(name: "about")
-        %li= link_to "FAQ", page_path(name: "faq")
+        %li= link_to "How it works", page_path("how-it-works")
+        %li= link_to "About", page_path("about")
+        %li= link_to "FAQ", page_path("faq")
         %li= link_to "Contact", new_contact_path
       - if @user
         %ul.nav.pull-right

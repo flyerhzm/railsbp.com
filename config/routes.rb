@@ -22,8 +22,6 @@ RailsbpCom::Application.routes.draw do
   resources :contacts
   resources :plans
 
-  match 'page/:name' => 'pages#show', :as => :page
-
   mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
 
   match ':controller/:action' => '#index', :as => :auto_complete, :constraints => { :action => /auto_complete_for_\S+/ }, :via => :get

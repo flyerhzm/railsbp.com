@@ -80,10 +80,10 @@ RailsAdmin.config do |config|
 
   #  ==> Included models
   # Add all excluded models here:
-  # config.excluded_models = [Build, Category, Configuration, Page, Parameter, Repository, User, UserRepository]
+  # config.excluded_models = [Build, Category, Configuration, Parameter, Repository, User, UserRepository]
 
   # Add models here if you want to go 'whitelist mode':
-  config.included_models = [Build, Category, Configuration, Page, Parameter, Repository, User, UserRepository, Delayed::Job]
+  config.included_models = [Build, Category, Configuration, Parameter, Repository, User, UserRepository, Delayed::Job]
 
   # Application wide tried label methods for models' instances
   # config.label_methods << :description # Default is [:name, :title]
@@ -179,21 +179,6 @@ RailsAdmin.config do |config|
   #   create do; end
   #   update do; end
   # end
-
-  config.model Page do
-    configure :name, :string
-    configure :body, :text
-    list do
-      field :id
-      field :name
-    end
-    edit do
-      field :name
-      field :body, :text do
-        ckeditor true
-      end
-    end
-  end
 
   # config.model Parameter do
   #   # Found associations:
