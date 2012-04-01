@@ -54,14 +54,6 @@ class User < ActiveRecord::Base
     user
   end
 
-  def self.new_with_session(params, session)
-    super.tap do |user|
-      if data = session["devise.github_data"] && session["devise.github_data"]["info"]
-        user.email = data["email"]
-      end
-    end
-  end
-
   def self.current
     Thread.current[:user]
   end
