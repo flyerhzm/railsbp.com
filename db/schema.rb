@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120331145748) do
+ActiveRecord::Schema.define(:version => 20120401140647) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(:version => 20120331145748) do
     t.datetime "finished_at"
   end
 
+  add_index "builds", ["repository_id"], :name => "index_builds_on_repository_id"
+
   create_table "categories", :force => true do |t|
     t.string "name"
   end
@@ -36,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20120331145748) do
     t.string  "url"
     t.integer "category_id"
   end
+
+  add_index "configurations", ["category_id"], :name => "index_configurations_on_category_id"
 
   create_table "delayed_jobs", :force => true do |t|
     t.integer  "priority",   :default => 0
@@ -60,6 +64,8 @@ ActiveRecord::Schema.define(:version => 20120331145748) do
     t.string  "description"
     t.integer "configuration_id"
   end
+
+  add_index "parameters", ["configuration_id"], :name => "index_parameters_on_configuration_id"
 
   create_table "rails_admin_histories", :force => true do |t|
     t.text     "message"
@@ -101,6 +107,9 @@ ActiveRecord::Schema.define(:version => 20120331145748) do
     t.integer "repository_id"
     t.boolean "own",           :default => true, :null => false
   end
+
+  add_index "user_repositories", ["repository_id"], :name => "index_user_repositories_on_repository_id"
+  add_index "user_repositories", ["user_id"], :name => "index_user_repositories_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                 :default => "",    :null => false
