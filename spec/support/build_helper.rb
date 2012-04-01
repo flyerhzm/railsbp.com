@@ -2,7 +2,7 @@ module Support
   module BuildHelper
     def build_analyze_success
       path = Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s
-      template = Rails.root.join("app/views/builds/_rbp.html.erb").to_s
+      template = Rails.root.join("app/views/builds/rbp.html.erb").to_s
       File.expects(:exist?).with(path).returns(false)
       FileUtils.expects(:mkdir_p).with(path)
       FileUtils.expects(:cd).with(path)

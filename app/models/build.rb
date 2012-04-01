@@ -63,7 +63,7 @@ class Build < ActiveRecord::Base
   end
 
   def template_file
-    Rails.root.join("app/views/builds/_rbp.html.erb").to_s
+    Rails.root.join("app/views/builds/rbp.html.erb").to_s
   end
 
   def set_position

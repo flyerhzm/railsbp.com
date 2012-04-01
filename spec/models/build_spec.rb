@@ -33,7 +33,7 @@ describe Build do
 
   context "#templae_file" do
     subject { @build = Factory(:build) }
-    its(:template_file) { should == Rails.root.join("app/views/builds/_rbp.html.erb").to_s }
+    its(:template_file) { should == Rails.root.join("app/views/builds/rbp.html.erb").to_s }
   end
 
   context "#run!" do
