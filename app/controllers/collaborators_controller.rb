@@ -17,8 +17,7 @@ class CollaboratorsController < ApplicationController
   end
 
   def destroy
-    user = User.find(params[:id])
-    @repository.users.destroy(user)
+    @repository.delete_collaborator(params[:id])
     redirect_to [@repository, :collaborators], notice: "Delete collaborator successfully"
   end
 

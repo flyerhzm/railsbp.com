@@ -79,7 +79,8 @@ class Repository < ActiveRecord::Base
   end
 
   def delete_collaborator(user_id)
-    user_repositories.where(user_id: user_id).destroy
+    user = User.find(user_id)
+    self.users.destroy(user)
   end
 
   def add_collaborator(login)

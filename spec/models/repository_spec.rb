@@ -126,6 +126,20 @@ describe Repository do
       end
     end
 
+    context "#delete_collaborator" do
+      before do
+        @flyerhzm = Factory(:user, github_uid: 66836)
+        @repository.users << @flyerhzm
+      end
+
+      it "should delete a collaborator" do
+        @repository.should have(2).users
+        @repository.delete_collaborator(@flyerhzm.id)
+        @repository.should have(1).users
+        @repository.users.should_not be_include(@flyerhzm)
+      end
+    end
+
     context "#collaborator_ids" do
       before do
         @flyerhzm = Factory(:user, github_uid: 66836)
