@@ -13,7 +13,7 @@ describe UserMailer do
       @build = Factory(:build, repository: @repository, warning_count: 10)
     end
 
-    subject { UserMailer.notify_build_success(@build.id) }
+    subject { UserMailer.notify_build_success(@build) }
     it { should deliver_to("user1@gmail.com, user2@gmail.com") }
     it { should have_subject("[Railsbp] flyerhzm/test build #1, warnings count 10") }
     it { should have_body_text("flyerhzm/test build successfully.") }

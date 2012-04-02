@@ -3,8 +3,8 @@ class UserMailer < ActionMailer::Base
 
   default from: "notification@railsbp.com"
 
-  def notify_build_success(build_id)
-    @build = Build.find(build_id)
+  def notify_build_success(build)
+    @build = build
     @repository = @build.repository
 
     mail(:to => @build.recipient_emails,
