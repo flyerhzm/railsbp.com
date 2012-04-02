@@ -72,12 +72,13 @@ end
 
 group :test do
   gem 'spork', '1.0.0.rc2'
+  gem 'spork-rails'
   gem 'mocha'
   gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers'
   gem 'factory_girl'
-  gem 'factory_girl_rails'
+  gem 'factory_girl_rails', :require => false
   gem 'cucumber'
   gem 'cucumber-rails', :require => 'cucumber/rails'
   gem 'capybara'

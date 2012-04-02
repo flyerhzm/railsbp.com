@@ -1,6 +1,9 @@
 require 'rubygems'
 require 'spork'
 
+Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+Spork.trap_class_method(RailsAdmin, :config)
+
 Spork.prefork do
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
@@ -69,12 +72,5 @@ end
 Spork.each_run do
   require 'factory_girl_rails'
   FactoryGirl.reload
-
-  load "#{Rails.root}/config/routes.rb"
-
-  # reload all the models
-  Dir["#{Rails.root}/app/models/**/*.rb"].each do |model|
-    load model
-  end
 end
 
