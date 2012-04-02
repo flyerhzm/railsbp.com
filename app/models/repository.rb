@@ -107,6 +107,10 @@ class Repository < ActiveRecord::Base
     user_repositories.map(&:user_id)
   end
 
+  def recipient_emails
+    users.select { |user| user.email !~ /fakemail.com$/ }.map(&:email)
+  end
+
   def to_param
     "#{id}-#{github_name.parameterize}"
   end

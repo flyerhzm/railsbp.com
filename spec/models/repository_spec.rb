@@ -151,6 +151,22 @@ describe Repository do
 
       its(:collaborator_ids) { should == [@owner.id, @flyerhzm.id, @scott.id] }
     end
+
+    context "#recipient_emails" do
+      before do
+        @user1 = Factory(:user, email: "user1@gmail.com")
+        @user2 = Factory(:user, email: "user2@gmail.com")
+        @fake_user = Factory(:user, email: "user@fakemail.com")
+        @repository = Factory(:repository)
+        @repository.users << @user1
+        @repository.users << @user2
+        @repository.users << @fake_user
+      end
+
+      it "should return non fakemail.com users" do
+        @repository.recipient_emails.should == ["user1@gmail.com", "user2@gmail.com"]
+      end
+    end
   end
 
   context "#sync_github" do

@@ -27,6 +27,8 @@ class Build < ActiveRecord::Base
 
   scope :completed, where(:aasm_state => "completed")
 
+  delegate :recipient_emails, to: :repository
+
   aasm do
     state :scheduled, initial: true
     state :running, enter: :analyze
@@ -68,10 +70,6 @@ class Build < ActiveRecord::Base
 
   def set_position
     self.position = repository.builds_count + 1
-  end
-
-  def recipient_emails
-    repository.users.select { |user| user.email !~ /fakemail.com$/ }.map(&:email)
   end
 
   def config_directory_path
@@ -142,7 +140,7 @@ class Build < ActiveRecord::Base
     self.duration = end_time - start_time
     self.finished_at = end_time
     complete!
-    UserMailer.notify_build_success(self.id).deliver
+    UserMailer.notify_build_success(self).deliver
   end
 
   protected
