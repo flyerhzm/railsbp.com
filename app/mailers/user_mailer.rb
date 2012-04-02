@@ -7,7 +7,7 @@ class UserMailer < ActionMailer::Base
     @build = build
     @repository = @build.repository
 
-    mail(:to => @build.recipient_emails,
-         :subject => "[Railsbp] #{@repository.github_name} build ##{@build.position}, warnings count #{@build.warning_count}")
+    mail(to: @repository.recipient_emails,
+         subject: "[Railsbp] #{@repository.github_name} build ##{@build.position}, warnings count #{@build.warning_count}")
   end
 end

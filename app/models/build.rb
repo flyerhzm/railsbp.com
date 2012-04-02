@@ -27,8 +27,6 @@ class Build < ActiveRecord::Base
 
   scope :completed, where(:aasm_state => "completed")
 
-  delegate :recipient_emails, to: :repository
-
   aasm do
     state :scheduled, initial: true
     state :running, enter: :analyze
