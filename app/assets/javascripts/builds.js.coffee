@@ -71,3 +71,8 @@ $ ->
               return false
       ]
     )
+
+$ ->
+  if $("#build").length > 0
+    $("#build table thead tr").append("<th class='report'></th>")
+    $("#build table tbody tr").append("<td class='report'><a class='btn' title='report wrong analyze result'>Report</a></td>")
