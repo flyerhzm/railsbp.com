@@ -3,4 +3,20 @@ require 'spec_helper'
 describe Configuration do
   it { should have_many(:parameters) }
   it { should belong_to(:category) }
+
+  context "#notify_collaborators" do
+    before do
+      Repository.any_instance.stubs(:set_privacy)
+      Repository.any_instance.stubs(:sync_github)
+      @repository1 = Factory(:repository)
+      @repository2 = Factory(:repository)
+    end
+
+    it "should notify all collaborators" do
+      @configuration = Factory(:configuration)
+      UserMailer.expects(:notify_configuration_created).with(@configuration, @repository1)
+      UserMailer.expects(:notify_configuration_created).with(@configuration, @repository2)
+      Delayed::Worker.new.work_off
+    end
+  end
 end

@@ -12,4 +12,11 @@
 class Configuration < ActiveRecord::Base
   has_many :parameters
   belongs_to :category
+
+  after_save :notify_collaborators
+
+  protected
+    def notify_collaborators
+      Delayed::Job.enqueue(DelayedJob::NotifyCollaborators.new(self.id))
+    end
 end
