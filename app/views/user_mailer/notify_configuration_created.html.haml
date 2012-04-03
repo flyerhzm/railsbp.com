@@ -1,0 +1,9 @@
+%p A new checker #{@configuration.name} is added on railsbp.com
+
+%p
+  Read it on
+  = link_to @configuration.url, @configuration.url
+
+%p
+  And
+  = link_to "enable it for your repository #{@repository.github_name}", edit_repository_configs_url(@repository)

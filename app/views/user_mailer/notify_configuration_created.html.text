@@ -1,0 +1,6 @@
+A new checker #{@configuration.name} is added on railsbp.com
+
+Read it on #{@configuration.url}
+
+And enable it for your repository #{@repository.github_name}
+#{edit_repository_configs_url(@repository)}
