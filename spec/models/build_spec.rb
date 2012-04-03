@@ -92,23 +92,6 @@ describe Build do
     end
   end
 
-  context "recipients" do
-    before do
-      @user1 = Factory(:user, email: "user1@gmail.com")
-      @user2 = Factory(:user, email: "user2@gmail.com")
-      @fake_user = Factory(:user, email: "user@fakemail.com")
-      @repository = Factory(:repository)
-      @repository.users << @user1
-      @repository.users << @user2
-      @repository.users << @fake_user
-      @build = Factory(:build, repository: @repository)
-    end
-
-    it "should return non fakemail.com users" do
-      @build.recipient_emails.should == ["user1@gmail.com", "user2@gmail.com"]
-    end
-  end
-
   context "config_directory_path" do
     before do
       @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
