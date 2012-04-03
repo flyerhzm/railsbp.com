@@ -75,4 +75,11 @@ $ ->
 $ ->
   if $("#build").length > 0
     $("#build table thead tr").append("<th class='report'></th>")
-    $("#build table tbody tr").append("<td class='report'><a class='btn' title='report wrong analyze result'>Report</a></td>")
+    $.each $("#build table tbody tr"), ->
+      message = "repository : #{$('h2').text()}<nl>" +
+                "commit     : #{$('#commit_id').text()}<nl>" +
+                "filename   : #{$(this).find('.filename').text()}<nl>" +
+                "line       : #{$(this).find('.line').text()}<nl>" +
+                "message    : #{$(this).find('.message').text()}<nl>" +
+                "is not analyzing correctly"
+      $(this).append("<td class='report'><a class='btn' href='/contacts/new?message=#{message}' title='report wrong analyze result'>Report</a></td>")
