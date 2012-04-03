@@ -5,6 +5,9 @@ class ContactsController < ApplicationController
       @contact.name = current_user.name
       @contact.email = current_user.email
     end
+    if params[:message]
+      @contact.message = params[:message].gsub("<nl>", "\r\n")
+    end
   end
 
   def create

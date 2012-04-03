@@ -19,5 +19,13 @@ describe ContactsController do
       contact.name.should == user.name
       contact.email.should == user.email
     end
+
+    it "should assign contact with custom message" do
+      get :new, message: "be aware<nl>report wrong analyze result"
+
+      response.should be_ok
+      contact = assigns(:contact)
+      contact.message.should == "be aware\r\nreport wrong analyze result"
+    end
   end
 end
