@@ -20,6 +20,7 @@
 #  name                   :string(255)
 #  github_token           :string(255)
 #  own_repositories_count :integer(4)      default(0), not null
+#  admin                  :boolean(1)      default(FALSE), not null
 #
 
 class User < ActiveRecord::Base

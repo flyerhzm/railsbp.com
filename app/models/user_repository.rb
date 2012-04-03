@@ -5,7 +5,7 @@
 #  id            :integer(4)      not null, primary key
 #  user_id       :integer(4)
 #  repository_id :integer(4)
-#  own           :boolean(1)      default(TRUE), not null
+#  own           :boolean(1)      default(TRUE)
 #
 
 class UserRepository < ActiveRecord::Base

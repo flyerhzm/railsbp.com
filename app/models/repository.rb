@@ -16,7 +16,7 @@
 #  ssh_url              :string(255)
 #  github_name          :string(255)
 #  builds_count         :integer(4)      default(0)
-#  branch               :string(255)     default("master"), not null
+#  branch               :string(255)     default("master")
 #  authentication_token :string(255)
 #  visible              :boolean(1)      default(FALSE), not null
 #  update_configs_url   :string(255)

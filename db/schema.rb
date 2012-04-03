@@ -94,7 +94,7 @@ ActiveRecord::Schema.define(:version => 20120401140647) do
     t.string   "ssh_url"
     t.string   "github_name"
     t.integer  "builds_count",         :default => 0
-    t.string   "branch",               :default => "master", :null => false
+    t.string   "branch",               :default => "master"
     t.string   "authentication_token"
     t.boolean  "visible",              :default => false,    :null => false
     t.string   "update_configs_url"
@@ -105,7 +105,7 @@ ActiveRecord::Schema.define(:version => 20120401140647) do
   create_table "user_repositories", :force => true do |t|
     t.integer "user_id"
     t.integer "repository_id"
-    t.boolean "own",           :default => true, :null => false
+    t.boolean "own",           :default => true
   end
 
   add_index "user_repositories", ["repository_id"], :name => "index_user_repositories_on_repository_id"
