@@ -1,10 +1,10 @@
 require 'rubygems'
 require 'spork'
 
-Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
-Spork.trap_class_method(RailsAdmin, :config)
-
 Spork.prefork do
+  require "rails/application"
+  Spork.trap_method(Rails::Application::RoutesReloader, :reload!)
+
   ENV["RAILS_ENV"] ||= 'test'
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
