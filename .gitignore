@@ -2,7 +2,7 @@
 db/*.sqlite3
 log/*.log
 tmp/
-builds/
+/builds/
 .sass-cache/
 config/database.yml
 config/github.yml
