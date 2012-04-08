@@ -91,6 +91,14 @@ class Build < ActiveRecord::Base
                                                             "with-git"       => true,
                                                             "template"       => template_file
                                                            )
+    rails_best_practices.errors_filter_block = lambda do |errors|
+      errors.delete_if { |error| error.git_commit.blank? }
+      errors.each do |error|
+        unless last_errors["#{error.short_filename} #{error.message}"] == error.git_commit
+          error.highlight = true
+        end
+      end
+     end
     rails_best_practices.analyze
     rails_best_practices.output
     end_time = Time.now
@@ -113,6 +121,7 @@ class Build < ActiveRecord::Base
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
     errors = []
     warnings.each do |warning|
+      warning['highlight'] = (last_errors[warning['short_filename'] + warning['message']] != warning['git_commit'])
       errors << RailsBestPractices::Core::Error.new(
         :filename => warning['short_filename'],
         :line_number => warning['line_number'],
@@ -120,7 +129,8 @@ class Build < ActiveRecord::Base
         :type => warning['type'],
         :url => warning['url'],
         :git_commit => warning['git_commit'],
-        :git_username => warning['git_username']
+        :git_username => warning['git_username'],
+        :highlight => warning['highlight']
       )
     end
     File.open(analyze_file, 'w+') do |file|
@@ -139,6 +149,19 @@ class Build < ActiveRecord::Base
     self.finished_at = end_time
     complete!
     UserMailer.notify_build_success(self).deliver
+  end
+
+  def last_errors
+    @last_errors ||= begin
+      last_build = repository.builds.where("id < ?", self.id).last
+      last_errors = {}
+      last_doc = Nokogiri::HTML(open(last_build.analyze_file))
+      last_doc.css("table tbody tr").each do |tr|
+        filename, _, message, git_commit, _ = tr.css("td").map { |td| td.text.strip }
+        last_errors["#{filename} #{message}"] = git_commit
+      end
+      last_errors
+    end
   end
 
   protected

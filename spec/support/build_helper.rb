@@ -13,6 +13,7 @@ module Support
 
       rails_best_practices = mock
       RailsBestPractices::Analyzer.expects(:new).with(path + "/railsbp.com", "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "with-git" => true, "template" => template).returns(rails_best_practices)
+      rails_best_practices.expects(:errors_filter_block=)
       rails_best_practices.expects(:analyze)
       rails_best_practices.expects(:output)
 

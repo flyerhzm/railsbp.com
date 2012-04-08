@@ -6,10 +6,11 @@ GIT
 
 GIT
   remote: git://github.com/railsbp/rails_best_practices.git
-  revision: ceb243d5fde3c269d5476e0cb7e117dbfe8485f4
+  revision: 1065ee43e5d9d6621553fac6a60f2247f8a32667
   specs:
     rails_best_practices (1.9.0)
       activesupport
+      awesome_print
       colored
       erubis
       i18n
@@ -67,6 +68,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.7)
     arel (3.0.2)
+    awesome_print (1.0.2)
     bbenezech-nested_form (0.0.5)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.0.1)
@@ -214,7 +216,7 @@ GEM
     mime-types (1.17.2)
     mocha (0.10.4)
       metaclass (~> 0.0.1)
-    multi_json (1.1.0)
+    multi_json (1.2.0)
     multipart-post (1.1.5)
     multiple_mailers (1.1.0)
     mysql2 (0.3.11)
@@ -402,6 +404,7 @@ DEPENDENCIES
   mocha
   multiple_mailers
   mysql2
+  nokogiri
   oa-core
   octokit
   omniauth

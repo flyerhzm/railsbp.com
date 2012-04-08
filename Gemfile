@@ -29,6 +29,7 @@ gem 'css_sprite'
 gem 'whenever', :require => false
 gem 'multiple_mailers'
 gem 'high_voltage'
+gem 'nokogiri'
 
 # Gems used only for assets and not required
 # in production environments by default.

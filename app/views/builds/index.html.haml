@@ -12,6 +12,7 @@
     %table.table.table-striped.table-condensed
       %thead
         %th.build Build
+        %th.warning_count Warning Count
         %th.commit Commit
         %th.message Message
         %th.duration Duration
@@ -20,6 +21,7 @@
         - @builds.each do |build|
           %tr{data: {url: repository_build_path(@repository, build)}}
             %td #{build.position}
+            %td #{build.warning_count}
             %td #{build.short_commit_id}
             %td #{build.last_commit_message}
             %td #{build.duration} secs

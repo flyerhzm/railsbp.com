@@ -80,6 +80,7 @@ describe Build do
       repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
       @build.warnings = [{"short_filename" => "app/models/user.rb", "line_number" => "10", "message" => "use scope", "type" => "RailsBestPractices::Review::UseScope", "git_commit" => "1234567890", "git_usernmae" => "richard"}]
+      @build.stubs(:last_errors).returns({})
       @build.proxy_analyze
     end
 
