@@ -153,12 +153,14 @@ class Build < ActiveRecord::Base
 
   def last_errors
     @last_errors ||= begin
-      last_build = repository.builds.where("id < ?", self.id).last
       last_errors = {}
-      last_doc = Nokogiri::HTML(open(last_build.analyze_file))
-      last_doc.css("table tbody tr").each do |tr|
-        filename, _, message, git_commit, _ = tr.css("td").map { |td| td.text.strip }
-        last_errors["#{filename} #{message}"] = git_commit
+      last_build = repository.builds.where("id < ?", self.id).last
+      if last_build
+        last_doc = Nokogiri::HTML(open(last_build.analyze_file))
+        last_doc.css("table tbody tr").each do |tr|
+          filename, _, message, git_commit, _ = tr.css("td").map { |td| td.text.strip }
+          last_errors["#{filename} #{message}"] = git_commit
+        end
       end
       last_errors
     end
