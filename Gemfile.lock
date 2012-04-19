@@ -6,9 +6,9 @@ GIT
 
 GIT
   remote: git://github.com/railsbp/rails_best_practices.git
-  revision: 1065ee43e5d9d6621553fac6a60f2247f8a32667
+  revision: 4d1bad82378df9aa14f9871ca7e2e1d17393bab5
   specs:
-    rails_best_practices (1.9.0)
+    rails_best_practices (1.9.1)
       activesupport
       awesome_print
       colored
@@ -216,7 +216,7 @@ GEM
     mime-types (1.17.2)
     mocha (0.10.4)
       metaclass (~> 0.0.1)
-    multi_json (1.2.0)
+    multi_json (1.3.2)
     multipart-post (1.1.5)
     multiple_mailers (1.1.0)
     mysql2 (0.3.11)
@@ -252,7 +252,7 @@ GEM
       cucumber (>= 0.8)
       rake
     polyglot (0.3.3)
-    progressbar (0.10.0)
+    progressbar (0.11.0)
     rack (1.4.1)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -314,7 +314,7 @@ GEM
       ffi (~> 1.0.9)
       json_pure
       rubyzip
-    sexp_processor (3.1.0)
+    sexp_processor (3.2.0)
     shoulda-matchers (1.0.0)
     simple_form (2.0.0)
       actionpack (~> 3.0)
