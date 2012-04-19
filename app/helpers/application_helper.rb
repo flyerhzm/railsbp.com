@@ -10,12 +10,4 @@ module ApplicationHelper
 
     flash_messages.join("\n").html_safe
   end
-
-  def render_page(name)
-    if page = Page.where(name: name).first
-      page.body.html_safe
-    else
-      ""
-    end
-  end
 end
