@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
 
   def self.find_for_github_oauth(data)
     if user = User.find_by_github_uid(data.uid)
-      if user.github_token.blank?
+      unless user.github_token?
         import_github_data(user, data)
         user.save
       end
