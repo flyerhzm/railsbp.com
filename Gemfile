@@ -69,6 +69,8 @@ group :develop do
   gem 'capistrano'
   gem 'capistrano_colors'
   gem 'capistrano-ext'
+
+  gem 'quiet_assets'
 end
 
 group :test do
