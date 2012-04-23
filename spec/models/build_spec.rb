@@ -98,6 +98,6 @@ describe Build do
       @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
-    its(:config_directory_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/config").to_s }
+    its(:config_directory_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/railsbp.com/config/").to_s }
   end
 end

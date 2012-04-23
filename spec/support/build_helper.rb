@@ -9,7 +9,7 @@ module Support
 
       Git.expects(:clone).with("git://github.com/flyerhzm/railsbp.com.git", "railsbp.com")
       Dir.expects(:chdir).with("railsbp.com")
-      FileUtils.expects(:cp).with(Rails.root.join("builds/flyerhzm/railsbp.com/rails_best_practices.yml").to_s, path + "/config")
+      FileUtils.expects(:cp).with(Rails.root.join("builds/flyerhzm/railsbp.com/rails_best_practices.yml").to_s, path + "/railsbp.com/config/")
 
       rails_best_practices = mock
       RailsBestPractices::Analyzer.expects(:new).with(path + "/railsbp.com", "format" => "html", "silent" => true, "output-file" => path + "/rbp.html", "with-github" => true, "github-name" => "flyerhzm/railsbp.com", "last-commit-id" => "987654321", "with-git" => true, "template" => template).returns(rails_best_practices)
