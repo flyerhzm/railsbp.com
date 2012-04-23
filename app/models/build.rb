@@ -71,7 +71,7 @@ class Build < ActiveRecord::Base
   end
 
   def config_directory_path
-    "#{analyze_path}/config"
+    "#{analyze_path}/#{repository.name}/config/"
   end
 
   def analyze
