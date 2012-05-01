@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120401140647) do
+ActiveRecord::Schema.define(:version => 20120501024439) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(:version => 20120401140647) do
     t.integer  "position"
     t.integer  "duration",            :default => 0
     t.datetime "finished_at"
+    t.string   "branch",              :default => "master", :null => false
   end
 
   add_index "builds", ["repository_id"], :name => "index_builds_on_repository_id"

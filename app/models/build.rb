@@ -13,6 +13,7 @@
 #  position            :integer(4)
 #  duration            :integer(4)      default(0)
 #  finished_at         :datetime
+#  branch              :string(255)     default("master"), not null
 #
 
 class Build < ActiveRecord::Base

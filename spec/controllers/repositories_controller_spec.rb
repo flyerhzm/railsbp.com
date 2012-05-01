@@ -65,21 +65,13 @@ describe RepositoriesController do
       }
     }
 
-    it "should generate build for master branch" do
+    it "should generate build" do
       repository = Factory.stub(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      repository.expects(:generate_build).with(last_message)
+      repository.expects(:generate_build).with("develop", last_message)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
       response.body.should == "success"
-    end
-
-    it "should not generate build for develop branch" do
-      repository = Factory.stub(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789", branch: "develop")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      post :sync, token: "123456789", payload: hook_json, format: 'json'
-      response.should be_ok
-      response.body.should == "skip"
     end
 
     it "should not generate build if authentication_token does not match" do
@@ -116,18 +108,10 @@ describe RepositoriesController do
       repository = Factory.stub(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       errors = ActiveSupport::JSON.decode(proxy_success_json)["errors"]
-      repository.expects(:generate_proxy_build).with(last_commit, errors)
-      post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: ActiveSupport::JSON.encode(last_commit), ref: "refs/heads/master", result: proxy_success_json
-      response.should be_ok
-      response.body.should == "success"
-    end
-
-    it "should not generate build for develop branch" do
-      repository = Factory.stub(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      repository.expects(:generate_proxy_build).with("develop", last_commit, errors)
       post :sync_proxy, token: "123456789", repository_url: "https://github.com/railsbp/rails-bestpractices.com", last_commit: ActiveSupport::JSON.encode(last_commit), ref: "refs/heads/develop", result: proxy_success_json
       response.should be_ok
-      response.body.should == "skip"
+      response.body.should == "success"
     end
 
     it "should not generate build if authentication_token does not exist" do

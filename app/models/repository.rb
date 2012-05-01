@@ -62,15 +62,15 @@ class Repository < ActiveRecord::Base
     config_path + "/rails_best_practices.yml"
   end
 
-  def generate_build(commit)
-    build = self.builds.build(last_commit_id: commit["id"], last_commit_message: commit["message"])
+  def generate_build(branch, commit)
+    build = self.builds.build(branch: branch, last_commit_id: commit["id"], last_commit_message: commit["message"])
     if build.save
       build.run!
     end
   end
 
-  def generate_proxy_build(commit, errors)
-    build = self.builds.build(last_commit_id: commit["id"], last_commit_message: commit["message"], warnings: errors)
+  def generate_proxy_build(branch, commit, errors)
+    build = self.builds.build(branch: branch, last_commit_id: commit["id"], last_commit_message: commit["message"], warnings: errors)
     if build.save
       build.proxy_analyze
     end
