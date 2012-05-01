@@ -10,3 +10,4 @@ config/mailers.yml
 NERD_tree_1
 bin/
 coverage/
+brakeman.html

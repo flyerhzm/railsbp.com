@@ -71,6 +71,8 @@ group :develop do
   gem 'capistrano-ext'
 
   gem 'quiet_assets'
+
+  gem 'brakeman'
 end
 
 group :test do
