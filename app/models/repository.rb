@@ -40,6 +40,8 @@ class Repository < ActiveRecord::Base
 
   scope :visible, where(:visible => true)
 
+  attr_accessible :git_url, :name, :description, :private, :fork, :github_id, :html_url, :ssh_url, :github_name, :branch, :visible, :update_configs_url
+
   def owner
     owners.first
   end
