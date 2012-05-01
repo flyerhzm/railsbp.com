@@ -4,6 +4,8 @@
       .left
         %dt Build
         %dd #{@build.position}
+        %dt Branch
+        %dd #{@build.branch}
         %dt Commit
         %dd#commit_id #{@build.short_commit_id}
       .right
@@ -11,8 +13,8 @@
         %dd #{@build.duration} secs
         %dt Finished
         %dd #{time_ago_in_words(@build.updated_at)} ago
-      %dt Message
-      %dd.message #{@build.last_commit_message}
+        %dt Message
+        %dd.message #{@build.last_commit_message}
     %h3 Analyze Result
     %p.warning-count Warning count: #{@build.warning_count}
     = link_to "Customize Checks", "#", :id => "customizeChecks", :class => "trigger plus_icon"
