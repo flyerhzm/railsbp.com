@@ -1,3 +1,16 @@
-%p #{@repository.github_name} build successfully.
-
-%p= link_to "View result here", repository_build_url(@repository, @build)
+%table
+  %tr
+    %td Repository
+    %td= @repository.github_name
+  %tr
+    %td Build ##{@build.position}
+    %td= link_to repository_build_url(@repository, @build), repository_build_url(@repository, @build)
+  %tr
+    %td Commit
+    %td #{@build.short_commit_id} (#{@build.branch})
+  %tr
+    %td Message
+    %td= @build.last_commit_message
+  %tr
+    %td Duration
+    %td #{@build.duration} secs

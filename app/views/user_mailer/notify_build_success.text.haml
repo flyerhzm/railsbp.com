@@ -1,3 +1,5 @@
-#{@repository.github_name} build successfully.
-
-View result here: #{repository_build_url(@repository, @build)}
+Repository: #{@repository.github_name}
+Build ##{@build.position}: #{repository_build_url(@repository, @build)}
+Commit: #{@build.short_commit_id} (#{@build.branch})
+Message: #{@build.last_commit_message}
+Duration: #{@build.duration} secs
