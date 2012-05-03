@@ -13,14 +13,19 @@ describe UserMailer do
       @repository = Factory(:repository, github_name: "flyerhzm/test")
       @repository.users << @user1
       @repository.users << @user2
-      @build = Factory(:build, repository: @repository, warning_count: 10)
+      @build = Factory(:build, repository: @repository, warning_count: 10, last_commit_id: "123456789", branch: "develop", last_commit_message: "hello", duration: 20)
     end
 
     subject { UserMailer.notify_build_success(@build) }
     it { should deliver_to("user1@gmail.com, user2@gmail.com") }
     it { should have_subject("[Railsbp] flyerhzm/test build #1, warnings count 10") }
-    it { should have_body_text("flyerhzm/test build successfully.") }
-    it { should have_body_text("<a href=\"http://localhost:3000/repositories/#{@repository.to_param}/builds/#{@build.id}\">View result here</a>") }
+    it { should have_body_text("flyerhzm/test") }
+    it { should have_body_text("Build #1") }
+    it { should have_body_text("<a href=\"http://localhost:3000/repositories/#{@repository.to_param}/builds/#{@build.id}\">http://localhost:3000/repositories/#{@repository.to_param}/builds/#{@build.id}</a>") }
+    it { should have_body_text("<td>10</td>") }
+    it { should have_body_text("1234567 (develop)") }
+    it { should have_body_text("hello") }
+    it { should have_body_text("20 secs") }
   end
 
   context "#notify_configuration_created" do

@@ -1,5 +1,6 @@
 Repository: #{@repository.github_name}
 Build ##{@build.position}: #{repository_build_url(@repository, @build)}
+Warning Count: #{@build.warning_count}
 Commit: #{@build.short_commit_id} (#{@build.branch})
 Message: #{@build.last_commit_message}
 Duration: #{@build.duration} secs

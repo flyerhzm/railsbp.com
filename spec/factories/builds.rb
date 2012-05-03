@@ -5,6 +5,7 @@ FactoryGirl.define do
     warning_count 0
     last_commit_id "1234567890"
     last_commit_message "test"
+    branch "master"
     association(:repository)
   end
 end
