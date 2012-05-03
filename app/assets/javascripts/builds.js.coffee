@@ -67,7 +67,12 @@ $ ->
         point:
           events:
             click: ->
-              window.location.href = window.location.href + "?position=" + @category
+              old_href = window.location.href.toString()
+              index = old_href.indexOf("?")
+              if index > -1
+                window.location.href = old_href[0...index] + "?position=" + @category
+              else
+                window.location.href = old_href + "?position=" + @category
               return false
       ]
     )
@@ -77,6 +82,7 @@ $ ->
     $("#build table thead tr").append("<th class='report'></th>")
     $.each $("#build table tbody tr"), ->
       message = "repository : #{$('h2').text()}<nl>" +
+                "branch     : #{$(this).find('.branch').text()}<nl>" +
                 "commit     : #{$('#commit_id').text()}<nl>" +
                 "filename   : #{$(this).find('.filename').text()}<nl>" +
                 "line       : #{$(this).find('.line').text()}<nl>" +
