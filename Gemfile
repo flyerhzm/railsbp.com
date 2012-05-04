@@ -54,7 +54,7 @@ end
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-group :develop do
+group :development do
   gem 'thin'
   gem 'rb-fsevent'
   gem 'annotate', :git => "git://github.com/ctran/annotate_models.git"
