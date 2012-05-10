@@ -130,6 +130,7 @@ GEM
       capybara (>= 1.1.2)
       cucumber (>= 1.1.8)
       nokogiri (>= 1.5.0)
+    daemon (1.1.0)
     daemons (1.1.8)
     database_cleaner (0.7.1)
     delayed_job (3.0.1)
@@ -398,6 +399,7 @@ DEPENDENCIES
   css_sprite
   cucumber
   cucumber-rails
+  daemon
   database_cleaner
   delayed_job_active_record
   devise
