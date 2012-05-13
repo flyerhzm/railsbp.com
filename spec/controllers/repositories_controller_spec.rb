@@ -87,6 +87,14 @@ describe RepositoriesController do
       response.should be_ok
       response.body.should == "not authenticate"
     end
+
+    it "should not generate build and send an email if repository is private" do
+      repository = Factory.stub(:repository, private: true, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      post :sync, token: "123456789", payload: hook_json, format: 'json'
+      response.should be_ok
+      response.body.should == "no private repository"
+    end
   end
 
   context "POST :sync_proxy" do
