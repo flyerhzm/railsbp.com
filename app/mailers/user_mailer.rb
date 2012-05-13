@@ -18,4 +18,11 @@ class UserMailer < ActionMailer::Base
     mail(to: @repository.recipient_emails,
          subject: "[Railsbp] new checker #{@configuration.name} added")
   end
+
+  def notify_repository_privacy(repository)
+    @repository = repository
+
+    mail(to: @repository.recipient_emails,
+         subject: "[Railsbp] private repository #{@repository.github_name} on railsbp.com")
+  end
 end

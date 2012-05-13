@@ -44,7 +44,10 @@ class RepositoriesController < ApplicationController
     repository = Repository.where(html_url: payload["repository"]["url"]).first
     render text: "not authenticate" and return unless repository
     render text: "not authenticate" and return unless repository.authentication_token == params["token"]
-    render text: "no private repository" and return if repository.private?
+    if repository.private?
+      repository.notify_privacy
+      render text: "no private repository" and return
+    end
 
     repository.generate_build(payload["ref"].split("/").last, payload["commits"].last)
     render text: "success"

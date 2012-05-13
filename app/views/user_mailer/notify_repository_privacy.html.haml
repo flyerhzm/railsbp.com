@@ -1,0 +1,23 @@
+%p Dear,
+%br/
+%p We are appreciated that you are using railsbp.com, but we notice that your repository #{@repository.github_name} is a private repository on github, so we can't check out and analyze your source codes.
+%p There are 2 ways for you to use railsbp.com for your private repository:
+%ol
+  %li
+    = link_to "fork railsbp.com on github", "https://github.com/railsbp/railsbp.com"
+    , then setup the service on your own server
+  %li
+    check out
+    = link_to "rails-proxy", "https://github.com/railsbp/rails-proxy"
+    or
+    = link_to "sinatra-proxy", "https://github.com/railsbp/sinatra-proxy"
+    , then follow the document
+    = link_to "here", "http://railsbp.com/pages/how-it-works#private_repository"
+%p
+  If you have any questions, feel free to
+  = link_to "contact us", "mailto:contact-us@railsbp.com"
+%br/
+%p
+  Sincerely,
+  %br/
+  Railsbp Team

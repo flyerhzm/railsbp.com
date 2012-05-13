@@ -112,6 +112,10 @@ class Repository < ActiveRecord::Base
     users.select { |user| user.email !~ /fakemail.com$/ }.map(&:email)
   end
 
+  def notify_privacy
+    UserMailer.notify_repository_privacy(self).deliver
+  end
+
   def to_param
     "#{id}-#{github_name.parameterize}"
   end
