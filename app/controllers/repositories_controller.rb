@@ -2,6 +2,7 @@ class RepositoriesController < ApplicationController
   load_and_authorize_resource except: [:sync, :sync_proxy]
   before_filter :authenticate_user!, except: [:show, :sync, :sync_proxy]
   before_filter :load_repository, only: [:show, :edit, :update]
+  before_filter :force_input_email, only: [:new, :create]
 
   def show
   end
@@ -77,5 +78,9 @@ class RepositoriesController < ApplicationController
 
     def branch_name
       params[:ref].split("/").last
+    end
+
+    def force_input_email
+      raise UserNoEmailException if current_user.fakemail?
     end
 end

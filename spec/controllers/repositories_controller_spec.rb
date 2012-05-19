@@ -24,6 +24,13 @@ describe RepositoriesController do
       response.should be_ok
       assigns(:repository).should_not be_nil
     end
+
+    it "should redirect to user/edit page if current_user didn't input email" do
+      user = Factory(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
+      sign_in user
+      get :new
+      response.should redirect_to(edit_user_registration_path)
+    end
   end
 
   context "POST :create" do
@@ -42,6 +49,13 @@ describe RepositoriesController do
       User.any_instance.stubs(:org_repository?).returns(false)
       post :create, repository: {github_name: ""}
       response.should render_template(action: "new")
+    end
+
+    it "should redirect to user/edit page if current_user didn't input email", focus: true do
+      user = Factory(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
+      sign_in user
+      post :create, repository: {github_name: "flyerhzm/railsbp.com"}
+      response.should redirect_to(edit_user_registration_path)
     end
   end
 
