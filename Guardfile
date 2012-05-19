@@ -59,7 +59,6 @@ end
 
 guard 'delayed', :environment => 'development' do
   watch('app/models/build.rb')
-  watch('app/models/repository.rb')
 end
 
 guard 'annotate', :run_at_start => false do
