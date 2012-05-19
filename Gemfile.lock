@@ -6,7 +6,7 @@ GIT
 
 GIT
   remote: git://github.com/railsbp/rails_best_practices.git
-  revision: e769693cc92416bfde5722833052fc08460772e6
+  revision: 39f4376d8bb1637617b6d0017378453ab5ee824d
   specs:
     rails_best_practices (1.9.1)
       activesupport
@@ -228,7 +228,7 @@ GEM
     mime-types (1.17.2)
     mocha (0.10.4)
       metaclass (~> 0.0.1)
-    multi_json (1.3.2)
+    multi_json (1.3.5)
     multipart-post (1.1.5)
     multiple_mailers (1.1.0)
     mysql2 (0.3.11)
