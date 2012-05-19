@@ -1,10 +1,7 @@
 require 'spec_helper'
 
 describe RepositoriesController do
-  before do
-    Repository.any_instance.stubs(:sync_github).returns(true)
-    Repository.any_instance.stubs(:set_privacy).returns(true)
-  end
+  before { skip_repository_callbacks }
 
   context "GET :show" do
     it "should assign repository" do
@@ -31,13 +28,11 @@ describe RepositoriesController do
 
   context "POST :create" do
     before do
-      Repository.any_instance.stubs(:sync_github)
       user = Factory(:user, nickname: "flyerhzm")
       sign_in user
     end
 
     it "should redirect to show if success" do
-      Repository.any_instance.stubs(:name).returns("railsbp.com")
       post :create, repository: {github_name: "flyerhzm/railsbp.com"}
       repository = assigns(:repository)
       response.should redirect_to(edit_repository_path(repository))

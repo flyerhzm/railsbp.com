@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe HeaderCell do
-  before { Repository.any_instance.stubs(:sync_github) }
+  before { skip_repository_callbacks }
+
   context "cell rendering" do
     context "rendering display without current_user" do
       subject { render_cell(:header, :display, nil, nil) }

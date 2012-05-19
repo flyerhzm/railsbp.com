@@ -2,8 +2,7 @@ require 'spec_helper'
 
 describe BuildsController do
   before do
-    Repository.any_instance.stubs(:sync_github).returns(true)
-    Repository.any_instance.stubs(:set_privacy).returns(true)
+    skip_repository_callbacks
     @user = Factory(:user)
     @repository = Factory(:repository)
     @repository.users << @user

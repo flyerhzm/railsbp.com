@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Ability do
-  before { Repository.any_instance.stubs(:sync_github) }
+  before { skip_repository_callbacks }
 
   context "new user" do
     before do

@@ -8,7 +8,7 @@ describe UserRepository do
   let(:repository) { Factory(:repository) }
 
   before do
-    Repository.any_instance.stubs(:sync_github)
+    skip_repository_callbacks
     User.current = user
   end
 

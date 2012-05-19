@@ -7,14 +7,14 @@ describe Repository do
   it { should have_many(:owners) }
   it { should validate_presence_of(:github_name) }
 
-  context "stub sync_github" do
+  context "stub callbacks" do
     include FakeFS::SpecHelpers
 
     it { should validate_uniqueness_of(:github_name) }
     it { should validate_uniqueness_of(:github_id) }
 
     before do
-      Repository.any_instance.stubs(:sync_github)
+      skip_repository_callbacks
       FakeFS do
         FileUtils.mkdir_p(Rails.root.join("config"))
         File.open(Rails.root.join("config/rails_best_practices.yml"), "w") { |f|
@@ -31,10 +31,6 @@ describe Repository do
       end
     end
     subject { @repository }
-
-    context "#reset_authentication_token" do
-      its(:authentication_token) { should_not be_nil }
-    end
 
     context "#generate_build" do
       it "should create a build and call analyze" do
@@ -169,8 +165,15 @@ describe Repository do
     end
   end
 
+  context "#reset_authentication_token" do
+    before { skip_repository_callbacks(:except => :reset_authentication_token) }
+    subject { Factory(:repository) }
+    its(:authentication_token) { should_not be_nil }
+  end
+
   context "#sync_github" do
     before do
+      skip_repository_callbacks(:except => :sync_github)
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
       stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
     end
@@ -186,5 +189,17 @@ describe Repository do
     its(:fork) { should be_false }
     its(:github_id) { should == 2860164 }
     its(:visible) { should be_false }
+  end
+
+  context "#setup_github_hook" do
+    before do
+      skip_repository_callbacks(:except => :setup_github_hook)
+    end
+
+    it "should call github" do
+      stub_request(:post, "https://api.github.com/repos/railsbp/railsbp.com/hooks").
+        with(body: {name: "railsbp", config: { railsbp_url: "http://railsbp.com", token:"1234567890" }, events: ["push"], active: true})
+      Factory(:repository, github_name: "railsbp/railsbp.com", authentication_token: "1234567890")
+    end
   end
 end

@@ -6,8 +6,7 @@ describe Configuration do
 
   context "#notify_collaborators" do
     before do
-      Repository.any_instance.stubs(:set_privacy)
-      Repository.any_instance.stubs(:sync_github)
+      skip_repository_callbacks
       @repository1 = Factory(:repository)
       @repository2 = Factory(:repository)
     end

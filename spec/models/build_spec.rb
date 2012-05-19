@@ -5,10 +5,7 @@ describe Build do
 
   it { should belong_to(:repository) }
 
-  before do
-    Repository.any_instance.stubs(:set_privacy)
-    Repository.any_instance.stubs(:sync_github)
-  end
+  before { skip_repository_callbacks }
 
   context "#short_commit_id" do
     subject { Factory(:build, :last_commit_id => "1234567890") }

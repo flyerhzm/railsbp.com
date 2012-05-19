@@ -1,10 +1,8 @@
 require 'spec_helper'
 
 describe BuildCell do
-  before do
-    Repository.any_instance.stubs(:sync_github)
-    Repository.any_instance.stubs(:set_privacy)
-  end
+  before { skip_repository_callbacks }
+
   context "cell rendering" do
     context "rendering tabs" do
       let(:repository) { Factory(:repository) }

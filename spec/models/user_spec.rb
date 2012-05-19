@@ -6,8 +6,7 @@ describe User do
 
   context "#add_repository" do
     before do
-      Repository.any_instance.stubs(:set_privacy)
-      Repository.any_instance.stubs(:sync_github)
+      skip_repository_callbacks
       @user = Factory(:user, nickname: "flyerhzm", github_uid: 66836)
       @repository = Factory(:repository, github_name: "flyerhzm/old")
       @user.repositories << @repository

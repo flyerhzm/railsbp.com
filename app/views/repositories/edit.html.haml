@@ -9,7 +9,6 @@
     %span Repository token
     = link_to "", "#", class: "question_mark_icon", rel: "tooltip", title: "repository token is used to authorized github hook, paste it to github railsbp hook"
     %b= @repository.authentication_token
-    %b= link_to "Update token on github", "#{@repository.html_url}/admin/hooks#railsbp_minibucket"
 
 = simple_form_for @repository, html: {class: "form-horizontal"} do |form|
   = form.input :name, input_html: {class: "span5"}

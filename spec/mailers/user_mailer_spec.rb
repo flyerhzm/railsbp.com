@@ -1,10 +1,7 @@
 require "spec_helper"
 
 describe UserMailer do
-  before do
-    Repository.any_instance.stubs(:set_privacy)
-    Repository.any_instance.stubs(:sync_github)
-  end
+  before { skip_repository_callbacks }
 
   context "#notify_build_success" do
     before do

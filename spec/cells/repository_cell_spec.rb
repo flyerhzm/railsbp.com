@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe RepositoryCell do
   context "cell rendering" do
-    before do
-      Repository.any_instance.stubs(:sync_github)
-      Repository.any_instance.stubs(:set_privacy)
-    end
+    before { skip_repository_callbacks }
 
     context "rendering tabs" do
       subject { render_cell(:repository, :tabs, "configs", Factory(:repository)) }

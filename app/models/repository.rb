@@ -35,7 +35,7 @@ class Repository < ActiveRecord::Base
   validates :github_id, uniqueness: true
 
   before_create :reset_authentication_token, :sync_github, :touch_last_build_at
-  after_create :copy_config_file
+  after_create :copy_config_file, :setup_github_hook
 
   scope :visible, where(:visible => true)
 
@@ -148,5 +148,11 @@ class Repository < ActiveRecord::Base
 
     def touch_last_build_at
       last_build_at = Time.now
+    end
+
+    def setup_github_hook
+      client = Octokit::Client.new(oauth_token: User.current.github_token)
+      client.create_hook(self.github_name, "railsbp", {:railsbp_url => "http://railsbp.com", :token => self.authentication_token})
+      true
     end
 end
