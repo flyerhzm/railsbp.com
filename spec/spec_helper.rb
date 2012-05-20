@@ -48,6 +48,7 @@ Spork.prefork do
     config.include(EmailSpec::Matchers)
     config.include(Support::BuildHelper)
     config.include(Support::CallbackHelper)
+    config.include(Support::DelayedJobHelper)
 
     config.include Devise::TestHelpers, type: :controller
 
@@ -57,15 +58,6 @@ Spork.prefork do
 
     config.after(:each) do
       DatabaseCleaner.clean
-    end
-  end
-
-  module DelayedJobSpecHelper
-    def work_off
-      Delayed::Job.all.each do |job|
-        job.payload_object.perform
-        job.destroy
-      end
     end
   end
 end

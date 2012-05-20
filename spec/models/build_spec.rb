@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe Build do
-  include DelayedJobSpecHelper
-
   it { should belong_to(:repository) }
 
   before { skip_repository_callbacks }
