@@ -24,3 +24,4 @@
 //= require plans
 //= require repositories
 //= require google_analytics
+//= require addthis
