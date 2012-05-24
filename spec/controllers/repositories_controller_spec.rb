@@ -51,7 +51,7 @@ describe RepositoriesController do
       response.should render_template(action: "new")
     end
 
-    it "should redirect to user/edit page if current_user didn't input email", focus: true do
+    it "should redirect to user/edit page if current_user didn't input email" do
       user = Factory(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
       sign_in user
       post :create, repository: {github_name: "flyerhzm/railsbp.com"}
