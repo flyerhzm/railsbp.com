@@ -160,7 +160,6 @@ GEM
     factory_girl_rails (1.7.0)
       factory_girl (~> 2.6.0)
       railties (>= 3.0.0)
-    fakefs (0.4.0)
     faraday (0.8.0)
       multipart-post (~> 1.1)
     faraday_middleware (0.8.7)
@@ -405,7 +404,6 @@ DEPENDENCIES
   exception_notification
   factory_girl
   factory_girl_rails
-  fakefs
   git
   gravtastic
   growl
