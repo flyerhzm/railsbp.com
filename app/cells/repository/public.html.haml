@@ -11,4 +11,4 @@
           %span #{repository.builds.last.duration} secs
           ,
           %span Finished:
-          %span #{time_ago_in_words(repository.builds.last.updated_at)} ago
+          %span #{time_ago_in_words(repository.last_build_at)} ago
