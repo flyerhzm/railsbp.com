@@ -14,6 +14,10 @@ describe RepositoryCell do
 
     context "rendering configurations_form" do
       let(:repository) { Factory(:repository) }
+      before do
+        repository.expects(:config_file_path).returns("/tmp")
+        YAML.expects(:load_file).with("/tmp")
+      end
       subject { render_cell(:repository, :configurations_form, repository) }
 
       it { should have_selector("form") }

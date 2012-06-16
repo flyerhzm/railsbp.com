@@ -8,27 +8,19 @@ describe Repository do
   it { should validate_presence_of(:github_name) }
 
   context "stub callbacks" do
-    include FakeFS::SpecHelpers
-
     it { should validate_uniqueness_of(:github_name) }
     it { should validate_uniqueness_of(:github_id) }
 
     before do
       skip_repository_callbacks
-      FakeFS do
-        FileUtils.mkdir_p(Rails.root.join("config"))
-        File.open(Rails.root.join("config/rails_best_practices.yml"), "w") { |f|
-          f.write "RemoveUnusedMethods: {}\n"
-        }
-        @owner = Factory(:user)
-        User.current = @owner
-        @repository = Factory(:repository,
-                        github_name: "railsbp/railsbp.com",
-                        git_url: "git://github.com/railsbp/railsbp.com.git",
-                        ssh_url: "git@github.com:railsbp/railsbp.com.git"
-                      )
-        @repository.owners << @owner
-      end
+      @owner = Factory(:user)
+      User.current = @owner
+      @repository = Factory(:repository,
+                      github_name: "railsbp/railsbp.com",
+                      git_url: "git://github.com/railsbp/railsbp.com.git",
+                      ssh_url: "git@github.com:railsbp/railsbp.com.git"
+                    )
+      @repository.owners << @owner
     end
     subject { @repository }
 
@@ -74,13 +66,6 @@ describe Repository do
 
     context "config_file_path" do
       its(:config_file_path) { should == Rails.root.join("builds/railsbp/railsbp.com/rails_best_practices.yml").to_s }
-    end
-
-    context "copy_config_file" do
-      it "should copy rails_best_practices.yml file" do
-        File.read(Rails.root.join("builds/flyerhzm/railsbp.com/rails_best_practices.yml").to_s).should ==
-          File.read(Rails.root.join("config/rails_best_practices.yml").to_s)
-      end
     end
 
     context "#sync_collaborators" do
@@ -162,6 +147,24 @@ describe Repository do
       it "should return non fakemail.com users" do
         @repository.recipient_emails.should == ["user1@gmail.com", "user2@gmail.com"]
       end
+    end
+  end
+
+  context "#copy_config_file" do
+    before { skip_repository_callbacks(:except => :copy_config_file) }
+    it "should copy config file if config path exists" do
+      repository = Factory.build(:repository)
+      File.expects(:exist?).with(repository.config_path).returns(true)
+      FileUtils.expects(:cp).with(repository.default_config_file_path, repository.config_file_path)
+      repository.save
+    end
+
+    it "should create config path and copy config file if config path does not exist" do
+      repository = Factory.build(:repository)
+      File.expects(:exist?).with(repository.config_path).returns(false)
+      FileUtils.expects(:mkdir_p).with(repository.config_path)
+      FileUtils.expects(:cp).with(repository.default_config_file_path, repository.config_file_path)
+      repository.save
     end
   end
 

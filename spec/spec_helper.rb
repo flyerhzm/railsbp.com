@@ -11,7 +11,6 @@ Spork.prefork do
   require 'rspec/autorun'
   require 'webmock/rspec'
   require 'database_cleaner'
-  require 'fakefs/spec_helpers'
   require 'email_spec'
   require "cancan/matchers"
   require 'simplecov'
