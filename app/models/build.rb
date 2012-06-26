@@ -155,7 +155,7 @@ class Build < ActiveRecord::Base
   def last_errors
     @last_errors ||= begin
       last_errors = {}
-      last_build = repository.builds.where("id < ?", self.id).last
+      last_build = repository.builds.where("id < ?", self.id).completed.last
       if last_build
         last_doc = Nokogiri::HTML(open(last_build.analyze_file))
         last_doc.css("table tbody tr").each do |tr|
