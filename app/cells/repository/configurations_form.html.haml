@@ -14,10 +14,11 @@
               - configuration.parameters.each do |parameter|
                 %label
                   %span= "#{parameter.name}: "
-                  - if parameter.kind == "array"
-                    = text_area_tag "repository[configs][#{index}][#{parameter.name}]", (@configs[configuration.name].try(:[], parameter.name) || parameter.value).join(", "), class: "span6"
-                  - else
-                    = text_field_tag "repository[configs][#{index}][#{parameter.name}]", (@configs[configuration.name].try(:[], parameter.name) || parameter.value), class: "string span1"
+                  - if @configs[configuration.name]
+                    - if parameter.kind == "array"
+                      = text_area_tag "repository[configs][#{index}][#{parameter.name}]", (@configs[configuration.name].try(:[], parameter.name) || parameter.value).join(", "), class: "span6"
+                    - else
+                      = text_field_tag "repository[configs][#{index}][#{parameter.name}]", (@configs[configuration.name].try(:[], parameter.name) || parameter.value), class: "string span1"
                   %span.description= parameter.description
   .form-actions
     = form.submit "Save Configurations", class: "btn btn-primary"
