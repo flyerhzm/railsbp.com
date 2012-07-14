@@ -48,6 +48,8 @@ class RepositoriesController < ApplicationController
     if repository.private?
       repository.notify_privacy
       render text: "no private repository" and return
+    elsif !repository.rails?
+      render text: "not rails repository" and return
     end
 
     repository.generate_build(payload["ref"].split("/").last, payload["commits"].last)

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120501030829) do
+ActiveRecord::Schema.define(:version => 20120714133938) do
 
   create_table "builds", :force => true do |t|
     t.integer  "warning_count"
@@ -100,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20120501030829) do
     t.string   "update_configs_url"
     t.integer  "collaborators_count",  :default => 0,     :null => false
     t.datetime "last_build_at"
+    t.boolean  "rails",                :default => true
   end
 
   create_table "user_repositories", :force => true do |t|

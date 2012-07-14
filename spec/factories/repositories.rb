@@ -8,6 +8,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "repo#{n}" }
     description "repository"
     private false
+    rails true
     fork false
     last_build_at { Time.now }
     pushed_at "2011-11-23 22:48:10"
