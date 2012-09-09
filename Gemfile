@@ -72,6 +72,7 @@ group :development do
   gem 'capistrano'
   gem 'capistrano_colors'
   gem 'capistrano-ext'
+  gem 'rvm-capistrano'
 
   gem 'quiet_assets'
 
