@@ -8,6 +8,7 @@ gem 'rails'
 gem 'mysql2'
 gem 'rails_best_practices', :git => "git://github.com/railsbp/rails_best_practices.git"
 gem 'haml'
+gem 'slim'
 gem 'simple_form'
 gem 'omniauth'
 gem 'omniauth-github'
