@@ -41,10 +41,6 @@ class Repository < ActiveRecord::Base
 
   attr_accessible :git_url, :name, :private, :fork, :rails, :description, :github_id, :html_url, :ssh_url, :github_name, :visible, :update_configs_url
 
-  def owner
-    owners.first
-  end
-
   def clone_url
     private? ? ssh_url : git_url
   end
