@@ -1,6 +1,3 @@
-set :rails_env, "production"
-set :deploy_to, "/home/huangzhi/sites/railsbp.com/production"
-
 after "deploy:symlink", "deploy:update_crontab:db"
 
 namespace :deploy do

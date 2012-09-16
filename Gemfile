@@ -71,7 +71,6 @@ group :development do
   # Deploy with Capistrano
   gem 'capistrano'
   gem 'capistrano_colors'
-  gem 'capistrano-ext'
   gem 'rvm-capistrano'
 
   gem 'quiet_assets'
