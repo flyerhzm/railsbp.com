@@ -25,6 +25,7 @@ class Build < ActiveRecord::Base
   after_destroy :remove_analyze_file
 
   attr_accessor :warnings
+  attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
 
   scope :completed, where(:aasm_state => "completed")
 
