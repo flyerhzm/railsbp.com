@@ -6,7 +6,7 @@ gem 'rails'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'rails_best_practices', :git => "git://github.com/railsbp/rails_best_practices.git"
+gem 'rails_best_practices', :github => "railsbp/rails_best_practices"
 gem 'haml'
 gem 'slim'
 gem 'simple_form'
@@ -24,7 +24,7 @@ gem 'git'
 gem 'cells'
 gem 'exception_notification'
 gem 'cancan'
-gem 'rails_admin', :git => 'git://github.com/sferik/rails_admin.git'
+gem 'rails_admin', :github => 'sferik/rails_admin'
 gem 'typhoeus'
 gem 'meta-tags', :require => 'meta_tags'
 gem 'css_sprite'
@@ -72,7 +72,6 @@ group :development do
   # Deploy with Capistrano
   gem 'capistrano'
   gem 'capistrano_colors'
-  gem 'capistrano-ext'
   gem 'rvm-capistrano'
 
   gem 'quiet_assets'

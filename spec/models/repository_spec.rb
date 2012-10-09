@@ -38,12 +38,6 @@ describe Repository do
       end
     end
 
-    context "owner" do
-      it "should equal to @owner" do
-        subject.owner.should == @owner
-      end
-    end
-
     context "#clone_url" do
       context "private" do
         subject { @repository.tap { |repository| repository.update_attribute(:private, false) } }
