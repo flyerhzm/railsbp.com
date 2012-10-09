@@ -6,16 +6,16 @@ GIT
 
 GIT
   remote: git://github.com/railsbp/rails_best_practices.git
-  revision: 39f4376d8bb1637617b6d0017378453ab5ee824d
+  revision: e7fb0884760bbd15e8f4b39a9b464c5f9627b08b
   specs:
-    rails_best_practices (1.9.1)
+    rails_best_practices (1.11.1)
       activesupport
       awesome_print
+      code_analyzer
       colored
       erubis
       i18n
       progressbar
-      sexp_processor
 
 GIT
   remote: git://github.com/sferik/rails_admin.git
@@ -68,7 +68,7 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.8)
     arel (3.0.2)
-    awesome_print (1.0.2)
+    awesome_print (1.1.0)
     bbenezech-nested_form (0.0.5)
     bcrypt-ruby (3.0.1)
     bootstrap-sass (2.0.1)
@@ -105,6 +105,8 @@ GEM
     childprocess (0.3.1)
       ffi (~> 1.0.6)
     chronic (0.6.7)
+    code_analyzer (0.2.0)
+      sexp_processor
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)

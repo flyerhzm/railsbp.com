@@ -60,8 +60,12 @@ class Build < ActiveRecord::Base
     Rails.root.join("builds", repository.github_name, "commit", last_commit_id).to_s
   end
 
-  def analyze_file
+  def html_output_file
     analyze_path + "/rbp.html"
+  end
+
+  def yaml_output_file
+    analyze_path + "/rbp.yml"
   end
 
   def template_file
@@ -78,33 +82,32 @@ class Build < ActiveRecord::Base
 
   def analyze
     start_time = Time.now
-    FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
-    FileUtils.cd(analyze_path)
-    g = Git.clone(repository.clone_url, repository.name)
-    Dir.chdir(repository.name) { g.reset_hard(last_commit_id) }
-    FileUtils.cp(repository.config_file_path, config_directory_path)
-    rails_best_practices = RailsBestPractices::Analyzer.new("#{analyze_path}/#{repository.name}",
-                                                            "format"         => "html",
-                                                            "silent"         => true,
-                                                            "output-file"    => analyze_file,
-                                                            "with-github"    => true,
-                                                            "github-name"    => repository.github_name,
-                                                            "last-commit-id" => last_commit_id,
-                                                            "with-git"       => true,
-                                                            "template"       => template_file
-                                                           )
-    rails_best_practices.errors_filter_block = lambda do |errors|
-      errors.delete_if { |error| error.git_commit.blank? }
-      errors.each do |error|
-        unless last_errors["#{error.short_filename} #{error.message}"] == error.git_commit
-          error.highlight = true
-        end
-      end
-     end
-    rails_best_practices.analyze
-    rails_best_practices.output
+    system("mkdir", analyze_path)
+    system("cd", analyze_path)
+    system("git", "clone", repository.clone_url)
+    system("cd", repository.name)
+    system("git", "reset", "--hard", last_commit_id)
+    system("cp", repository.config_file_path, config_directory_path)
+    system("rails_best_practices", "--format yaml",
+                                   "--silent",
+                                   "--output-file #{yaml_output_file}",
+                                   "--with-git",
+                                   "#{analyze_path}/#{repository.name}")
+    current_errors.each do |error|
+      error['highlight'] = (last_errors_memo[error.short_filename + error.message] != error.git_commit)
+    end
+    File.open(html_output_file, 'w+') do |file|
+      eruby = Erubis::Eruby.new(File.read(template_file))
+      file.puts eruby.evaluate(
+        :errors         => current_errors,
+        :github         => true,
+        :github_name    => repository.github_name,
+        :last_commit_id => last_commit_id,
+        :git            => true
+      )
+    end
     end_time = Time.now
-    self.warning_count = rails_best_practices.runner.errors.size
+    self.warning_count = current_errors.size
     self.duration = end_time - start_time
     self.finished_at = end_time
     complete!
@@ -114,17 +117,49 @@ class Build < ActiveRecord::Base
     ExceptionNotifier::Notifier.background_exception_notification(e)
     fail!
   ensure
-    FileUtils.rm_rf("#{analyze_path}/#{repository.name}")
+    system("rm", "-rf", "#{analyze_path}/#{repository.name}")
   end
   handle_asynchronously :analyze
 
   def proxy_analyze
     start_time = Time.now
     FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
-    errors = []
-    warnings.each do |warning|
-      warning['highlight'] = (last_errors[warning['short_filename'] + warning['message']] != warning['git_commit'])
-      errors << RailsBestPractices::Core::Error.new(
+    File.open(html_output_file, 'w+') do |file|
+      eruby = Erubis::Eruby.new(File.read(template_file))
+      file.puts eruby.evaluate(
+        :errors         => remote_errors,
+        :github         => true,
+        :github_name    => repository.github_name,
+        :last_commit_id => last_commit_id,
+        :git            => true
+      )
+    end
+    end_time = Time.now
+    self.warning_count = remote_errors.size
+    self.duration = end_time - start_time
+    self.finished_at = end_time
+    complete!
+    UserMailer.notify_build_success(self).deliver
+  end
+
+  def current_errors
+    @current_errors ||= self.load_errors
+  end
+
+  def last_errors
+    @last_errors ||= repository.builds.where("id < ?", self.id).completed.last.load_errors
+  end
+
+  def last_errors_memo
+    @last_errors_memo ||= last_errors.inject({}) do |memo, error|
+      memo[error.short_filename + error.message] = error.git_commit
+    end
+  end
+
+  def remote_errors
+    @remote_errors ||= warnings.map do |warning|
+      warning['highlight'] = (last_errors_memo[warning['short_filename'] + warning['message']] != warning['git_commit'])
+      RailsBestPractices::Core::Error.new(
         :filename => warning['short_filename'],
         :line_number => warning['line_number'],
         :message => warning['message'],
@@ -135,36 +170,19 @@ class Build < ActiveRecord::Base
         :highlight => warning['highlight']
       )
     end
-    File.open(analyze_file, 'w+') do |file|
-      eruby = Erubis::Eruby.new(File.read(template_file))
-      file.puts eruby.evaluate(
-        :errors         => errors,
-        :github         => true,
-        :github_name    => repository.github_name,
-        :last_commit_id => last_commit_id,
-        :git            => true
-      )
-    end
-    end_time = Time.now
-    self.warning_count = warnings.size
-    self.duration = end_time - start_time
-    self.finished_at = end_time
-    complete!
-    UserMailer.notify_build_success(self).deliver
   end
 
-  def last_errors
-    @last_errors ||= begin
-      last_errors = {}
-      last_build = repository.builds.where("id < ?", self.id).completed.last
-      if last_build
-        last_doc = Nokogiri::HTML(open(last_build.analyze_file))
-        last_doc.css("table tbody tr").each do |tr|
-          filename, _, message, git_commit, _ = tr.css("td").map { |td| td.text.strip }
-          last_errors["#{filename} #{message}"] = git_commit
-        end
-      end
-      last_errors
+  def load_errors
+    YAML.dump_file(self.yaml_output_file).map do |error|
+      RailsBestPractices::Core::Error.new(
+        :filename => error['filename'],
+        :line_number => error['line_number'],
+        :message => error['message'],
+        :type => error['type'],
+        :url => error['url'],
+        :git_commit => error['git_commit'],
+        :git_username => error['git_username']
+      )
     end
   end
 

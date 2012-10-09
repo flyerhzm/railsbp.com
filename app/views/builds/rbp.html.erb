@@ -31,13 +31,8 @@
       <td class="message">
         <a href="<%= error.url %>" target="_blank"><%= error.message %></a>
       </td>
-      <% if @hg %>
-        <td class="hg_commit"><%= error.hg_commit %></td>
-        <td class="hg_usename"><%= error.hg_username %></td>
-      <% elsif @git %>
-        <td class="git_commit"><%= error.git_commit %></td>
-        <td class="git_usename"><%= error.git_username %></td>
-      <% end %>
+      <td class="git_commit"><%= error.git_commit %></td>
+      <td class="git_usename"><%= error.git_username %></td>
     </tr>
   <% end %>
   </tbody>
