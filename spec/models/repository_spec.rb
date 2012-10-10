@@ -29,6 +29,10 @@ describe Repository do
         Build.any_instance.expects(:run!)
         lambda { subject.generate_build("develop", "id" => "987654321", "message" => "commit message") }.should change(subject.builds, :count).by(1)
       end
+
+      it "should do nothing if commit if nil" do
+        subject.generate_build("develop", nil).should be_nil
+      end
     end
 
     context "#generate_proxy_build" do
