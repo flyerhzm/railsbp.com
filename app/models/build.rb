@@ -82,10 +82,11 @@ class Build < ActiveRecord::Base
 
   def analyze
     start_time = Time.now
-    system("mkdir", analyze_path)
-    system("cd", analyze_path)
+    system("mkdir", "-p", analyze_path)
+    Dir.chdir(analyze_path)
     system("git", "clone", repository.clone_url)
-    system("cd", repository.name)
+    system("rm", "#{repository.name}/.rvmrc")
+    Dir.chdir(repository.name)
     system("git", "reset", "--hard", last_commit_id)
     system("cp", repository.config_file_path, config_directory_path)
     system("rails_best_practices", "--format yaml",
@@ -94,7 +95,7 @@ class Build < ActiveRecord::Base
                                    "--with-git",
                                    "#{analyze_path}/#{repository.name}")
     current_errors.each do |error|
-      error['highlight'] = (last_errors_memo[error.short_filename + error.message] != error.git_commit)
+      error.highlight = (last_errors_memo[error.short_filename + error.message] != error.git_commit)
     end
     File.open(html_output_file, 'w+') do |file|
       eruby = Erubis::Eruby.new(File.read(template_file))
@@ -110,12 +111,12 @@ class Build < ActiveRecord::Base
     self.warning_count = current_errors.size
     self.duration = end_time - start_time
     self.finished_at = end_time
-    complete!
+    self.complete!
     self.repository.touch(:last_build_at)
     UserMailer.notify_build_success(self).deliver
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e)
-    fail!
+    self.fail!
   ensure
     system("rm", "-rf", "#{analyze_path}/#{repository.name}")
   end
@@ -138,7 +139,7 @@ class Build < ActiveRecord::Base
     self.warning_count = remote_errors.size
     self.duration = end_time - start_time
     self.finished_at = end_time
-    complete!
+    self.complete!
     UserMailer.notify_build_success(self).deliver
   end
 
@@ -152,7 +153,7 @@ class Build < ActiveRecord::Base
 
   def last_errors_memo
     @last_errors_memo ||= last_errors.inject({}) do |memo, error|
-      memo[error.short_filename + error.message] = error.git_commit
+      memo[error.short_filename + error.message] = error.git_commit; memo
     end
   end
 
@@ -173,16 +174,10 @@ class Build < ActiveRecord::Base
   end
 
   def load_errors
-    YAML.dump_file(self.yaml_output_file).map do |error|
-      RailsBestPractices::Core::Error.new(
-        :filename => error['filename'],
-        :line_number => error['line_number'],
-        :message => error['message'],
-        :type => error['type'],
-        :url => error['url'],
-        :git_commit => error['git_commit'],
-        :git_username => error['git_username']
-      )
+    if File.exists? self.yaml_output_file
+      YAML.load_file(self.yaml_output_file)
+    else
+      []
     end
   end
 

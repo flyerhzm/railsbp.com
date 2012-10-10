@@ -2,6 +2,7 @@ module Support
   module BuildHelper
     def build_analyze_success
       Build.any_instance.stubs(:system)
+      Dir.stubs(:chdir)
       Build.any_instance.stubs(:last_errors).returns([])
       Build.any_instance.stubs(:current_errors).returns([])
       mailer = mock(:deliver)
@@ -12,8 +13,7 @@ module Support
 
     def build_analyze_failure
       Build.any_instance.stubs(:system)
-      Build.any_instance.stubs(:current_errors).returns([])
-      File.expects(:open).raises()
+      Dir.stubs(:chdir).raises()
       ExceptionNotifier::Notifier.expects(:background_exception_notification)
       work_off
     end
