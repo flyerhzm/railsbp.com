@@ -144,7 +144,10 @@ class Build < ActiveRecord::Base
   end
 
   def last_errors
-    @last_errors ||= repository.builds.where("id < ?", self.id).completed.last.load_errors
+    @last_errors ||= begin
+                       last_build = repository.builds.where("id < ?", self.id).completed.last
+                       last_build ? last_build.load_errors : []
+                     end
   end
 
   def last_errors_memo
