@@ -118,27 +118,6 @@ class Build < ActiveRecord::Base
   end
   handle_asynchronously :analyze
 
-  def proxy_analyze
-    start_time = Time.now
-    FileUtils.mkdir_p(analyze_path) unless File.exist?(analyze_path)
-    File.open(html_output_file, 'w+') do |file|
-      eruby = Erubis::Eruby.new(File.read(template_file))
-      file.puts eruby.evaluate(
-        :errors         => remote_errors,
-        :github         => true,
-        :github_name    => repository.github_name,
-        :last_commit_id => last_commit_id,
-        :git            => true
-      )
-    end
-    end_time = Time.now
-    self.warning_count = remote_errors.size
-    self.duration = end_time - start_time
-    self.finished_at = end_time
-    self.complete!
-    UserMailer.notify_build_success(self).deliver
-  end
-
   def current_errors
     @current_errors ||= self.load_errors
   end
@@ -153,22 +132,6 @@ class Build < ActiveRecord::Base
   def last_errors_memo
     @last_errors_memo ||= last_errors.inject({}) do |memo, error|
       memo[error.short_filename + error.message] = error.git_commit; memo
-    end
-  end
-
-  def remote_errors
-    @remote_errors ||= warnings.map do |warning|
-      warning['highlight'] = (last_errors_memo[warning['short_filename'] + warning['message']] != warning['git_commit'])
-      RailsBestPractices::Core::Error.new(
-        :filename => warning['short_filename'],
-        :line_number => warning['line_number'],
-        :message => warning['message'],
-        :type => warning['type'],
-        :url => warning['url'],
-        :git_commit => warning['git_commit'],
-        :git_username => warning['git_username'],
-        :highlight => warning['highlight']
-      )
     end
   end
 

@@ -56,30 +56,9 @@ class RepositoriesController < ApplicationController
     render text: "success"
   end
 
-  def sync_proxy
-    render text: "not authenticate" and return if params[:token].blank?
-
-    repository = Repository.where(html_url: params[:repository_url]).first
-    render text: "not authenticate" and return unless repository
-    render text: "not authenticate" and return unless repository.authentication_token == params[:token]
-
-    if params[:error].present?
-      raise Exception.new(params[:error])
-    else
-      errors = ActiveSupport::JSON.decode(params[:result])["errors"]
-      last_commit = ActiveSupport::JSON.decode(params[:last_commit])
-      repository.generate_proxy_build(branch_name, last_commit, errors)
-      render text: "success"
-    end
-  end
-
   protected
     def load_repository
       @repository = Repository.find(params[:id])
-    end
-
-    def branch_name
-      params[:ref].split("/").last
     end
 
     def force_input_email

@@ -66,13 +66,6 @@ class Repository < ActiveRecord::Base
     end
   end
 
-  def generate_proxy_build(branch, commit, errors)
-    build = self.builds.build(branch: branch, last_commit_id: commit["id"], last_commit_message: commit["message"], warnings: errors)
-    if build.save
-      build.proxy_analyze
-    end
-  end
-
   def sync_collaborators
     Delayed::Job.enqueue(DelayedJob::SyncCollaborators.new(self.id, User.current.id))
   end

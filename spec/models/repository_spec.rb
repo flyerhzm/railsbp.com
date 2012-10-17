@@ -35,13 +35,6 @@ describe Repository do
       end
     end
 
-    context "#generate_proxy_build" do
-      it "should create a build and call proxy_analyze" do
-        Build.any_instance.expects(:proxy_analyze)
-        lambda { subject.generate_proxy_build("develop", {"id" => "987654321", "message" => "commit message"}, []) }.should change(subject.builds, :count).by(1)
-      end
-    end
-
     context "#clone_url" do
       context "private" do
         subject { @repository.tap { |repository| repository.update_attribute(:private, false) } }
