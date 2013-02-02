@@ -16,12 +16,5 @@
 //= require railsbp_bootstrap
 //
 //= require builds
-//= require collaborators
-//= require configs
-//= require contacts
-//= require home
-//= require pages
-//= require plans
-//= require repositories
 //= require google_analytics
 //= require addthis
