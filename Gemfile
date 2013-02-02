@@ -2,11 +2,8 @@ source 'http://rubygems.org'
 
 gem 'rails'
 
-# Bundle edge Rails instead:
-# gem 'rails',     :git => 'git://github.com/rails/rails.git'
-
 gem 'mysql2'
-gem 'rails_best_practices', :github => "railsbp/rails_best_practices"
+gem 'rails_best_practices'
 gem 'haml'
 gem 'slim'
 gem 'simple_form'
@@ -24,7 +21,7 @@ gem 'git'
 gem 'cells'
 gem 'exception_notification'
 gem 'cancan'
-gem 'rails_admin', :github => 'sferik/rails_admin'
+gem 'rails_admin'
 gem 'typhoeus'
 gem 'meta-tags', :require => 'meta_tags'
 gem 'css_sprite'
@@ -32,11 +29,8 @@ gem 'whenever', :require => false
 gem 'multiple_mailers'
 gem 'high_voltage'
 gem 'nokogiri'
-
 gem 'newrelic_rpm'
 
-# Gems used only for assets and not required
-# in production environments by default.
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
@@ -45,23 +39,14 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
 group :production do
   gem 'therubyracer'
 end
 
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
 group :development do
   gem 'thin'
   gem 'rb-fsevent'
-  gem 'annotate', :git => "git://github.com/ctran/annotate_models.git"
+  gem 'annotate'
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rails'
@@ -69,18 +54,15 @@ group :development do
   gem 'guard-delayed'
   gem 'guard-annotate'
 
-  # Deploy with Capistrano
   gem 'capistrano'
   gem 'capistrano_colors'
   gem 'rvm-capistrano'
 
   gem 'quiet_assets'
-
-  gem 'brakeman'
 end
 
 group :test do
-  gem 'spork', '1.0.0.rc2'
+  gem 'spork', '1.0.0.rc3'
   gem 'spork-rails'
   gem 'mocha'
   gem 'rspec'
