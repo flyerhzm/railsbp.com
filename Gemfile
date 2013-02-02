@@ -56,6 +56,7 @@ group :development do
   gem 'capistrano'
   gem 'capistrano_colors'
   gem 'rvm-capistrano'
+  gem 'turbo-sprockets-rails3'
 
   gem 'quiet_assets'
 end
