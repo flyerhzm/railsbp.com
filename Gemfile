@@ -22,7 +22,6 @@ gem 'cells'
 gem 'exception_notification'
 gem 'cancan'
 gem 'rails_admin'
-gem 'typhoeus'
 gem 'meta-tags', :require => 'meta_tags'
 gem 'css_sprite'
 gem 'whenever', :require => false

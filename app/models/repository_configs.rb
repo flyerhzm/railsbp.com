@@ -28,11 +28,4 @@ class RepositoryConfigs
   def read
     YAML.load_file(@repository.config_file_path)
   end
-
-  def notify_remote(configs)
-    if @repository.update_configs_url?
-      Typhoeus::Request.post(@repository.update_configs_url, :params => {:configs => configs})
-    end
-  end
-  handle_asynchronously :notify_remote
 end

@@ -17,7 +17,5 @@
   = form.input :git_url, input_html: {class: "span5"}
   = form.input :ssh_url, input_html: {class: "span5"}
   = form.input :visible, label: "Visibility #{link_to '', '#', class: 'question_mark_icon', rel: 'tooltip', title: 'analyze result is visible to everyone if check, otherwise it is accessible only by collaborators'}".html_safe, hint: "if the repository is visible to everyone"
-  - if @repository.private?
-    = form.input :update_configs_url, label: "Update configs url #{link_to '', '#', class: 'question_mark_icon', rel: 'tooltip', title: 'update configs url is used to update rails_best_practices.yml on proxy server'}".html_safe, input_html: {class: "span5"}
   .form-actions
     = form.submit class: "btn btn-primary"

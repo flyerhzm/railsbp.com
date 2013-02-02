@@ -18,7 +18,6 @@
 #  builds_count         :integer(4)      default(0)
 #  authentication_token :string(255)
 #  visible              :boolean(1)      default(FALSE), not null
-#  update_configs_url   :string(255)
 #  collaborators_count  :integer(4)      default(0), not null
 #  last_build_at        :datetime
 #
@@ -39,7 +38,7 @@ class Repository < ActiveRecord::Base
 
   scope :visible, where(:visible => true)
 
-  attr_accessible :git_url, :name, :private, :fork, :rails, :description, :github_id, :html_url, :ssh_url, :github_name, :visible, :update_configs_url
+  attr_accessible :git_url, :name, :private, :fork, :rails, :description, :github_id, :html_url, :ssh_url, :github_name, :visible
 
   def clone_url
     private? ? ssh_url : git_url
