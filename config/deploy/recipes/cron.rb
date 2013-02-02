@@ -1,4 +1,4 @@
-after "deploy:symlink", "deploy:update_crontab:db"
+after "deploy:create_symlink", "deploy:update_crontab:db"
 
 namespace :deploy do
   namespace :update_crontab do
