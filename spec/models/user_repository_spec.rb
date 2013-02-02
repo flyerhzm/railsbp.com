@@ -4,8 +4,8 @@ describe UserRepository do
   it { should belong_to(:user) }
   it { should belong_to(:repository) }
 
-  let(:user) { Factory(:user) }
-  let(:repository) { Factory(:repository) }
+  let(:user) { FactoryGirl.create(:user) }
+  let(:repository) { FactoryGirl.create(:repository) }
 
   before do
     skip_repository_callbacks

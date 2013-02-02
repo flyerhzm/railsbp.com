@@ -10,7 +10,7 @@ describe ContactsController do
     end
 
     it "should assign contact with current_user" do
-      user = Factory(:user)
+      user = FactoryGirl.create(:user)
       sign_in user
       get :new
 

@@ -7,7 +7,6 @@ describe HeaderCell do
     context "rendering display without current_user" do
       subject { render_cell(:header, :display, nil, nil) }
 
-      it { should have_selector("h3", :content => "Railsbp") }
       it { should have_link("Home") }
       it { should have_link("About") }
       it { should have_link("Contact") }
@@ -16,11 +15,10 @@ describe HeaderCell do
     end
 
     context "rendering display with current_user" do
-      let(:user) { Factory(:user) }
-      let(:repository) { Factory(:repository) }
+      let(:user) { FactoryGirl.create(:user) }
+      let(:repository) { FactoryGirl.create(:repository) }
       subject { render_cell(:header, :display, user, repository) }
 
-      it { should have_selector("h3", :content => "Railsbp") }
       it { should have_link("Home") }
       it { should have_link("About") }
       it { should have_link("Contact") }

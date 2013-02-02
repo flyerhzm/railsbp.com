@@ -5,29 +5,29 @@ describe RepositoryCell do
     before { skip_repository_callbacks }
 
     context "rendering tabs" do
-      subject { render_cell(:repository, :tabs, "configs", Factory(:repository)) }
+      subject { render_cell(:repository, :tabs, "configs", FactoryGirl.create(:repository)) }
 
       it { should have_link("Overview") }
-      it { should have_selector("li.active a", :content => "Configurations") }
+      it { should have_css("li.active a", :text => "Configurations") }
       it { should have_link("Collaborators") }
     end
 
     context "rendering configurations_form" do
-      let(:repository) { Factory(:repository) }
+      let(:repository) { FactoryGirl.create(:repository) }
       before do
         repository.expects(:config_file_path).returns("/tmp")
         YAML.expects(:load_file).with("/tmp")
       end
       subject { render_cell(:repository, :configurations_form, repository) }
 
-      it { should have_selector("form") }
+      it { should have_css("form") }
     end
 
     context "renderding public" do
       before do
-        public_repository = Factory(:repository, name: "public", visible: true)
-        private_repository = Factory(:repository, name: "private", visible: false)
-        last_build = Factory(:build, repository: public_repository, duration: 20)
+        public_repository = FactoryGirl.create(:repository, name: "public", visible: true)
+        private_repository = FactoryGirl.create(:repository, name: "private", visible: false)
+        last_build = FactoryGirl.create(:build, repository: public_repository, duration: 20)
         last_build.update_attribute(:position, 5)
       end
       subject { render_cell(:repository, :public) }

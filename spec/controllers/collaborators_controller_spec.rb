@@ -3,16 +3,16 @@ require 'spec_helper'
 describe CollaboratorsController do
   before do
     skip_repository_callbacks
-    @repository = Factory(:repository)
+    @repository = FactoryGirl.create(:repository)
 
-    user = Factory(:user)
+    user = FactoryGirl.create(:user)
     sign_in user
   end
 
   context "GET :index" do
     it "should list all collaborators" do
-      collaborator1 = Factory(:user)
-      collaborator2 = Factory(:user)
+      collaborator1 = FactoryGirl.create(:user)
+      collaborator2 = FactoryGirl.create(:user)
       @repository.users << collaborator1
       @repository.users << collaborator2
 

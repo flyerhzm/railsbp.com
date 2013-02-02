@@ -13,9 +13,9 @@ describe Repository do
 
     before do
       skip_repository_callbacks
-      @owner = Factory(:user)
+      @owner = FactoryGirl.create(:user)
       User.current = @owner
-      @repository = Factory(:repository,
+      @repository = FactoryGirl.create(:repository,
                       github_name: "railsbp/railsbp.com",
                       git_url: "git://github.com/railsbp/railsbp.com.git",
                       ssh_url: "git@github.com:railsbp/railsbp.com.git"
@@ -61,14 +61,14 @@ describe Repository do
 
     context "#sync_collaborators" do
       before do
-        @flyerhzm = Factory(:user, github_uid: 66836)
-        @scott = Factory(:user, github_uid: 366)
-        @ben = Factory(:user, github_uid: 149420)
+        @flyerhzm = FactoryGirl.create(:user, github_uid: 66836)
+        @scott = FactoryGirl.create(:user, github_uid: 366)
+        @ben = FactoryGirl.create(:user, github_uid: 149420)
         @repository.users << @flyerhzm
         @repository.users << @scott
         User.current = @flyerhzm
         collaborators = File.read(Rails.root.join("spec/fixtures/collaborators.json").to_s)
-        stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com/collaborators").to_return(body: collaborators)
+        stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com/collaborators").to_return(body: MultiJson.decode(collaborators))
         @repository.sync_collaborators
         Delayed::Worker.new.work_off
       end
@@ -87,7 +87,7 @@ describe Repository do
     context "#add_collaborator" do
       before do
         collaborator = File.read(Rails.root.join("spec/fixtures/collaborator.json").to_s)
-        stub_request(:get, "https://api.github.com/users/flyerhzm").to_return(body: collaborator)
+        stub_request(:get, "https://api.github.com/users/flyerhzm").to_return(body: MultiJson.decode(collaborator))
       end
 
       it "should include new created user and owned by user" do
@@ -100,7 +100,7 @@ describe Repository do
 
     context "#delete_collaborator" do
       before do
-        @flyerhzm = Factory(:user, github_uid: 66836)
+        @flyerhzm = FactoryGirl.create(:user, github_uid: 66836)
         @repository.users << @flyerhzm
       end
 
@@ -114,9 +114,9 @@ describe Repository do
 
     context "#collaborator_ids" do
       before do
-        @flyerhzm = Factory(:user, github_uid: 66836)
-        @scott = Factory(:user, github_uid: 366)
-        @ben = Factory(:user, github_uid: 149420)
+        @flyerhzm = FactoryGirl.create(:user, github_uid: 66836)
+        @scott = FactoryGirl.create(:user, github_uid: 366)
+        @ben = FactoryGirl.create(:user, github_uid: 149420)
         @repository.users << @flyerhzm
         @repository.users << @scott
       end
@@ -126,10 +126,10 @@ describe Repository do
 
     context "#recipient_emails" do
       before do
-        @user1 = Factory(:user, email: "user1@gmail.com")
-        @user2 = Factory(:user, email: "user2@gmail.com")
-        @fake_user = Factory(:user, email: "user@fakemail.com")
-        @repository = Factory(:repository)
+        @user1 = FactoryGirl.create(:user, email: "user1@gmail.com")
+        @user2 = FactoryGirl.create(:user, email: "user2@gmail.com")
+        @fake_user = FactoryGirl.create(:user, email: "user@fakemail.com")
+        @repository = FactoryGirl.create(:repository)
         @repository.users << @user1
         @repository.users << @user2
         @repository.users << @fake_user
@@ -144,14 +144,14 @@ describe Repository do
   context "#copy_config_file" do
     before { skip_repository_callbacks(:except => :copy_config_file) }
     it "should copy config file if config path exists" do
-      repository = Factory.build(:repository)
+      repository = FactoryGirl.build(:repository)
       File.expects(:exist?).with(repository.config_path).returns(true)
       FileUtils.expects(:cp).with(repository.default_config_file_path, repository.config_file_path)
       repository.save
     end
 
     it "should create config path and copy config file if config path does not exist" do
-      repository = Factory.build(:repository)
+      repository = FactoryGirl.build(:repository)
       File.expects(:exist?).with(repository.config_path).returns(false)
       FileUtils.expects(:mkdir_p).with(repository.config_path)
       FileUtils.expects(:cp).with(repository.default_config_file_path, repository.config_file_path)
@@ -161,7 +161,7 @@ describe Repository do
 
   context "#reset_authentication_token" do
     before { skip_repository_callbacks(:except => :reset_authentication_token) }
-    subject { Factory(:repository) }
+    subject { FactoryGirl.create(:repository) }
     its(:authentication_token) { should_not be_nil }
   end
 
@@ -169,10 +169,10 @@ describe Repository do
     before do
       skip_repository_callbacks(:except => :sync_github)
       repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
-      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: repo)
+      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: MultiJson.decode(repo))
     end
 
-    subject { Factory(:repository, github_name: "railsbp/railsbp.com") }
+    subject { FactoryGirl.create(:repository, github_name: "railsbp/railsbp.com") }
 
     its(:html_url) { should == "https://github.com/railsbp/railsbp.com" }
     its(:git_url) { should == "git://github.com/railsbp/railsbp.com.git" }
@@ -193,7 +193,7 @@ describe Repository do
     it "should call github" do
       stub_request(:post, "https://api.github.com/repos/railsbp/railsbp.com/hooks").
         with(body: {name: "railsbp", config: { railsbp_url: "http://railsbp.com", token:"1234567890" }, events: ["push"], active: true})
-      Factory(:repository, github_name: "railsbp/railsbp.com", authentication_token: "1234567890")
+      FactoryGirl.create(:repository, github_name: "railsbp/railsbp.com", authentication_token: "1234567890")
     end
   end
 end

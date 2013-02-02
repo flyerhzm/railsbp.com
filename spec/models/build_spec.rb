@@ -6,13 +6,13 @@ describe Build do
   before { skip_repository_callbacks }
 
   context "#short_commit_id" do
-    subject { Factory(:build, :last_commit_id => "1234567890") }
+    subject { FactoryGirl.create(:build, :last_commit_id => "1234567890") }
     its(:short_commit_id) { should == "1234567" }
   end
 
   context "#analyze_path" do
     before do
-      @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
     its(:analyze_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s }
@@ -20,7 +20,7 @@ describe Build do
 
   context "#html_output_file" do
     before do
-      @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
     its(:html_output_file) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.html").to_s }
@@ -28,20 +28,20 @@ describe Build do
 
   context "#yaml_output_file" do
     before do
-      @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
     its(:yaml_output_file) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.yml").to_s }
   end
 
   context "#template_file" do
-    subject { @build = Factory(:build) }
+    subject { @build = FactoryGirl.create(:build) }
     its(:template_file) { should == Rails.root.join("app/views/builds/rbp.html.erb").to_s }
   end
 
   context "#run!" do
     before do
-      repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      repository = FactoryGirl.create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
       @build.run!
     end
@@ -63,7 +63,7 @@ describe Build do
 
   context "#rerun!" do
     before do
-      repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      repository = FactoryGirl.create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
       @build = repository.builds.create(last_commit_id: "987654321")
       @build.aasm_state = "failed"
       @build.save
@@ -80,7 +80,7 @@ describe Build do
 
   context "config_directory_path" do
     before do
-      @repository = Factory(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
+      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
     its(:config_directory_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/railsbp.com/config/").to_s }

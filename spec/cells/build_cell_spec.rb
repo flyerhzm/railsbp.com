@@ -5,56 +5,56 @@ describe BuildCell do
 
   context "cell rendering" do
     context "rendering tabs" do
-      let(:repository) { Factory(:repository) }
-      let(:build) { Factory(:build, :repository => repository) }
+      let(:repository) { FactoryGirl.create(:repository) }
+      let(:build) { FactoryGirl.create(:build, :repository => repository) }
 
       context "current" do
         subject { render_cell(:build, :tabs, "current", repository) }
 
         it { should have_link("Edit") }
-        it { should have_selector("li.active", :content => "Current") }
+        it { should have_css("li.active", :text => "Current") }
       end
 
       context "history" do
         subject { render_cell(:build, :tabs, "history", repository) }
 
         it { should have_link("Edit") }
-        it { should have_selector("li.active", :content => "Current") }
+        it { should have_css("li.active", :text => "History") }
       end
 
       context "build" do
-        subject { render_cell(:build, :tabs, "history", repository, build) }
+        subject { render_cell(:build, :tabs, "build", repository, build) }
 
         it { should have_link("Edit") }
-        it { should have_selector("li.active", :content => "Build") }
+        it { should have_css("li.active", :text => "Build #1") }
       end
     end
 
     context "rendering history_links" do
-      let(:repository) { Factory(:repository) }
+      let(:repository) { FactoryGirl.create(:repository) }
 
       context "last 10" do
         subject { render_cell(:build, :history_links, repository, 10) }
 
-        it { should have_selector("a.active", :content => "Last 10 Builds") }
+        it { should have_css("a.active", :text => "Last 10 Builds") }
       end
 
       context "last 50" do
         subject { render_cell(:build, :history_links, repository, 50) }
 
-        it { should have_selector("a.active", :content => "Last 50 Builds") }
+        it { should have_css("a.active", :text => "Last 50 Builds") }
       end
 
       context "last 100" do
         subject { render_cell(:build, :history_links, repository, 100) }
 
-        it { should have_selector("a.active", :content => "Last 100 Builds") }
+        it { should have_css("a.active", :text => "Last 100 Builds") }
       end
     end
 
     context "rendering content" do
-      let(:repository) { Factory(:repository) }
-      let(:build) { Factory(:build, :repository => repository, :warning_count => 10).tap { |build| build.run!; build.complete! } }
+      let(:repository) { FactoryGirl.create(:repository) }
+      let(:build) { FactoryGirl.create(:build, :repository => repository, :warning_count => 10).tap { |build| build.run!; build.complete! } }
       before do
         File.stubs(:read).returns("")
       end

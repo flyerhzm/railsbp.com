@@ -7,7 +7,7 @@ describe AccountCell do
       subject { render_cell(:account, :tabs, "plans") }
 
       it { should have_link("Account Overview") }
-      it { should have_selector("li.active a", :content => "Plan & Billing") }
+      it { should have_css("li.active a", :text => "Plan & Billing") }
     end
 
   end

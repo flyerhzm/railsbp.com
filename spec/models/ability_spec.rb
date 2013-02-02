@@ -5,9 +5,9 @@ describe Ability do
 
   context "new user" do
     before do
-      User.current = Factory(:user)
-      @visible_repository = Factory(:repository, visible: true)
-      @private_repository = Factory(:repository, visible: false)
+      User.current = FactoryGirl.create(:user)
+      @visible_repository = FactoryGirl.create(:repository, visible: true)
+      @private_repository = FactoryGirl.create(:repository, visible: false)
       @ability = Ability.new(nil)
     end
 
@@ -22,11 +22,11 @@ describe Ability do
 
   context "user" do
     before do
-      @user = Factory(:user)
-      @user_repository = Factory(:repository, visible: false)
-      @other_repository = Factory(:repository, visible: false)
+      @user = FactoryGirl.create(:user)
+      @user_repository = FactoryGirl.create(:repository, visible: false)
+      @other_repository = FactoryGirl.create(:repository, visible: false)
       @user.repositories << @user_repository
-      @own_repository = Factory(:repository, visible: false)
+      @own_repository = FactoryGirl.create(:repository, visible: false)
       @user.own_repositories << @own_repository
       @ability = Ability.new(@user)
     end
