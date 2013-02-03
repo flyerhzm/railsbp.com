@@ -18,5 +18,5 @@
     %h3 Analyze Result
     %p.warning-count Warning count: #{@build.warning_count}
     = link_to "Customize Checks", "#", :id => "customizeChecks", :class => "trigger plus_icon"
-    %ul#checksPanel.hidden
+    %ul#checksPanel
     = render :inline => File.read(@build.html_output_file)

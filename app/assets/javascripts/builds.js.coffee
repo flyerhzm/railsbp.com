@@ -8,6 +8,7 @@ $ ->
       if index > 0 && $.inArray($(item).attr("class"), checks) == -1
         checks.push $(item).attr("class")
     checksPanel = $("#checksPanel")
+    checksPanel.hide()
     $.each(checks, (index, check) ->
       checksPanel.append($("<li><input id='"+check+"' type='checkbox' value='"+check+"' /><label for='"+check+"'>"+check+"</label></li>"))
     )

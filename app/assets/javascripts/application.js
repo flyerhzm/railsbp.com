@@ -6,15 +6,16 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap-tab
-//= require bootstrap-modal
-//= require bootstrap-dropdown
-//= require bootstrap-alert
-//= require bootstrap-button
-//= require bootstrap-tooltip
+//= require twitter/bootstrap
+//= require twitter/bootstrap/bootstrap-tab
+//= require twitter/bootstrap/bootstrap-modal
+//= require twitter/bootstrap/bootstrap-dropdown
+//= require twitter/bootstrap/bootstrap-alert
+//= require twitter/bootstrap/bootstrap-button
+//= require twitter/bootstrap/bootstrap-tooltip
 //= require highstock
-//= require railsbp_bootstrap
+//= require bootstrap
 //
 //= require builds
-//= require google_analytics
 //= require addthis
+//= require google_analytics
