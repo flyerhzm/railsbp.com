@@ -18,16 +18,6 @@ role :web, "app.railsbp.com"                          # Your HTTP server, Apache
 role :app, "app.railsbp.com"                          # This may be the same as your `Web` server
 role :db,  "db.railsbp.com", :primary => true # This is where Rails migrations will run
 
-before "deploy:assets:precompile", "symlinks:create"
-
-namespace :symlinks do
-  task :create do
-    run "ln -nfs #{shared_path}/config/*.yml #{release_path}/config/"
-    run "ln -nfs #{shared_path}/builds #{release_path}/builds"
-    run "cd #{release_path}; bundle exec rails_best_practices -g"
-  end
-end
-
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
   task :start do ; end
