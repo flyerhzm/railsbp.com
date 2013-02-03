@@ -1,4 +1,8 @@
 RailsbpCom::Application.routes.draw do
+
+
+  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
+
   post '/' => 'repositories#sync'
   post '/sync_proxy' => 'repositories#sync_proxy'
   root :to => "home#index"
@@ -22,8 +26,4 @@ RailsbpCom::Application.routes.draw do
   end
   resources :contacts, only: [:new, :create]
   resources :plans, only: :index
-
-  mount RailsAdmin::Engine => '/admin', :as => 'rails_admin'
-
-  match ':controller/:action' => '#index', :as => :auto_complete, :constraints => { :action => /auto_complete_for_\S+/ }, :via => :get
 end
