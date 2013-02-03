@@ -14,6 +14,13 @@ class BuildsController < ApplicationController
     @build = @repository.builds.find(params[:id])
   end
 
+  def rebuild
+    @build = @repository.builds.find(params[:id])
+    @build.rerun!
+    flash["notice"] = "Rebuilding..."
+    redirect_to :action => :show
+  end
+
   protected
     def builds_count
       (params[:count] || 10).to_i

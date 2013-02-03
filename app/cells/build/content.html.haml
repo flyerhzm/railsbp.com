@@ -15,6 +15,7 @@
         %dd #{time_ago_in_words(@build.updated_at)} ago
         %dt Message
         %dd.message #{@build.last_commit_message}
+    = link_to "Rebuild", rebuild_repository_build_path(@build.repository, @build), :method => :put, :class => "btn btn-primary"
     %h3 Analyze Result
     %p.warning-count Warning count: #{@build.warning_count}
     = link_to "Customize Checks", "#", :id => "customizeChecks", :class => "trigger plus_icon"
