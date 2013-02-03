@@ -90,7 +90,7 @@ class Build < ActiveRecord::Base
     system("git", "reset", "--hard", last_commit_id)
     system("cp", repository.config_file_path, config_directory_path)
     system("rails_best_practices --format yaml --silent --output-file #{yaml_output_file} --with-git #{analyze_path}/#{repository.name}")
-    RailsBestPractices::Core::Runner = File.join(analyze_path, repository.name)
+    RailsBestPractices::Core::Runner.base_path = File.join(analyze_path, repository.name)
     current_errors.each do |error|
       error.highlight = (last_errors_memo[error.short_filename + error.message] != error.git_commit)
     end
