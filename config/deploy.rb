@@ -6,7 +6,7 @@ set :rvm_ruby_string, 'ruby-1.9.3-p194@railsbp.com'
 
 set :application, "railsbp.com"
 set :repository,  "git@github.com:railsbp/railsbp.com.git"
-set :rails_env, :production
+set :rails_env, "production"
 set :deploy_to, "/home/huangzhi/sites/railsbp.com/production"
 set :user, "huangzhi"
 set :use_sudo, false
