@@ -30,6 +30,8 @@ gem 'high_voltage'
 gem 'nokogiri'
 gem 'newrelic_rpm'
 
+gem 'puma'
+
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
@@ -43,7 +45,6 @@ group :production do
 end
 
 group :development do
-  gem 'thin'
   gem 'rb-fsevent'
   gem 'annotate'
   gem 'guard'
