@@ -14,6 +14,10 @@ Spork.prefork do
   require 'email_spec'
   require "cancan/matchers"
   require 'simplecov'
+  require 'mocha/setup'
+  require 'capybara/rails'
+  require 'capybara/rspec'
+  require 'shoulda/matchers'
 
   # Requires supporting ruby files with custom matchers and macros, etc,
   # in spec/support/ and its subdirectories.

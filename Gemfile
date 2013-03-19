@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 
 gem 'rails'
 
@@ -22,9 +22,9 @@ gem 'cells'
 gem 'exception_notification'
 gem 'cancan'
 gem 'rails_admin'
-gem 'meta-tags', :require => 'meta_tags'
+gem 'meta-tags', require: 'meta_tags'
 gem 'css_sprite'
-gem 'whenever', :require => false
+gem 'whenever', require: false
 gem 'multiple_mailers'
 gem 'high_voltage'
 gem 'nokogiri'
@@ -65,14 +65,14 @@ end
 group :test do
   gem 'spork', '1.0.0.rc3'
   gem 'spork-rails'
-  gem 'mocha'
+  gem 'mocha', require: false
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', require: false
   gem 'factory_girl'
-  gem 'factory_girl_rails', :require => false
+  gem 'factory_girl_rails', require: false
   gem 'cucumber'
-  gem 'cucumber-rails', :require => 'cucumber/rails'
+  gem 'cucumber-rails', require: 'cucumber/rails'
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
@@ -81,7 +81,7 @@ group :test do
   gem 'rspec-cells'
   gem 'email_spec'
 
-  gem 'simplecov', :require => false
+  gem 'simplecov', require: false
 
   gem 'rails3-generators'
 
