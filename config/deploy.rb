@@ -4,8 +4,6 @@ require 'bundler/capistrano'
 require 'rvm/capistrano'
 set :rvm_ruby_string, 'ruby-2.0.0-p0@railsbp.com'
 
-require 'puma/capistrano'
-
 set :application, "railsbp.com"
 set :repository,  "git@github.com:railsbp/railsbp.com.git"
 set :rails_env, "production"
@@ -27,5 +25,6 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     migrate
     cleanup
+    run "kill -s USR2 `cat #{shared_path}/pids/puma.pid`"
   end
 end
