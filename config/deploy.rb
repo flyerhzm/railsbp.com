@@ -25,6 +25,6 @@ namespace :deploy do
   task :restart, :roles => :app, :except => { :no_release => true } do
     migrate
     cleanup
-    run "kill -s USR2 `cat #{shared_path}/pids/puma.pid`"
+    run "sudo monit restart railsbp.com"
   end
 end
