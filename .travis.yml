@@ -9,3 +9,4 @@ before_script:
   - "bundle exec rake db:create"
   - "bundle exec rake db:schema:load"
   - "bundle exec rake secret"
+  - 'echo "RailsbpCom::Application.config.secret_token = '$(bundle exec rake secret)'" > config/initializers/secret_token.rb'
