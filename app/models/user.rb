@@ -41,17 +41,9 @@ class User < ActiveRecord::Base
   has_many :own_repositories, through: :user_repositories, source: :repository, conditions: ["own = ?", true]
 
   def self.find_for_github_oauth(data)
-    if user = User.find_by_github_uid(data.uid)
-      unless user.github_token?
-        import_github_data(user, data)
-        user.save
-      end
-      user
-    else # Create a user with a stub password.
-      user = User.new
-      import_github_data(user, data)
-      user.save
-    end
+    user = User.find_by_github_uid(data.uid) || User.new
+    import_github_data(user, data)
+    user.save
     user
   end
 
