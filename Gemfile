@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails'
 
-gem 'mysql2'
+gem 'mysql2', '~> 0.3.12b6'
 gem 'rails_best_practices'
 gem 'haml'
 gem 'slim'
