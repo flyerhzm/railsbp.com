@@ -1,4 +1,4 @@
-class ConfiguresController < ApplicationController
+class ConfigsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_repository
 

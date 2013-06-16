@@ -13,7 +13,7 @@ RailsbpCom::Application.routes.draw do
         put :rebuild
       end
     end
-    resource :configs, controller: "configures", only: [:edit, :update] do
+    resource :configs, only: [:edit, :update] do
       collection do
         put :sync
       end
