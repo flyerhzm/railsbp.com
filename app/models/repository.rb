@@ -103,7 +103,9 @@ class Repository < ActiveRecord::Base
   end
 
   def notify_privacy
-    UserMailer.notify_repository_privacy(self).deliver
+    if recipient_emails.present?
+      UserMailer.notify_repository_privacy(self).deliver
+    end
   end
 
   def to_param
