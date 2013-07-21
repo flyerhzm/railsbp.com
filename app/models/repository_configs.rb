@@ -22,7 +22,6 @@ class RepositoryConfigs
     File.open(@repository.config_file_path, 'w+') do |file|
       file.write(result.to_yaml)
     end
-    notify_remote(result.to_yaml)
   end
 
   def read
