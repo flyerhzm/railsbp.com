@@ -30,7 +30,7 @@ gem 'high_voltage'
 gem 'nokogiri'
 gem 'newrelic_rpm'
 
-gem 'puma', '2.0.0.b6'
+gem 'puma'
 
 group :assets do
   gem 'sass-rails'
