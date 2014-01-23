@@ -29,6 +29,7 @@ Spork.prefork do
   SimpleCov.start 'rails'
 
   RSpec.configure do |config|
+    config.include FactoryGirl::Syntax::Methods
     config.mock_with :mocha
 
     # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

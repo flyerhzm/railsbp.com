@@ -7,8 +7,8 @@ describe User do
   context "#add_repository" do
     before do
       skip_repository_callbacks
-      @user = FactoryGirl.create(:user, nickname: "flyerhzm", github_uid: 66836)
-      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/old")
+      @user = create(:user, nickname: "flyerhzm", github_uid: 66836)
+      @repository = create(:repository, github_name: "flyerhzm/old")
       @user.repositories << @repository
     end
 
@@ -34,11 +34,11 @@ describe User do
 
   context "#fakemail?" do
     context "flyerhzm" do
-      subject { FactoryGirl.create(:user, email: "flyerhzm@gmail.com") }
+      subject { create(:user, email: "flyerhzm@gmail.com") }
       its(:fakemail?) { should be_false }
     end
     context "flyerhzm-test" do
-      subject { FactoryGirl.create(:user, email: "flyerhzm-test@fakemail.com") }
+      subject { create(:user, email: "flyerhzm-test@fakemail.com") }
       its(:fakemail?) { should be_true }
     end
   end

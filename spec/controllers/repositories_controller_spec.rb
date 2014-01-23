@@ -5,10 +5,10 @@ describe RepositoriesController do
 
   context "GET :show" do
     it "should assign repository" do
-      user = FactoryGirl.create(:user)
-      repository = FactoryGirl.create(:repository)
+      user = create(:user)
+      repository = create(:repository)
       user.repositories << repository
-      build = FactoryGirl.create(:build, :repository => repository)
+      build = create(:build, :repository => repository)
       sign_in user
       get :show, id: repository.id
       response.should be_ok
@@ -18,7 +18,7 @@ describe RepositoriesController do
 
   context "GET :new" do
     it "should assign repository" do
-      user = FactoryGirl.create(:user, nickname: "flyerhzm")
+      user = create(:user, nickname: "flyerhzm")
       sign_in user
       get :new
       response.should be_ok
@@ -26,7 +26,7 @@ describe RepositoriesController do
     end
 
     it "should redirect to user/edit page if current_user didn't input email" do
-      user = FactoryGirl.create(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
+      user = create(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
       sign_in user
       get :new
       response.should redirect_to(edit_user_registration_path)
@@ -35,7 +35,7 @@ describe RepositoriesController do
 
   context "POST :create" do
     before do
-      user = FactoryGirl.create(:user, nickname: "flyerhzm")
+      user = create(:user, nickname: "flyerhzm")
       sign_in user
     end
 
@@ -52,7 +52,7 @@ describe RepositoriesController do
     end
 
     it "should redirect to user/edit page if current_user didn't input email" do
-      user = FactoryGirl.create(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
+      user = create(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
       sign_in user
       post :create, repository: {github_name: "flyerhzm/railsbp.com"}
       response.should redirect_to(edit_user_registration_path)
@@ -75,7 +75,7 @@ describe RepositoriesController do
     }
 
     it "should generate build" do
-      repository = FactoryGirl.build(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      repository = build(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       repository.expects(:generate_build).with("develop", last_message)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
@@ -84,7 +84,7 @@ describe RepositoriesController do
     end
 
     it "should not generate build if authentication_token does not match" do
-      repository = FactoryGirl.build(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "987654321")
+      repository = build(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "987654321")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok
@@ -98,7 +98,7 @@ describe RepositoriesController do
     end
 
     it "should not generate build and notify privacy if repository is private" do
-      repository = FactoryGirl.build(:repository, private: true, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      repository = build(:repository, private: true, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       repository.expects(:notify_privacy)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
@@ -107,7 +107,7 @@ describe RepositoriesController do
     end
 
     it "should not generate build if repository is not rails" do
-      repository = FactoryGirl.build(:repository, rails: false, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
+      repository = build(:repository, rails: false, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
       Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
       response.should be_ok

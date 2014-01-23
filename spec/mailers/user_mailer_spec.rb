@@ -5,12 +5,12 @@ describe UserMailer do
 
   context "#notify_build_success" do
     before do
-      @user1 = FactoryGirl.create(:user, email: "user1@gmail.com")
-      @user2 = FactoryGirl.create(:user, email: "user2@gmail.com")
-      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/test")
+      @user1 = create(:user, email: "user1@gmail.com")
+      @user2 = create(:user, email: "user2@gmail.com")
+      @repository = create(:repository, github_name: "flyerhzm/test")
       @repository.users << @user1
       @repository.users << @user2
-      @build = FactoryGirl.create(:build, repository: @repository, warning_count: 10, last_commit_id: "123456789", branch: "develop", last_commit_message: "hello", duration: 20)
+      @build = create(:build, repository: @repository, warning_count: 10, last_commit_id: "123456789", branch: "develop", last_commit_message: "hello", duration: 20)
     end
 
     subject { UserMailer.notify_build_success(@build) }
@@ -27,12 +27,12 @@ describe UserMailer do
 
   context "#notify_configuration_created" do
     before do
-      @user1 = FactoryGirl.create(:user, email: "user1@gmail.com")
-      @user2 = FactoryGirl.create(:user, email: "user2@gmail.com")
-      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/test")
+      @user1 = create(:user, email: "user1@gmail.com")
+      @user2 = create(:user, email: "user2@gmail.com")
+      @repository = create(:repository, github_name: "flyerhzm/test")
       @repository.users << @user1
       @repository.users << @user2
-      @configuration = FactoryGirl.create(:configuration, name: "Fat Model", url: "http://rails-bestpracitces.com")
+      @configuration = create(:configuration, name: "Fat Model", url: "http://rails-bestpracitces.com")
     end
 
     subject { UserMailer.notify_configuration_created(@configuration, @repository) }
@@ -45,9 +45,9 @@ describe UserMailer do
 
   context "#notify_repository_privacy" do
     before do
-      @user1 = FactoryGirl.create(:user, email: "user1@gmail.com")
-      @user2 = FactoryGirl.create(:user, email: "user2@gmail.com")
-      @repository = FactoryGirl.create(:repository, github_name: "flyerhzm/test")
+      @user1 = create(:user, email: "user1@gmail.com")
+      @user2 = create(:user, email: "user2@gmail.com")
+      @repository = create(:repository, github_name: "flyerhzm/test")
       @repository.users << @user1
       @repository.users << @user2
     end

@@ -3,12 +3,12 @@ require 'spec_helper'
 describe BuildsController do
   before do
     skip_repository_callbacks
-    @user = FactoryGirl.create(:user)
-    @repository = FactoryGirl.create(:repository)
+    @user = create(:user)
+    @repository = create(:repository)
     @repository.users << @user
   end
 
-  let(:build) { FactoryGirl.create(:build, repository: @repository) }
+  let(:build) { create(:build, repository: @repository) }
 
   context "GET :index" do
     context "without position" do

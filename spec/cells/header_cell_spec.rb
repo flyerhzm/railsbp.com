@@ -15,8 +15,8 @@ describe HeaderCell do
     end
 
     context "rendering display with current_user" do
-      let(:user) { FactoryGirl.create(:user) }
-      let(:repository) { FactoryGirl.create(:repository) }
+      let(:user) { create(:user) }
+      let(:repository) { create(:repository) }
       subject { render_cell(:header, :display, user, repository) }
 
       it { should have_link("Home") }

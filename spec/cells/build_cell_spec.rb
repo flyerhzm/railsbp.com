@@ -5,8 +5,8 @@ describe BuildCell do
 
   context "cell rendering" do
     context "rendering tabs" do
-      let(:repository) { FactoryGirl.create(:repository) }
-      let(:build) { FactoryGirl.create(:build, :repository => repository) }
+      let(:repository) { create(:repository) }
+      let(:build) { create(:build, :repository => repository) }
 
       context "current" do
         subject { render_cell(:build, :tabs, "current", repository) }
@@ -31,7 +31,7 @@ describe BuildCell do
     end
 
     context "rendering history_links" do
-      let(:repository) { FactoryGirl.create(:repository) }
+      let(:repository) { create(:repository) }
 
       context "last 10" do
         subject { render_cell(:build, :history_links, repository, 10) }
@@ -53,8 +53,8 @@ describe BuildCell do
     end
 
     context "rendering content" do
-      let(:repository) { FactoryGirl.create(:repository) }
-      let(:build) { FactoryGirl.create(:build, :repository => repository, :warning_count => 10).tap { |build| build.run!; build.complete! } }
+      let(:repository) { create(:repository) }
+      let(:build) { create(:build, :repository => repository, :warning_count => 10).tap { |build| build.run!; build.complete! } }
       before do
         File.stubs(:read).returns("")
       end
