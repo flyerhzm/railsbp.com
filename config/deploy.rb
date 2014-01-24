@@ -2,17 +2,18 @@ require 'capistrano_colors'
 require 'bundler/capistrano'
 
 require 'rvm/capistrano'
-set :rvm_ruby_string, 'ruby-2.0.0-p0@railsbp.com'
+set :rvm_ruby_string, 'ruby-2.0.0-p353@railsbp.com'
 
 set :application, "railsbp.com"
 set :repository,  "git@github.com:railsbp/railsbp.com.git"
 set :rails_env, "production"
-set :deploy_to, "/home/huangzhi/sites/railsbp.com/production"
-set :user, "huangzhi"
+set :deploy_to, "/home/deploy/sites/railsbp.com/production"
+set :user, "deploy"
 set :use_sudo, false
 
 set :scm, :git
-set :git_shallow_clone, 1
+
+ssh_options[:forward_agent] = true
 
 role :web, "app.railsbp.com"                          # Your HTTP server, Apache/etc
 role :app, "app.railsbp.com"                          # This may be the same as your `Web` server
