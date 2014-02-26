@@ -24,7 +24,6 @@ gem 'cancan'
 gem 'rails_admin'
 gem 'meta-tags', require: 'meta_tags'
 gem 'css_sprite'
-gem 'whenever', require: false
 gem 'multiple_mailers'
 gem 'high_voltage'
 gem 'nokogiri'
