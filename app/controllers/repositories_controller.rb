@@ -60,7 +60,7 @@ class RepositoriesController < ApplicationController
       render text: "not authenticate" and return if params[:token].blank?
 
       @payload = ActiveSupport::JSON.decode(params[:payload])
-      @repository = Repository.where(html_url: payload["repository"]["url"]).first
+      @repository = Repository.where(html_url: @payload["repository"]["url"]).first
       render text: "not authenticate" and return unless @repository
       render text: "not authenticate" and return unless @repository.authentication_token == params["token"]
     end
