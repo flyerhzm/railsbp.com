@@ -3,6 +3,7 @@ class RepositoriesController < ApplicationController
   before_filter :authenticate_user!, except: [:show, :sync, :sync_proxy]
   before_filter :load_repository, only: [:show, :edit, :update]
   before_filter :force_input_email, only: [:new, :create]
+  before_filter :check_github_authenticate, only: [:sync]
 
   def show
   end
@@ -39,26 +40,29 @@ class RepositoriesController < ApplicationController
   end
 
   def sync
-    render text: "not authenticate" and return if params[:token].blank?
-
-    payload = ActiveSupport::JSON.decode(params[:payload])
-    repository = Repository.where(html_url: payload["repository"]["url"]).first
-    render text: "not authenticate" and return unless repository
-    render text: "not authenticate" and return unless repository.authentication_token == params["token"]
-    if repository.private?
-      repository.notify_privacy
+    if @repository.private?
+      @repository.notify_privacy
       render text: "no private repository" and return
-    elsif !repository.rails?
+    elsif !@repository.rails?
       render text: "not rails repository" and return
     end
 
-    repository.generate_build(payload["ref"].split("/").last, payload["commits"].last)
+    @repository.generate_build(@payload["ref"].split("/").last, @payload["commits"].last)
     render text: "success"
   end
 
   protected
     def load_repository
       @repository = Repository.find(params[:id])
+    end
+
+    def check_github_authenticate
+      render text: "not authenticate" and return if params[:token].blank?
+
+      @payload = ActiveSupport::JSON.decode(params[:payload])
+      @repository = Repository.where(html_url: payload["repository"]["url"]).first
+      render text: "not authenticate" and return unless @repository
+      render text: "not authenticate" and return unless @repository.authentication_token == params["token"]
     end
 
     def force_input_email
