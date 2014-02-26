@@ -60,22 +60,22 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :repository, :belongs_to_association 
+  #     configure :repository, :belongs_to_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :warning_count, :integer 
-  #     configure :repository_id, :integer         # Hidden 
-  #     configure :aasm_state, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :last_commit_id, :string 
-  #     configure :last_commit_message, :text 
-  #     configure :position, :integer 
-  #     configure :duration, :integer 
-  #     configure :finished_at, :datetime 
-  #     configure :branch, :string 
+  #     configure :id, :integer
+  #     configure :warning_count, :integer
+  #     configure :repository_id, :integer         # Hidden
+  #     configure :aasm_state, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :last_commit_id, :string
+  #     configure :last_commit_message, :text
+  #     configure :position, :integer
+  #     configure :duration, :integer
+  #     configure :finished_at, :datetime
+  #     configure :branch, :string
 
   #   # Cross-section configuration:
 
@@ -111,12 +111,12 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :configurations, :has_many_association 
+  #     configure :configurations, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :name, :string 
+  #     configure :id, :integer
+  #     configure :name, :string
 
   #   # Cross-section configuration:
 
@@ -152,16 +152,16 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :category, :belongs_to_association 
-  #     configure :parameters, :has_many_association 
+  #     configure :category, :belongs_to_association
+  #     configure :parameters, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :name, :string 
-  #     configure :description, :string 
-  #     configure :url, :string 
-  #     configure :category_id, :integer         # Hidden 
+  #     configure :id, :integer
+  #     configure :name, :string
+  #     configure :description, :string
+  #     configure :url, :string
+  #     configure :category_id, :integer         # Hidden
 
   #   # Cross-section configuration:
 
@@ -197,16 +197,16 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :configuration, :belongs_to_association 
+  #     configure :configuration, :belongs_to_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :name, :string 
-  #     configure :kind, :string 
-  #     configure :value, :string 
-  #     configure :description, :string 
-  #     configure :configuration_id, :integer         # Hidden 
+  #     configure :id, :integer
+  #     configure :name, :string
+  #     configure :kind, :string
+  #     configure :value, :string
+  #     configure :description, :string
+  #     configure :configuration_id, :integer         # Hidden
 
   #   # Cross-section configuration:
 
@@ -242,32 +242,32 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :user_repositories, :has_many_association 
-  #     configure :users, :has_many_association 
-  #     configure :owners, :has_many_association 
-  #     configure :builds, :has_many_association 
+  #     configure :user_repositories, :has_many_association
+  #     configure :users, :has_many_association
+  #     configure :owners, :has_many_association
+  #     configure :builds, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :git_url, :string 
-  #     configure :name, :string 
-  #     configure :description, :string 
-  #     configure :private, :boolean 
-  #     configure :fork, :boolean 
-  #     configure :pushed_at, :datetime 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :github_id, :integer 
-  #     configure :html_url, :string 
-  #     configure :ssh_url, :string 
-  #     configure :github_name, :string 
-  #     configure :builds_count, :integer 
-  #     configure :authentication_token, :string 
-  #     configure :visible, :boolean 
-  #     configure :collaborators_count, :integer 
-  #     configure :last_build_at, :datetime 
-  #     configure :rails, :boolean 
+  #     configure :id, :integer
+  #     configure :git_url, :string
+  #     configure :name, :string
+  #     configure :description, :string
+  #     configure :private, :boolean
+  #     configure :fork, :boolean
+  #     configure :pushed_at, :datetime
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :github_id, :integer
+  #     configure :html_url, :string
+  #     configure :ssh_url, :string
+  #     configure :github_name, :string
+  #     configure :builds_count, :integer
+  #     configure :authentication_token, :string
+  #     configure :visible, :boolean
+  #     configure :collaborators_count, :integer
+  #     configure :last_build_at, :datetime
+  #     configure :rails, :boolean
 
   #   # Cross-section configuration:
 
@@ -303,32 +303,32 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :user_repositories, :has_many_association 
-  #     configure :repositories, :has_many_association 
-  #     configure :own_repositories, :has_many_association 
+  #     configure :user_repositories, :has_many_association
+  #     configure :repositories, :has_many_association
+  #     configure :own_repositories, :has_many_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :email, :string 
-  #     configure :password, :password         # Hidden 
-  #     configure :password_confirmation, :password         # Hidden 
-  #     configure :reset_password_token, :string         # Hidden 
-  #     configure :reset_password_sent_at, :datetime 
-  #     configure :remember_created_at, :datetime 
-  #     configure :sign_in_count, :integer 
-  #     configure :current_sign_in_at, :datetime 
-  #     configure :last_sign_in_at, :datetime 
-  #     configure :current_sign_in_ip, :string 
-  #     configure :last_sign_in_ip, :string 
-  #     configure :created_at, :datetime 
-  #     configure :updated_at, :datetime 
-  #     configure :github_uid, :integer 
-  #     configure :nickname, :string 
-  #     configure :name, :string 
-  #     configure :github_token, :string 
-  #     configure :own_repositories_count, :integer 
-  #     configure :admin, :boolean 
+  #     configure :id, :integer
+  #     configure :email, :string
+  #     configure :password, :password         # Hidden
+  #     configure :password_confirmation, :password         # Hidden
+  #     configure :reset_password_token, :string         # Hidden
+  #     configure :reset_password_sent_at, :datetime
+  #     configure :remember_created_at, :datetime
+  #     configure :sign_in_count, :integer
+  #     configure :current_sign_in_at, :datetime
+  #     configure :last_sign_in_at, :datetime
+  #     configure :current_sign_in_ip, :string
+  #     configure :last_sign_in_ip, :string
+  #     configure :created_at, :datetime
+  #     configure :updated_at, :datetime
+  #     configure :github_uid, :integer
+  #     configure :nickname, :string
+  #     configure :name, :string
+  #     configure :github_token, :string
+  #     configure :own_repositories_count, :integer
+  #     configure :admin, :boolean
 
   #   # Cross-section configuration:
 
@@ -364,15 +364,15 @@ RailsAdmin.config do |config|
 
   #   # Found associations:
 
-  #     configure :user, :belongs_to_association 
-  #     configure :repository, :belongs_to_association 
+  #     configure :user, :belongs_to_association
+  #     configure :repository, :belongs_to_association
 
   #   # Found columns:
 
-  #     configure :id, :integer 
-  #     configure :user_id, :integer         # Hidden 
-  #     configure :repository_id, :integer         # Hidden 
-  #     configure :own, :boolean 
+  #     configure :id, :integer
+  #     configure :user_id, :integer         # Hidden
+  #     configure :repository_id, :integer         # Hidden
+  #     configure :own, :boolean
 
   #   # Cross-section configuration:
 
