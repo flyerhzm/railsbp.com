@@ -112,7 +112,7 @@ class Build < ActiveRecord::Base
     self.repository.touch(:last_build_at)
     UserMailer.notify_build_success(self).deliver
   rescue => e
-    ExceptionNotifier::Notifier.background_exception_notification(e)
+    ExceptionNotifier::Notifier.background_exception_notification(e).deliver
     self.fail!
   ensure
     system("rm", "-rf", "#{analyze_path}/#{repository.name}")
