@@ -110,7 +110,7 @@ class Build < ActiveRecord::Base
     self.finished_at = end_time
     self.complete!
     self.repository.touch(:last_build_at)
-    UserMailer.notify_build_success(self).deliver
+    UserMailer.notify_build_success(self).deliver if repository.recipient_emails.present?
   rescue => e
     ExceptionNotifier::Notifier.background_exception_notification(e).deliver
     self.fail!
