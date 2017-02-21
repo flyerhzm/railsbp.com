@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.17'
 
-gem 'mysql2'
+gem 'pg'
 gem 'rails_best_practices'
 gem 'haml'
 gem 'slim'
@@ -38,10 +38,6 @@ group :assets do
 end
 
 gem 'jquery-rails'
-
-group :production do
-  gem 'therubyracer'
-end
 
 group :development do
   gem 'rb-fsevent'
