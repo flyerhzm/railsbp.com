@@ -1,32 +1,21 @@
-require 'capistrano_colors'
-require 'bundler/capistrano'
+set :rvm_type, :user
+set :rvm_ruby_version, '2.3.3'
 
-require 'rvm/capistrano'
-set :rvm_ruby_string, 'ruby-2.0.0-p648@railsbp.com'
+set :application, 'railsbp.com'
+set :repo_url, 'git@github.com:railsbp/railsbp.com.git'
+set :branch, 'develop'
+set :deploy_to, '/home/deploy/sites/railsbp.com/production'
+set :keep_releases, 5
 
-set :application, "railsbp.com"
-set :repository,  "git@github.com:railsbp/railsbp.com.git"
+set :linked_files, %w{config/database.yml config/github.yml config/mailer.yml config/initializers/secret_token.rb}
+
+set :linked_dirs, %w{bin log builds tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads config/rubocop}
+
 set :rails_env, "production"
-set :deploy_to, "/home/deploy/sites/railsbp.com/production"
-set :user, "deploy"
-set :use_sudo, false
 
-set :scm, :git
+set :disallow_pushing, true
 
-ssh_options[:port] = 12222
-ssh_options[:forward_agent] = true
-
-role :web, "railsbp.com"                          # Your HTTP server, Apache/etc
-role :app, "railsbp.com"                          # This may be the same as your `Web` server
-role :db,  "railsbp.com", :primary => true # This is where Rails migrations will run
-
-# If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
-  task :start do ; end
-  task :stop do ; end
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    migrate
-    cleanup
-    run "cd #{current_path}; kill -HUP `cat tmp/pids/puma.pid`"
-  end
+  before :compile_assets, "css_sprite:build"
+  after :publishing, "rails_bes_practices:generate_config"
 end

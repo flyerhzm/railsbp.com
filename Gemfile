@@ -49,10 +49,12 @@ group :development do
   gem 'guard-delayed'
   gem 'guard-annotate'
 
-  gem 'capistrano'
-  gem 'capistrano_colors'
-  gem 'rvm-capistrano'
-  gem 'turbo-sprockets-rails3'
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano3-puma', require: false
+  gem 'capistrano3-delayed-job', require: false
 
   gem 'quiet_assets'
 end
