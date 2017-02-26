@@ -3,7 +3,7 @@ set :rvm_ruby_version, '2.3.3'
 
 set :application, 'railsbp.com'
 set :repo_url, 'git@github.com:railsbp/railsbp.com.git'
-set :branch, 'develop'
+set :branch, 'master'
 set :deploy_to, '/home/deploy/sites/railsbp.com/production'
 set :keep_releases, 5
 
