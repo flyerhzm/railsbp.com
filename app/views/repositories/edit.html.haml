@@ -2,7 +2,7 @@
 
 %h2 Edit Repository
 
-= render_cell :repository, :tabs, "overview", @repository
+= render 'tabs', active_class_name: "overview", repository: @repository
 
 .repository-info
   %p

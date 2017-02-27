@@ -15,8 +15,6 @@ class UserRepository < ActiveRecord::Base
   after_create :increment_user_own_repositories_count, :increment_repository_collaborators_count
   after_destroy :decrement_user_own_repositories_count, :decrement_repository_collaborators_count
 
-  attr_accessible :user, :repository, :own
-
   protected
     def increment_user_own_repositories_count
       user.increment!(:own_repositories_count) if own?

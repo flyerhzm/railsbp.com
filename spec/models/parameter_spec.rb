@@ -1,5 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Parameter do
-  it { should belong_to(:configuration) }
+RSpec.describe Parameter, type: :model do
+  it { is_expected.to belong_to(:configuration) }
 end

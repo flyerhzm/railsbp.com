@@ -8,5 +8,4 @@
 
 class Category < ActiveRecord::Base
   has_many :configurations
-  attr_accessible :name
 end

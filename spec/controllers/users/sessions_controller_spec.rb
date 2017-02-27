@@ -1,5 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Users::SessionsController do
+RSpec.describe Users::SessionsController do
 
 end

@@ -2,7 +2,7 @@
 
 %h2 Account Settings
 
-= render_cell :account, :tabs, "account"
+= render 'accounts/tabs', active_class_name: 'accounts'
 
 = simple_form_for @user, url: registration_path(@user), html: {class: "form-horizontal", method: :put} do |form|
   = form.input :email, hint: "We promise we won't share your email with anyone. It's only used to receive notifications", input_html: {class: "span5"}

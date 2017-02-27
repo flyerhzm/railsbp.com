@@ -2,7 +2,7 @@
 
 %h2 Edit Repository
 
-= render_cell :repository, :tabs, "collaborators", @repository
+= render 'repositories/tabs', active_class_name: "collaborators", repository: @repository
 
 .repository-info.clearfix
   .command

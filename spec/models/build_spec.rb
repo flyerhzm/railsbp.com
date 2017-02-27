@@ -1,13 +1,16 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Build do
-  it { should belong_to(:repository) }
+RSpec.describe Build, type: :model do
+  it { is_expected.to belong_to(:repository) }
 
   before { skip_repository_callbacks }
 
   context "#short_commit_id" do
     subject { create(:build, :last_commit_id => "1234567890") }
-    its(:short_commit_id) { should == "1234567" }
+    describe '#short_commit_id' do
+      subject { super().short_commit_id }
+      it { should == "1234567" }
+    end
   end
 
   context "#analyze_path" do
@@ -15,7 +18,10 @@ describe Build do
       @repository = create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
-    its(:analyze_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s }
+    describe '#analyze_path' do
+      subject { super().analyze_path }
+      it { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321").to_s }
+    end
   end
 
   context "#html_output_file" do
@@ -23,7 +29,10 @@ describe Build do
       @repository = create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
-    its(:html_output_file) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.html").to_s }
+    describe '#html_output_file' do
+      subject { super().html_output_file }
+      it { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.html").to_s }
+    end
   end
 
   context "#yaml_output_file" do
@@ -31,12 +40,18 @@ describe Build do
       @repository = create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
-    its(:yaml_output_file) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.yml").to_s }
+    describe '#yaml_output_file' do
+      subject { super().yaml_output_file }
+      it { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/rbp.yml").to_s }
+    end
   end
 
   context "#template_file" do
     subject { @build = create(:build) }
-    its(:template_file) { should == Rails.root.join("app/views/builds/rbp.html.erb").to_s }
+    describe '#template_file' do
+      subject { super().template_file }
+      it { should == Rails.root.join("app/views/builds/rbp.html.erb").to_s }
+    end
   end
 
   context "#run!" do
@@ -50,14 +65,14 @@ describe Build do
       build_analyze_success
 
       @build.reload
-      @build.aasm_state.should == "completed"
+      expect(@build.aasm_state).to eq "completed"
     end
 
     it "should fail" do
       build_analyze_failure
 
       @build.reload
-      @build.aasm_state.should == "failed"
+      expect(@build.aasm_state).to eq "failed"
     end
   end
 
@@ -74,7 +89,7 @@ describe Build do
       build_analyze_success
 
       @build.reload
-      @build.aasm_state.should == "completed"
+      expect(@build.aasm_state).to eq "completed"
     end
   end
 
@@ -83,6 +98,9 @@ describe Build do
       @repository = create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
     end
     subject { @build = @repository.builds.create(last_commit_id: "987654321") }
-    its(:config_directory_path) { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/railsbp.com/config/").to_s }
+    describe '#config_directory_path' do
+      subject { super().config_directory_path }
+      it { should == Rails.root.join("builds/flyerhzm/railsbp.com/commit/987654321/railsbp.com/config/").to_s }
+    end
   end
 end

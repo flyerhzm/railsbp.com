@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe RepositoriesController do
+RSpec.describe RepositoriesController, type: :controller do
   before { skip_repository_callbacks }
 
   context "GET :show" do
@@ -8,11 +8,11 @@ describe RepositoriesController do
       user = create(:user)
       repository = create(:repository)
       user.repositories << repository
-      build = create(:build, :repository => repository)
+      create(:build, :repository => repository)
       sign_in user
       get :show, id: repository.id
-      response.should be_ok
-      assigns(:repository).should_not be_nil
+      expect(response).to be_ok
+      expect(assigns(:repository)).not_to be_nil
     end
   end
 
@@ -21,15 +21,15 @@ describe RepositoriesController do
       user = create(:user, nickname: "flyerhzm")
       sign_in user
       get :new
-      response.should be_ok
-      assigns(:repository).should_not be_nil
+      expect(response).to be_ok
+      expect(assigns(:repository)).not_to be_nil
     end
 
     it "should redirect to user/edit page if current_user didn't input email" do
       user = create(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
       sign_in user
       get :new
-      response.should redirect_to(edit_user_registration_path)
+      expect(response).to redirect_to(edit_user_registration_path)
     end
   end
 
@@ -42,20 +42,20 @@ describe RepositoriesController do
     it "should redirect to show if success" do
       post :create, repository: {github_name: "flyerhzm/railsbp.com"}
       repository = assigns(:repository)
-      response.should redirect_to(edit_repository_path(repository))
+      expect(response).to redirect_to(edit_repository_path(repository))
     end
 
     it "should render new action if failed" do
-      User.any_instance.stubs(:org_repository?).returns(false)
+      allow_any_instance_of(User).to receive(:org_repository?).and_return(false)
       post :create, repository: {github_name: ""}
-      response.should render_template(action: "new")
+      expect(response).to redirect_to(new_repository_path)
     end
 
     it "should redirect to user/edit page if current_user didn't input email" do
       user = create(:user, nickname: "flyerhzm", email: "flyerhzm@fakemail.com")
       sign_in user
       post :create, repository: {github_name: "flyerhzm/railsbp.com"}
-      response.should redirect_to(edit_user_registration_path)
+      expect(response).to redirect_to(edit_user_registration_path)
     end
   end
 
@@ -76,42 +76,42 @@ describe RepositoriesController do
 
     it "should generate build" do
       repository = build(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      repository.expects(:generate_build).with("develop", last_message)
+      expect(Repository).to receive(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").and_return([repository])
+      expect(repository).to receive(:generate_build).with("develop", last_message)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
-      response.should be_ok
-      response.body.should == "success"
+      expect(response).to be_ok
+      expect(response.body).to eq "success"
     end
 
     it "should not generate build if authentication_token does not match" do
       repository = build(:repository, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "987654321")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      expect(Repository).to receive(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").and_return([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
-      response.should be_ok
-      response.body.should == "not authenticate"
+      expect(response).to be_ok
+      expect(response.body).to eq "not authenticate"
     end
 
     it "should not generate build if authentication_token does not exist" do
       post :sync, payload: hook_json, format: 'json'
-      response.should be_ok
-      response.body.should == "not authenticate"
+      expect(response).to be_ok
+      expect(response.body).to eq "not authenticate"
     end
 
     it "should not generate build and notify privacy if repository is private" do
       repository = build(:repository, private: true, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
-      repository.expects(:notify_privacy)
+      expect(Repository).to receive(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").and_return([repository])
+      expect(repository).to receive(:notify_privacy)
       post :sync, token: "123456789", payload: hook_json, format: 'json'
-      response.should be_ok
-      response.body.should == "no private repository"
+      expect(response).to be_ok
+      expect(response.body).to eq "no private repository"
     end
 
     it "should not generate build if repository is not rails" do
       repository = build(:repository, rails: false, html_url: "https://github.com/railsbp/rails-bestpractices.com", authentication_token: "123456789")
-      Repository.expects(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").returns([repository])
+      expect(Repository).to receive(:where).with(html_url: "https://github.com/railsbp/rails-bestpractices.com").and_return([repository])
       post :sync, token: "123456789", payload: hook_json, format: 'json'
-      response.should be_ok
-      response.body.should == "not rails repository"
+      expect(response).to be_ok
+      expect(response.body).to eq "not rails repository"
     end
   end
 end

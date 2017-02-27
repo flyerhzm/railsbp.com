@@ -5,7 +5,7 @@ class Contact
   attr_accessor :name, :email, :message
 
   validates :name,    :presence => true
-  validates :email,   :format => { :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i },
+  validates :email,   :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i },
                       :presence => true
   validates :message, :presence => true
 

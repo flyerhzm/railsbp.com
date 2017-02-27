@@ -2,5 +2,5 @@
 
 %h2= @repository.github_name
 
-= render_cell :build, :tabs, "current", @repository
-= render_cell :build, :content, @repository
+= render 'tabs', active_class_name: "current", repository: @repository
+= render 'builds/conent', build: @build

@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.17'
+gem 'rails', '4.2.8'
 
 gem 'pg'
 gem 'rails_best_practices'
@@ -18,9 +18,7 @@ gem 'daemons'
 gem 'delayed_job_active_record'
 gem 'aasm'
 gem 'git'
-gem 'cells'
-gem 'exception_notification'
-gem 'cancan'
+gem 'cancancan'
 gem 'rails_admin'
 gem 'meta-tags', require: 'meta_tags'
 gem 'css_sprite'
@@ -28,16 +26,15 @@ gem 'multiple_mailers'
 gem 'high_voltage'
 gem 'nokogiri'
 gem 'newrelic_rpm'
+gem 'rollbar'
+gem 'oj'
 
 gem 'puma'
 
-group :assets do
-  gem 'sass-rails'
-  gem 'coffee-rails'
-  gem 'uglifier'
-end
-
 gem 'jquery-rails'
+gem 'sass-rails'
+gem 'coffee-rails'
+gem 'uglifier'
 
 group :development do
   gem 'rb-fsevent'
@@ -55,34 +52,22 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano3-puma', require: false
   gem 'capistrano3-delayed-job', require: false
-
-  gem 'quiet_assets'
 end
 
 group :test do
-  gem 'spork', '1.0.0.rc3'
-  gem 'spork-rails'
-  gem 'mocha', require: false
-  gem 'rspec'
   gem 'rspec-rails'
   gem 'shoulda-matchers', require: false
-  gem 'factory_girl'
   gem 'factory_girl_rails', require: false
-  gem 'cucumber'
-  gem 'cucumber-rails', require: 'cucumber/rails'
+  gem 'cucumber-rails', require: false
   gem 'capybara'
   gem 'database_cleaner'
   gem 'launchy'
   gem 'pickle'
   gem 'webmock'
-  gem 'rspec-cells'
   gem 'email_spec'
 
   gem 'simplecov', require: false
 
-  gem 'rails3-generators'
-
-  gem 'guard-spork'
   gem 'guard-rspec'
 
   gem 'growl'

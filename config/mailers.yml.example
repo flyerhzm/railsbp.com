@@ -10,8 +10,3 @@ production:
     <<: *common
     user_name: 'notification@railsbp.com'
     password: ''
-
-  exception_notifier:
-    <<: *common
-    user_name: 'exception.notifier@railsbp.com'
-    password: ''

@@ -34,14 +34,13 @@ class User < ActiveRecord::Base
          :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me
 
   has_many :user_repositories
-  has_many :repositories, through: :user_repositories, uniq: true
-  has_many :own_repositories, through: :user_repositories, source: :repository, conditions: ["own = ?", true]
+  has_many :repositories, -> { distinct }, through: :user_repositories
+  has_many :own_repositories, -> { where("user_repositories.own": true) }, through: :user_repositories, source: :repository
 
   def self.find_for_github_oauth(data)
-    user = User.find_by_github_uid(data.uid) || User.new
+    user = User.find_by(github_uid: data.uid) || User.new
     import_github_data(user, data)
     user.save
     user
@@ -57,7 +56,7 @@ class User < ActiveRecord::Base
 
   def add_repository(github_name)
     if own_repository?(github_name) || org_repository?(github_name)
-      repository = self.repositories.create(github_name: github_name)
+      self.repositories.create(github_name: github_name)
     else
       raise AuthorizationException.new("Seems you are not the owner or collaborator of this repository")
     end

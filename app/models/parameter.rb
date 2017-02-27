@@ -12,5 +12,4 @@
 
 class Parameter < ActiveRecord::Base
   belongs_to :configuration
-  attr_accessible :name, :kind, :value, :description
 end

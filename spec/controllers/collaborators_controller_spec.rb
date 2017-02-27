@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe CollaboratorsController do
+RSpec.describe CollaboratorsController, type: :controller do
   before do
     skip_repository_callbacks
     @repository = create(:repository)
@@ -17,8 +17,8 @@ describe CollaboratorsController do
       @repository.users << collaborator2
 
       get :index, repository_id: @repository.id
-      response.should be_ok
-      assigns(:collaborators).should == [collaborator1, collaborator2]
+      expect(response).to be_ok
+      expect(assigns(:collaborators)).to eq [collaborator1, collaborator2]
     end
   end
 end

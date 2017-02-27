@@ -1,8 +1,8 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Configuration do
-  it { should have_many(:parameters) }
-  it { should belong_to(:category) }
+RSpec.describe Configuration, type: :model do
+  it { is_expected.to have_many(:parameters) }
+  it { is_expected.to belong_to(:category) }
 
   context "#notify_collaborators" do
     before do
@@ -13,8 +13,9 @@ describe Configuration do
 
     it "should notify all collaborators" do
       @configuration = create(:configuration)
-      UserMailer.expects(:notify_configuration_created).with(@configuration, @repository1)
-      UserMailer.expects(:notify_configuration_created).with(@configuration, @repository2)
+      allow_any_instance_of(Repository).to receive(:recipient_emails).and_return(['team@railsbp.com'])
+      expect(UserMailer).to receive(:notify_configuration_created).with(@configuration, @repository1)
+      expect(UserMailer).to receive(:notify_configuration_created).with(@configuration, @repository2)
       Delayed::Worker.new.work_off
     end
   end

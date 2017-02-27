@@ -26,8 +26,8 @@ require 'authorization_exception'
 
 class Repository < ActiveRecord::Base
   has_many :user_repositories, dependent: :destroy
-  has_many :users, through: :user_repositories, uniq: true
-  has_many :owners, through: :user_repositories, conditions: ["user_repositories.own = ?", true], source: :user
+  has_many :users, -> { distinct }, through: :user_repositories
+  has_many :owners, -> { where("user_repositories.own": true) }, through: :user_repositories, source: :user
   has_many :builds, dependent: :destroy
 
   validates :github_name, presence: true, uniqueness: true
@@ -36,9 +36,7 @@ class Repository < ActiveRecord::Base
   before_create :reset_authentication_token, :sync_github, :touch_last_build_at
   after_create :copy_config_file, :setup_github_hook
 
-  scope :visible, where(:visible => true)
-
-  attr_accessible :git_url, :name, :private, :fork, :rails, :description, :github_id, :html_url, :ssh_url, :github_name, :visible
+  scope :visible, -> { where(:visible => true) }
 
   def clone_url
     private? ? ssh_url : git_url
@@ -108,6 +106,10 @@ class Repository < ActiveRecord::Base
     end
   end
 
+  def configs
+    @configs ||= RepositoryConfigs.new(@repository).read
+  end
+
   def to_param
     "#{id}-#{github_name.parameterize}"
   end
@@ -139,7 +141,7 @@ class Repository < ActiveRecord::Base
     end
 
     def touch_last_build_at
-      last_build_at = Time.now
+      self.last_build_at = Time.now
     end
 
     def setup_github_hook

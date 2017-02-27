@@ -25,9 +25,8 @@ class Build < ActiveRecord::Base
   after_destroy :remove_analyze_file
 
   attr_accessor :warnings
-  attr_accessible :branch, :duration, :finished_at, :last_commit_id, :last_commit_message, :position
 
-  scope :completed, where(:aasm_state => "completed")
+  scope :completed, -> { where(:aasm_state => "completed") }
 
   aasm do
     state :scheduled, initial: true
@@ -112,7 +111,7 @@ class Build < ActiveRecord::Base
     self.repository.touch(:last_build_at)
     UserMailer.notify_build_success(self).deliver if repository.recipient_emails.present?
   rescue => e
-    ExceptionNotifier::Notifier.background_exception_notification(e).deliver
+    Rollbar.error(e)
     self.fail!
   ensure
     system("rm", "-rf", "#{analyze_path}/#{repository.name}")

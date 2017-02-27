@@ -1,6 +1,6 @@
 class CollaboratorsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :load_repository
+  before_action :authenticate_user!
+  before_action :load_repository
 
   def index
     @collaborators = @repository.users

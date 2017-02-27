@@ -1,15 +1,15 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Repository do
-  it { should have_many(:builds) }
-  it { should have_many(:user_repositories) }
-  it { should have_many(:users) }
-  it { should have_many(:owners) }
-  it { should validate_presence_of(:github_name) }
+RSpec.describe Repository, type: :model do
+  it { is_expected.to have_many(:builds) }
+  it { is_expected.to have_many(:user_repositories) }
+  it { is_expected.to have_many(:users) }
+  it { is_expected.to have_many(:owners) }
+  it { is_expected.to validate_presence_of(:github_name) }
 
   context "stub callbacks" do
-    it { should validate_uniqueness_of(:github_name) }
-    it { should validate_uniqueness_of(:github_id) }
+    it { is_expected.to validate_uniqueness_of(:github_name) }
+    it { is_expected.to validate_uniqueness_of(:github_id) }
 
     before do
       skip_repository_callbacks
@@ -26,37 +26,52 @@ describe Repository do
 
     context "#generate_build" do
       it "should create a build and call analyze" do
-        Build.any_instance.expects(:run!)
-        lambda { subject.generate_build("develop", "id" => "987654321", "message" => "commit message") }.should change(subject.builds, :count).by(1)
+        expect_any_instance_of(Build).to receive(:run!)
+        expect { subject.generate_build("develop", "id" => "987654321", "message" => "commit message") }.to change(subject.builds, :count).by(1)
       end
 
       it "should do nothing if commit if nil" do
-        subject.generate_build("develop", nil).should be_nil
+        expect(subject.generate_build("develop", nil)).to be_nil
       end
     end
 
     context "#clone_url" do
       context "private" do
         subject { @repository.tap { |repository| repository.update_attribute(:private, false) } }
-        its(:clone_url) { should == "git://github.com/railsbp/railsbp.com.git" }
+        describe '#clone_url' do
+          subject { super().clone_url }
+          it { should == "git://github.com/railsbp/railsbp.com.git" }
+        end
       end
 
       context "public" do
         subject { @repository.tap { |repository| repository.update_attribute(:private, true) } }
-        its(:clone_url) { should == "git@github.com:railsbp/railsbp.com.git" }
+        describe '#clone_url' do
+          subject { super().clone_url }
+          it { should == "git@github.com:railsbp/railsbp.com.git" }
+        end
       end
     end
 
     context "default_config_file_path" do
-      its(:default_config_file_path) { should == Rails.root.join("config/rails_best_practices.yml").to_s }
+      describe '#default_config_file_path' do
+        subject { super().default_config_file_path }
+        it { should == Rails.root.join("config/rails_best_practices.yml").to_s }
+      end
     end
 
     context "config_path" do
-      its(:config_path) { should == Rails.root.join("builds/railsbp/railsbp.com").to_s }
+      describe '#config_path' do
+        subject { super().config_path }
+        it { should == Rails.root.join("builds/railsbp/railsbp.com").to_s }
+      end
     end
 
     context "config_file_path" do
-      its(:config_file_path) { should == Rails.root.join("builds/railsbp/railsbp.com/rails_best_practices.yml").to_s }
+      describe '#config_file_path' do
+        subject { super().config_file_path }
+        it { should == Rails.root.join("builds/railsbp/railsbp.com/rails_best_practices.yml").to_s }
+      end
     end
 
     context "#sync_collaborators" do
@@ -67,8 +82,8 @@ describe Repository do
         @repository.users << @flyerhzm
         @repository.users << @scott
         User.current = @flyerhzm
-        collaborators = File.read(Rails.root.join("spec/fixtures/collaborators.json").to_s)
-        stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com/collaborators").to_return(body: MultiJson.decode(collaborators))
+        stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com/collaborators").
+          to_return(headers: { "Content-Type": "application/json" }, body: File.new(Rails.root.join("spec/fixtures/collaborators.json")))
         @repository.sync_collaborators
         Delayed::Worker.new.work_off
       end
@@ -76,25 +91,25 @@ describe Repository do
       subject { @repository.reload }
 
       it "should include existed user" do
-        subject.users.should be_include(@ben)
+        expect(subject.users).to be_include(@ben)
       end
 
       it "should include new created user" do
-        subject.users.should be_include(User.find_by_github_uid(10122))
+        expect(subject.users).to be_include(User.find_by(github_uid: 10122))
       end
     end
 
     context "#add_collaborator" do
       before do
-        collaborator = File.read(Rails.root.join("spec/fixtures/collaborator.json").to_s)
-        stub_request(:get, "https://api.github.com/users/flyerhzm").to_return(body: MultiJson.decode(collaborator))
+        stub_request(:get, "https://api.github.com/users/flyerhzm").
+          to_return(headers: { "Content-Type": "application/json" }, body: File.new(Rails.root.join("spec/fixtures/collaborator.json")))
       end
 
       it "should include new created user and owned by user" do
         @repository.add_collaborator("flyerhzm")
-        user = User.find_by_github_uid(66836)
-        @repository.users.should be_include(user)
-        @repository.owners.should == [@owner]
+        user = User.find_by(github_uid: 66836)
+        expect(@repository.users).to be_include(user)
+        expect(@repository.owners).to eq [@owner]
       end
     end
 
@@ -105,10 +120,10 @@ describe Repository do
       end
 
       it "should delete a collaborator" do
-        @repository.should have(2).users
+        expect(@repository.users.size).to eq 2
         @repository.delete_collaborator(@flyerhzm.id)
-        @repository.should have(1).users
-        @repository.users.should_not be_include(@flyerhzm)
+        expect(@repository.users.size).to eq 1
+        expect(@repository.users).not_to be_include(@flyerhzm)
       end
     end
 
@@ -121,7 +136,10 @@ describe Repository do
         @repository.users << @scott
       end
 
-      its(:collaborator_ids) { should == [@owner.id, @flyerhzm.id, @scott.id] }
+      describe '#collaborator_ids' do
+        subject { super().collaborator_ids }
+        it { should == [@owner.id, @flyerhzm.id, @scott.id] }
+      end
     end
 
     context "#recipient_emails" do
@@ -136,7 +154,7 @@ describe Repository do
       end
 
       it "should return non fakemail.com users" do
-        @repository.recipient_emails.should == ["user1@gmail.com", "user2@gmail.com"]
+        expect(@repository.recipient_emails).to eq ["user1@gmail.com", "user2@gmail.com"]
       end
     end
   end
@@ -145,16 +163,16 @@ describe Repository do
     before { skip_repository_callbacks(:except => :copy_config_file) }
     it "should copy config file if config path exists" do
       repository = build(:repository)
-      File.expects(:exist?).with(repository.config_path).returns(true)
-      FileUtils.expects(:cp).with(repository.default_config_file_path, repository.config_file_path)
+      expect(File).to receive(:exist?).with(repository.config_path).and_return(true)
+      expect(FileUtils).to receive(:cp).with(repository.default_config_file_path, repository.config_file_path)
       repository.save
     end
 
     it "should create config path and copy config file if config path does not exist" do
       repository = build(:repository)
-      File.expects(:exist?).with(repository.config_path).returns(false)
-      FileUtils.expects(:mkdir_p).with(repository.config_path)
-      FileUtils.expects(:cp).with(repository.default_config_file_path, repository.config_file_path)
+      expect(File).to receive(:exist?).with(repository.config_path).and_return(false)
+      expect(FileUtils).to receive(:mkdir_p).with(repository.config_path)
+      expect(FileUtils).to receive(:cp).with(repository.default_config_file_path, repository.config_file_path)
       repository.save
     end
   end
@@ -162,27 +180,57 @@ describe Repository do
   context "#reset_authentication_token" do
     before { skip_repository_callbacks(:except => :reset_authentication_token) }
     subject { create(:repository) }
-    its(:authentication_token) { should_not be_nil }
+    describe '#authentication_token' do
+      subject { super().authentication_token }
+      it { is_expected.not_to be_nil }
+    end
   end
 
   context "#sync_github" do
     before do
       skip_repository_callbacks(:except => :sync_github)
-      repo = File.read(Rails.root.join("spec/fixtures/repository.json").to_s)
-      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").to_return(body: MultiJson.decode(repo))
+      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").
+        to_return(headers: { "Content-Type": "application/json" }, body: File.new(Rails.root.join("spec/fixtures/repository.json")))
     end
 
     subject { create(:repository, github_name: "railsbp/railsbp.com") }
 
-    its(:html_url) { should == "https://github.com/railsbp/railsbp.com" }
-    its(:git_url) { should == "git://github.com/railsbp/railsbp.com.git" }
-    its(:ssh_url) { should == "git@github.com:railsbp/railsbp.com.git" }
-    its(:name) { should == "railsbp.com" }
-    its(:description) { should == "railsbp.com" }
-    its(:private) { should be_true }
-    its(:fork) { should be_false }
-    its(:github_id) { should == 2860164 }
-    its(:visible) { should be_false }
+    describe '#html_url' do
+      subject { super().html_url }
+      it { should == "https://github.com/railsbp/railsbp.com" }
+    end
+    describe '#git_url' do
+      subject { super().git_url }
+      it { should == "git://github.com/railsbp/railsbp.com.git" }
+    end
+    describe '#ssh_url' do
+      subject { super().ssh_url }
+      it { should == "git@github.com:railsbp/railsbp.com.git" }
+    end
+    describe '#name' do
+      subject { super().name }
+      it { should == "railsbp.com" }
+    end
+    describe '#description' do
+      subject { super().description }
+      it { should == "railsbp.com" }
+    end
+    describe '#private' do
+      subject { super().private }
+      it { is_expected.to be_truthy }
+    end
+    describe '#fork' do
+      subject { super().fork }
+      it { is_expected.to be_falsey }
+    end
+    describe '#github_id' do
+      subject { super().github_id }
+      it { should == 2860164 }
+    end
+    describe '#visible' do
+      subject { super().visible }
+      it { is_expected.to be_falsey }
+    end
   end
 
   context "#setup_github_hook" do

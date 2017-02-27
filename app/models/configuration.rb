@@ -14,7 +14,6 @@ class Configuration < ActiveRecord::Base
   belongs_to :category
 
   after_save :notify_collaborators
-  attr_accessible :name, :description, :url
 
   protected
     def notify_collaborators

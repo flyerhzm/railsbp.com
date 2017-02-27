@@ -2,6 +2,5 @@
 
 %h2 Edit Repository
 
-= render_cell :repository, :tabs, "configs", @repository
-
-= render_cell :repository, :configurations_form, @repository
+= render 'repositories/tabs', active_class_name: "configs", repository: @repository
+= render 'repositories/configurations_form', repository: @repository

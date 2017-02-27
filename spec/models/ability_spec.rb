@@ -1,6 +1,6 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Ability do
+RSpec.describe Ability, type: :model do
   before { skip_repository_callbacks }
 
   context "new user" do
@@ -12,11 +12,11 @@ describe Ability do
     end
 
     it "should be able to read visible repository" do
-      @ability.should be_able_to(:read, @visible_repository)
+      expect(@ability).to be_able_to(:read, @visible_repository)
     end
 
     it "should not be able to read private repository" do
-      @ability.should_not be_able_to(:read, @private_repository)
+      expect(@ability).not_to be_able_to(:read, @private_repository)
     end
   end
 
@@ -32,23 +32,23 @@ describe Ability do
     end
 
     it "should be able to read user's private repository" do
-      @ability.should be_able_to(:read, @user_repository)
+      expect(@ability).to be_able_to(:read, @user_repository)
     end
 
     it "should not be able to read other's private repository" do
-      @ability.should_not be_able_to(:read, @other_repository)
+      expect(@ability).not_to be_able_to(:read, @other_repository)
     end
 
     it "should be able to create a repository" do
-      @ability.should be_able_to(:create, Repository)
+      expect(@ability).to be_able_to(:create, Repository)
     end
 
     it "should be able to update an own repository" do
-      @ability.should be_able_to(:update, @own_repository)
+      expect(@ability).to be_able_to(:update, @own_repository)
     end
 
     it "should not be able to update a not own repository" do
-      @ability.should_not be_able_to(:update, @user_repoistory)
+      expect(@ability).not_to be_able_to(:update, @user_repoistory)
     end
   end
 end

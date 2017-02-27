@@ -1,5 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe Category do
-  it { should have_many(:configurations) }
+RSpec.describe Category, type: :model do
+  it { is_expected.to have_many(:configurations) }
 end

@@ -1,0 +1,4 @@
+#history_links
+  = link_to "Last 10 Builds", repository_builds_path(repository, count: 10), class: builds_count == 10 ? "active" : ""
+  = link_to "Last 50 Builds", repository_builds_path(repository, count: 50), class: builds_count == 50 ? "active" : ""
+  = link_to "Last 100 Builds", repository_builds_path(repository, count: 100), class: builds_count == 100 ? "active" : ""

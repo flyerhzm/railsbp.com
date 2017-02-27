@@ -1,5 +1,5 @@
 class BuildsController < ApplicationController
-  before_filter :load_repository
+  before_action :load_repository
   helper_method :builds_count
 
   def index

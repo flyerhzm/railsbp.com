@@ -5,15 +5,15 @@ module Support
     def skip_repository_callbacks(options={})
       if options[:only]
         Array(options[:only]).each do |callback|
-          Repository.any_instance.stubs(callback)
+          allow_any_instance_of(Repository).to receive(callback)
         end
       elsif options[:except]
         (REPOSITORY_CALLBACKS - Array(options[:except])).each do |callback|
-          Repository.any_instance.stubs(callback)
+          allow_any_instance_of(Repository).to receive(callback)
         end
       else
         REPOSITORY_CALLBACKS.each do |callback|
-          Repository.any_instance.stubs(callback)
+          allow_any_instance_of(Repository).to receive(callback)
         end
       end
     end

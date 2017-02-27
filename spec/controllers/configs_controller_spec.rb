@@ -1,5 +1,5 @@
-require 'spec_helper'
+require 'rails_helper'
 
-describe ConfigsController do
+RSpec.describe ConfigsController, type: :controller do
 
 end

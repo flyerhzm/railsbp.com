@@ -1,4 +1,5 @@
 RailsbpCom::Application.configure do
+  config.eager_load = true
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -9,10 +10,10 @@ RailsbpCom::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.js_compressor = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -59,9 +60,4 @@ RailsbpCom::Application.configure do
   config.active_support.deprecation = :notify
 
   config.action_mailer.default_url_options = { :host => "railsbp.com", :protocol => "http" }
-
-  config.middleware.use ExceptionNotifier,
-    :email_prefix => "[railsbp.com] ",
-    :sender_address => %{"Application Error" <exception.notifier@railsbp.com>},
-    :exception_recipients => %w{flyerhzm@railsbp.com}
 end
