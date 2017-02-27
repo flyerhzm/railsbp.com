@@ -90,7 +90,7 @@ GEM
     concurrent-ruby (1.0.4)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    css_sprite (2.3.0)
+    css_sprite (2.4.0)
       mini_magick
     cucumber (2.4.0)
       builder (>= 2.1.2)
