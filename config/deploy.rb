@@ -7,9 +7,9 @@ set :branch, 'master'
 set :deploy_to, '/home/deploy/sites/railsbp.com/production'
 set :keep_releases, 5
 
-set :linked_files, %w{config/database.yml config/github.yml config/mailer.yml config/initializers/secret_token.rb}
+set :linked_files, %w{config/database.yml config/github.yml config/mailers.yml config/secrets.yml}
 
-set :linked_dirs, %w{bin log builds tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads config/rubocop}
+set :linked_dirs, %w{bin log builds tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
 set :rails_env, "production"
 
