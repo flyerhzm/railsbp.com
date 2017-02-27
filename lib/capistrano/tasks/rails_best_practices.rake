@@ -3,7 +3,7 @@ namespace :rails_best_practices do
   task :generate_config do
     on roles(:app) do
       within release_path do
-        execute :rails_best_practices, '-g'
+        execute :bundle, 'exec rails_best_practices -g'
       end
     end
   end

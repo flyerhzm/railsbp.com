@@ -17,5 +17,5 @@ set :disallow_pushing, true
 
 namespace :deploy do
   before :compile_assets, "css_sprite:build"
-  after :publishing, "rails_bes_practices:generate_config"
+  after :publishing, "rails_best_practices:generate_config"
 end

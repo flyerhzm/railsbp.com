@@ -18,7 +18,7 @@ RSpec.describe UserMailer, type: :mailer do
     it { is_expected.to have_subject("[Railsbp] flyerhzm/test build #1, warnings count 10") }
     it { is_expected.to have_body_text("flyerhzm/test") }
     it { is_expected.to have_body_text("Build #1") }
-    it { is_expected.to have_body_text("<a href=\"http://localhost:3000/repositories/#{@repository.to_param}/builds/#{@build.id}\">http://localhost:3000/repositories/#{@repository.to_param}/builds/#{@build.id}</a>") }
+    it { is_expected.to have_body_text("<a href=\"http://test.railsbp.com/repositories/#{@repository.to_param}/builds/#{@build.id}\">http://test.railsbp.com/repositories/#{@repository.to_param}/builds/#{@build.id}</a>") }
     it { is_expected.to have_body_text("<td>10</td>") }
     it { is_expected.to have_body_text("1234567 (develop)") }
     it { is_expected.to have_body_text("hello") }
@@ -40,7 +40,7 @@ RSpec.describe UserMailer, type: :mailer do
     it { is_expected.to have_subject("[Railsbp] new checker Fat Model added") }
     it { is_expected.to have_body_text("A new checker Fat Model is added on railsbp.com") }
     it { is_expected.to have_body_text("<a href=\"http://rails-bestpracitces.com\">http://rails-bestpracitces.com</a>") }
-    it { is_expected.to have_body_text("<a href=\"http://localhost:3000/repositories/#{@repository.to_param}/configs/edit\">enable it for your repository flyerhzm/test</a>") }
+    it { is_expected.to have_body_text("<a href=\"http://test.railsbp.com/repositories/#{@repository.to_param}/configs/edit\">enable it for your repository flyerhzm/test</a>") }
   end
 
   context "#notify_repository_privacy" do

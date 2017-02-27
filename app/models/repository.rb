@@ -23,6 +23,8 @@
 #
 
 require 'authorization_exception'
+require 'delayed_job/notify_collaborators'
+require 'delayed_job/sync_collaborators'
 
 class Repository < ActiveRecord::Base
   has_many :user_repositories, dependent: :destroy

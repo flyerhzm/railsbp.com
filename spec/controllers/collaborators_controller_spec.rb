@@ -18,7 +18,7 @@ RSpec.describe CollaboratorsController, type: :controller do
 
       get :index, repository_id: @repository.id
       expect(response).to be_ok
-      expect(assigns(:collaborators)).to eq [collaborator1, collaborator2]
+      expect(assigns(:collaborators)).to match_array([collaborator1, collaborator2])
     end
   end
 end

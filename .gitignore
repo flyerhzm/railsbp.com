@@ -9,6 +9,5 @@ config/github.yml
 config/mailers.yml
 config/secrets.yml
 NERD_tree_1
-bin/
 coverage/
 brakeman.html

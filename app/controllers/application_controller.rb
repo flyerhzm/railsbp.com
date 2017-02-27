@@ -1,3 +1,5 @@
+require 'user_no_email_exception'
+
 class ApplicationController < ActionController::Base
   before_action :set_current_user
   protect_from_forgery
