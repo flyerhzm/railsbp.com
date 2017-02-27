@@ -36,7 +36,7 @@ class Repository < ActiveRecord::Base
   before_create :reset_authentication_token, :sync_github, :touch_last_build_at
   after_create :copy_config_file, :setup_github_hook
 
-  scope :visible, -> { where(:visible => true) }
+  scope :visible, -> { where(visible: true) }
 
   def clone_url
     private? ? ssh_url : git_url

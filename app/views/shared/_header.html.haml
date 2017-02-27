@@ -13,7 +13,7 @@
         %ul.nav.pull-right
           %li= link_to "Create Repository", new_repository_path
           %li.dropdown
-            = link_to name_with_caret(repository.try(:name) || "Select a repository").html_safe, "#", "class" => "dropdown-toggle", "data-toggle" => "dropdown"
+            = link_to name_and_caret(repository.try(:name) || "Select a repository").html_safe, "#", "class" => "dropdown-toggle", "data-toggle" => "dropdown"
             %ul.dropdown-menu
               - current_user.repositories.each do |repository|
                 - unless repository.new_record?
@@ -22,4 +22,4 @@
           %li= link_to "Account Setting", edit_user_registration_path
           %li.avatar= image_tag current_user.gravatar_url size: 24, secure: true
       - else
-        %nav= link_to "Sign in with Github", user_omniauth_authorize_path(:github), class: "btn btn-primary"
+        %nav= link_to "Sign in with Github", user_github_omniauth_authorize_path, class: "btn btn-primary"
