@@ -1,11 +1,11 @@
 language: ruby
 rvm:
-  - 2.0.0
+  - 2.3.3
 env: DB=mysql
 before_script:
   - "cp config/database.yml.example config/database.yml"
   - "cp config/github.yml.example config/github.yml"
   - "cp config/mailers.yml.example config/mailers.yml"
-  - "cp config/initializers/secret_token.rb.example config/initializers/secret_token.rb"
+  - "cp config/secrets.yml.example config/secrets.yml"
   - "bundle exec rake db:create"
   - "bundle exec rake db:schema:load"
