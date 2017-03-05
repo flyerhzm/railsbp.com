@@ -109,7 +109,7 @@ class Build < ActiveRecord::Base
     self.finished_at = end_time
     self.complete!
     self.repository.touch(:last_build_at)
-    UserMailer.notify_build_success(self).deliver if repository.recipient_emails.present?
+    UserMailer.notify_build_success(self).deliver_now if repository.recipient_emails.present?
   rescue => e
     Rollbar.error(e)
     self.fail!

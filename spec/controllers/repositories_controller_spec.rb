@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe RepositoriesController, type: :controller do
-  before { skip_repository_callbacks }
-
   context "GET :show" do
     it "should assign repository" do
       user = create(:user)

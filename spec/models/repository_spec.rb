@@ -12,7 +12,6 @@ RSpec.describe Repository, type: :model do
     it { is_expected.to validate_uniqueness_of(:github_id) }
 
     before do
-      skip_repository_callbacks
       @owner = create(:user)
       User.current = @owner
       @repository = create(:repository,
@@ -160,7 +159,7 @@ RSpec.describe Repository, type: :model do
   end
 
   context "#copy_config_file" do
-    before { skip_repository_callbacks(:except => :copy_config_file) }
+    before { allow_any_instance_of(Repository).to receive(:copy_config_file).and_call_original }
     it "should copy config file if config path exists" do
       repository = build(:repository)
       expect(File).to receive(:exist?).with(repository.config_path).and_return(true)
@@ -178,7 +177,7 @@ RSpec.describe Repository, type: :model do
   end
 
   context "#reset_authentication_token" do
-    before { skip_repository_callbacks(:except => :reset_authentication_token) }
+    before { allow_any_instance_of(Repository).to receive(:reset_authentication_token).and_call_original }
     subject { create(:repository) }
     describe '#authentication_token' do
       subject { super().authentication_token }
@@ -188,7 +187,7 @@ RSpec.describe Repository, type: :model do
 
   context "#sync_github" do
     before do
-      skip_repository_callbacks(:except => :sync_github)
+      allow_any_instance_of(Repository).to receive(:sync_github).and_call_original
       stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").
         to_return(headers: { "Content-Type": "application/json" }, body: File.new(Rails.root.join("spec/fixtures/repository.json")))
     end
@@ -234,14 +233,12 @@ RSpec.describe Repository, type: :model do
   end
 
   context "#setup_github_hook" do
-    before do
-      skip_repository_callbacks(:except => :setup_github_hook)
-    end
+    before { allow_any_instance_of(Repository).to receive(:setup_github_hook).and_call_original }
 
     it "should call github" do
       stub_request(:post, "https://api.github.com/repos/railsbp/railsbp.com/hooks").
-        with(body: {name: "railsbp", config: { railsbp_url: "http://railsbp.com", token:"1234567890" }, events: ["push"], active: true})
-      create(:repository, github_name: "railsbp/railsbp.com", authentication_token: "1234567890")
+        with(body: {name: "railsbp", config: { railsbp_url: "http://railsbp.com", token:"123456789" }, events: ["push"], active: true})
+      create(:repository, github_name: "railsbp/railsbp.com", authentication_token: "123456789")
     end
   end
 end

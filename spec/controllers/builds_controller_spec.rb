@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe BuildsController, type: :controller do
   before do
-    skip_repository_callbacks
     @user = create(:user)
     @repository = create(:repository)
     @repository.users << @user

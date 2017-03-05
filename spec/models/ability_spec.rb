@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Ability, type: :model do
-  before { skip_repository_callbacks }
-
   context "new user" do
     before do
       User.current = create(:user)

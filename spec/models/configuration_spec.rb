@@ -6,7 +6,6 @@ RSpec.describe Configuration, type: :model do
 
   context "#notify_collaborators" do
     before do
-      skip_repository_callbacks
       @repository1 = create(:repository)
       @repository2 = create(:repository)
     end

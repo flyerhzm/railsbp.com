@@ -2,7 +2,6 @@ require 'rails_helper'
 
 RSpec.describe CollaboratorsController, type: :controller do
   before do
-    skip_repository_callbacks
     @repository = create(:repository)
 
     user = create(:user)

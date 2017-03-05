@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe Build, type: :model do
   it { is_expected.to belong_to(:repository) }
 
-  before { skip_repository_callbacks }
-
   context "#short_commit_id" do
     subject { create(:build, :last_commit_id => "1234567890") }
     describe '#short_commit_id' do

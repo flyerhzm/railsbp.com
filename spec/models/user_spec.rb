@@ -6,7 +6,6 @@ RSpec.describe User, type: :model do
 
   context "#add_repository" do
     before do
-      skip_repository_callbacks
       @user = create(:user, nickname: "flyerhzm", github_uid: 66836)
       @repository = create(:repository, github_name: "flyerhzm/old")
       @user.repositories << @repository

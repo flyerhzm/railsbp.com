@@ -1,8 +1,6 @@
 require "rails_helper"
 
 RSpec.describe UserMailer, type: :mailer do
-  before { skip_repository_callbacks }
-
   context "#notify_build_success" do
     before do
       @user1 = create(:user, email: "user1@gmail.com")

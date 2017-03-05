@@ -9,7 +9,7 @@ set :keep_releases, 5
 
 set :linked_files, %w{config/database.yml config/github.yml config/mailers.yml config/secrets.yml}
 
-set :linked_dirs, %w{bin log builds tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+set :linked_dirs, %w{log builds tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
 set :rails_env, "production"
 

@@ -8,7 +8,6 @@ RSpec.describe UserRepository, type: :model do
   let(:repository) { create(:repository) }
 
   before do
-    skip_repository_callbacks
     User.current = user
   end
 

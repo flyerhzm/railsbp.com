@@ -34,11 +34,10 @@ RSpec.configure do |config|
   # rspec-rails.
   config.infer_base_class_for_anonymous_controllers = false
 
-  config.include(EmailSpec::Helpers)
-  config.include(EmailSpec::Matchers)
-  config.include(Support::BuildHelper)
-  config.include(Support::CallbackHelper)
-  config.include(Support::DelayedJobHelper)
+  config.include EmailSpec::Helpers
+  config.include EmailSpec::Matchers
+  config.include Support::BuildHelper
+  config.include Support::DelayedJobHelper
 
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
@@ -49,6 +48,13 @@ RSpec.configure do |config|
 
   config.after(:example) do
     DatabaseCleaner.clean
+  end
+
+  config.before do
+    allow_any_instance_of(Repository).to receive(:sync_github)
+    allow_any_instance_of(Repository).to receive(:setup_github_hook)
+    allow_any_instance_of(Repository).to receive(:copy_config_file)
+    allow(Devise).to receive(:friendly_token).and_return('123456789')
   end
 end
 
