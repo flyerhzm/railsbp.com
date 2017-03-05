@@ -1,7 +1,7 @@
 %h3 Public Repositories
 
 %ul.repositories
-  - @repositories.each do |repository|
+  - public_repositories.each do |repository|
     %li{:class => cycle("odd", "even")}
       = link_to repository.name, repository, :class => 'current'
       - if repository.builds_count > 0
