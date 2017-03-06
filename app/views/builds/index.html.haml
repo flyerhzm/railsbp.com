@@ -2,7 +2,7 @@
 
 %h2= @repository.github_name
 
-= render 'tabs', active_class_name: "history", repository: @repository
+= render 'tabs', active_class_name: "history", repository: @repository, build: nil
 = render 'history_links', repository: @repository, builds_count: builds_count
 
 #history
