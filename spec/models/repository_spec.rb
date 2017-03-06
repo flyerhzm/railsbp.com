@@ -153,7 +153,7 @@ RSpec.describe Repository, type: :model do
       end
 
       it "should return non fakemail.com users" do
-        expect(@repository.recipient_emails).to eq ["user1@gmail.com", "user2@gmail.com"]
+        expect(@repository.recipient_emails).to match_array ["user1@gmail.com", "user2@gmail.com"]
       end
     end
   end
