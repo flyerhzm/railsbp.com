@@ -1,7 +1,5 @@
 # railsbp.com
 
-[![Build Status](https://secure.travis-ci.org/railsbp/railsbp.com.png)](http://travis-ci.org/railsbp/railsbp.com)
-
 <a href='https://pledgie.com/campaigns/12057'><img alt='Click here to lend your support to: rails best practices and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/12057.png?skin_name=chrome' border='0' ></a>
 
 railsbp.com provides online rails projects code quality check service,
