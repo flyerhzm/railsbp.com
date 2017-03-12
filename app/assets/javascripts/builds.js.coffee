@@ -22,7 +22,7 @@ $ ->
       return false
     $("input[type=checkbox]").prop("checked", true)
     $("input[type=checkbox]").click ->
-      if $(this).attr("checked")
+      if $(this).prop("checked")
         $("."+$(this).val()).show()
       else
         $("."+$(this).val()).hide()

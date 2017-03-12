@@ -109,7 +109,7 @@ class Repository < ActiveRecord::Base
   end
 
   def configs
-    @configs ||= RepositoryConfigs.new(@repository).read
+    @configs ||= RepositoryConfigs.new(self).read
   end
 
   def to_param

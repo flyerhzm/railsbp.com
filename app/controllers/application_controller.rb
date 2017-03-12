@@ -5,11 +5,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to '/', alert: exception.message
+    redirect_to '/', error: exception.message
   end
 
   rescue_from UserNoEmailException do |exception|
-    redirect_to edit_user_registration_path, alert: "Your must input your email before creating a repository! It is only used to receive notification."
+    redirect_to edit_user_registration_path, error: "Your must input your email before creating a repository! It is only used to receive notification."
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exception|

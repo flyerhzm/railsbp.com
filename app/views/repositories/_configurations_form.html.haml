@@ -20,5 +20,4 @@
                     - else
                       = text_field_tag "repository[configs][#{index}][#{parameter.name}]", (repository.configs[configuration.name].try(:[], parameter.name) || parameter.value), class: "string span1"
                   %span.description= parameter.description
-  .form-actions
-    = form.submit "Save Configurations", class: "btn btn-primary"
+  = form.submit "Save Configurations", class: "btn btn-default"

@@ -1,4 +1,4 @@
-= link_to 'Show Builds', repository, :class => "edit btn btn-primary"
+= link_to 'Show Builds', [repository, :builds], :class => "edit-btn btn btn-default"
 %ul.nav.nav-tabs
   %li{:class => active_class_name == "overview" ? "active" : ""}
     = link_to "Overview", [:edit, repository]

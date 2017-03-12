@@ -17,7 +17,7 @@ class BuildsController < ApplicationController
   def rebuild
     @build = @repository.builds.find(params[:id])
     @build.rerun!
-    flash["notice"] = "Rebuilding..."
+    flash[:notice] = "Rebuilding..."
     redirect_to :action => :show
   end
 

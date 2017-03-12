@@ -6,15 +6,12 @@
     = display_meta_tags site: "Railsbp", description: "rails best practices, code review, rails code analyze"
   %body
     = render 'shared/header', repository: @repository
-    %section#share= render "shared/addthis"
-    %section#flash
-      .container-fluid
-        = notice_message
     %section#primary
-      .content
-        .well
-          .pledgie= render 'shared/pledgie'
-          = yield
+      .pledgie= render 'shared/pledgie'
+      .share= render "shared/addthis"
+      .well
+        = notice_message
+        = yield
     %footer.footer
       .inner
         .container
