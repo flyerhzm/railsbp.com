@@ -51,6 +51,7 @@ group :development do
   gem 'capistrano-rvm', require: false
   gem 'capistrano3-puma', require: false
   gem 'capistrano3-delayed-job', require: false
+  gem 'capistrano-db-tasks', require: false
 end
 
 group :test do
