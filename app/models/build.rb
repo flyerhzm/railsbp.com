@@ -39,7 +39,7 @@ class Build < ActiveRecord::Base
     end
 
     event :complete do
-      transitions to: :completed, from: [:running, :scheduled]
+      transitions to: :completed, from: [:running, :scheduled, :completed]
     end
 
     event :fail do
