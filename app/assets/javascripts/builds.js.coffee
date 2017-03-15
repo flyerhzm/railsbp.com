@@ -34,51 +34,6 @@ $ ->
     return false
 
 $ ->
-  if $("#buildsChart").length > 0
-    categories = $("#buildsChart").data("categories").reverse()
-    data = $("#buildsChart").data("data").reverse()
-    repository = $("#buildsChart").data("repository")
-    buildsChart = new Highcharts.Chart(
-      chart:
-        renderTo: "buildsChart"
-        defaultSeriesType: "line"
-
-      title:
-        text: "Builds History"
-
-      xAxis:
-        categories: categories
-
-      yAxis:
-        title:
-          text: "Warning count"
-        plotLines: [
-          value: 0
-          width: 1
-          color: "#808080"
-        ]
-
-      tooltip:
-        formatter: ->
-          @x
-
-      series: [
-        name: repository
-        data: data
-        point:
-          events:
-            click: ->
-              old_href = window.location.href.toString()
-              index = old_href.indexOf("?")
-              if index > -1
-                window.location.href = old_href[0...index] + "?position=" + @category
-              else
-                window.location.href = old_href + "?position=" + @category
-              return false
-      ]
-    )
-
-$ ->
   if $("#build").length > 0
     $("#build table thead tr").append("<th class='report'></th>")
     $.each $("#build table tbody tr"), ->
