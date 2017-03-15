@@ -27,6 +27,7 @@ gem 'nokogiri'
 gem 'newrelic_rpm'
 gem 'rollbar'
 gem 'oj'
+gem 'chartkick'
 
 gem 'puma'
 

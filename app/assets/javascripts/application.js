@@ -7,8 +7,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
-//= require highstock
-//= require bootstrap
+//= require Chart.bundle
+//= require chartkick
 //
 //= require builds
 //= require addthis

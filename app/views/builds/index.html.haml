@@ -7,7 +7,10 @@
 
 #history
   - if @builds.present?
-    #buildsChart{ data: { categories: @builds.map(&:position), data: @builds.map(&:warning_count), repository: @repository.github_name } }
+    = line_chart @builds.inject({}) { |h, build| h[build.position] = build.warning_count; h },
+      defer: true,
+      xtitle: "Build",
+      ytitle: "Warning Count"
     %table.table.table-striped.table-condensed
       %thead
         %th.build Build

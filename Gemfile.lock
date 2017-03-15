@@ -78,6 +78,7 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    chartkick (2.2.3)
     code_analyzer (0.4.7)
       sexp_processor
     coderay (1.1.1)
@@ -432,6 +433,7 @@ DEPENDENCIES
   capistrano3-delayed-job
   capistrano3-puma
   capybara
+  chartkick
   coffee-rails
   css_sprite
   cucumber-rails
