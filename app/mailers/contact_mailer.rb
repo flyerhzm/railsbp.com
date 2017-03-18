@@ -1,5 +1,5 @@
 class ContactMailer < ActionMailer::Base
-  mailer_account "notification"
+  default from: "notification@railsbp.com"
 
   def contact_us(contact)
     @message = contact.message
