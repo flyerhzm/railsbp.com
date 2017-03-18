@@ -127,6 +127,10 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.3)
     docile (1.1.5)
+    dotenv (2.2.0)
+    dotenv-rails (2.2.0)
+      dotenv (= 2.2.0)
+      railties (>= 3.2, < 5.1)
     em-websocket (0.5.1)
       eventmachine (>= 0.12.9)
       http_parser.rb (~> 0.6.0)
@@ -237,7 +241,6 @@ GEM
     multi_test (0.1.2)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
-    multiple_mailers (1.2.1)
     nenv (0.3.0)
     nested_form (0.3.2)
     net-scp (1.2.1)
@@ -441,6 +444,7 @@ DEPENDENCIES
   database_cleaner
   delayed_job_active_record
   devise
+  dotenv-rails
   email_spec
   factory_girl_rails
   git
@@ -458,7 +462,6 @@ DEPENDENCIES
   jquery-rails
   launchy
   meta-tags
-  multiple_mailers
   newrelic_rpm
   nokogiri
   oa-core

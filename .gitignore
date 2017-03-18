@@ -4,10 +4,8 @@ log/*.log
 tmp/
 /builds/
 .sass-cache/
-config/database.yml
-config/github.yml
-config/mailers.yml
-config/secrets.yml
 NERD_tree_1
 coverage/
 brakeman.html
+.env
+.env.test
