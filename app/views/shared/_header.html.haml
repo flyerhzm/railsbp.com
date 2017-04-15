@@ -14,8 +14,8 @@
         %li= link_to "About", page_path("about")
         %li= link_to "FAQ", page_path("faq")
         %li= link_to "Contact", new_contact_path
-      - if current_user
-        %ul.nav.navbar-nav.navbar-right
+      %ul.nav.navbar-nav.navbar-right
+        - if current_user
           %li= link_to "Create Repository", new_repository_path
           %li.dropdown
             = link_to name_and_caret(repository.try(:name) || "Select a repository").html_safe, "#", "class" => "dropdown-toggle", "data-toggle" => "dropdown"
@@ -26,5 +26,5 @@
           %li= link_to "Sign out", destroy_user_session_path, method: :delete
           %li= link_to "Account Setting", edit_user_registration_path
           %li.avatar= image_tag current_user.gravatar_url size: 24, secure: true
-      - else
-        %nav.nav.navbar-nav.navbar-right= link_to "Sign in with Github", user_github_omniauth_authorize_path, class: "btn btn-default signin-btn"
+        - else
+          %li= link_to "Sign in with Github", user_github_omniauth_authorize_path
