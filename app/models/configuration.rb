@@ -16,7 +16,8 @@ class Configuration < ActiveRecord::Base
   after_save :notify_collaborators
 
   protected
-    def notify_collaborators
-      Delayed::Job.enqueue(DelayedJob::NotifyCollaborators.new(self.id))
-    end
+
+  def notify_collaborators
+    NotifyCollaboratorsJob.perform_later(id)
+  end
 end

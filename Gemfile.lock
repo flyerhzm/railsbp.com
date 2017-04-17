@@ -65,9 +65,9 @@ GEM
     capistrano-rvm (0.1.2)
       capistrano (~> 3.0)
       sshkit (~> 1.2)
-    capistrano3-delayed-job (1.7.3)
-      capistrano (~> 3.0, >= 3.0.0)
-      daemons (~> 1.2.4)
+    capistrano-sidekiq (0.10.0)
+      capistrano
+      sidekiq (>= 3.4)
     capistrano3-puma (1.2.1)
       capistrano (~> 3.0)
       puma (>= 2.6)
@@ -91,6 +91,7 @@ GEM
     coffee-script-source (1.12.2)
     commonjs (0.2.7)
     concurrent-ruby (1.0.4)
+    connection_pool (2.2.1)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
     css_sprite (2.4.0)
@@ -114,11 +115,6 @@ GEM
     cucumber-wire (0.0.1)
     daemons (1.2.4)
     database_cleaner (1.5.3)
-    delayed_job (4.1.2)
-      activesupport (>= 3.0, < 5.1)
-    delayed_job_active_record (4.1.1)
-      activerecord (>= 3.0, < 5.1)
-      delayed_job (>= 3.0, < 5)
     devise (4.2.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -175,10 +171,6 @@ GEM
       guard (~> 2.2)
       guard-compat (~> 1.1)
     guard-compat (1.2.1)
-    guard-delayed (0.3.2)
-      delayed_job (~> 4)
-      guard (~> 2.1)
-      guard-compat (~> 1.1)
     guard-livereload (2.5.2)
       em-websocket (~> 0.5)
       guard (~> 2.8)
@@ -191,6 +183,9 @@ GEM
       guard (~> 2.1)
       guard-compat (~> 1.1)
       rspec (>= 2.99.0, < 4.0)
+    guard-sidekiq (0.1.0)
+      guard (>= 2)
+      sidekiq
     haml (4.0.7)
       tilt
     hashdiff (0.3.2)
@@ -286,6 +281,8 @@ GEM
     rack-pjax (1.0.0)
       nokogiri (~> 1.5)
       rack (>= 1.1)
+    rack-protection (1.5.3)
+      rack
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.8)
@@ -337,6 +334,9 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    redis (3.3.3)
+    redis-namespace (1.5.3)
+      redis (~> 3.0, >= 3.0.4)
     remotipart (1.3.1)
     require_all (1.4.0)
     responders (2.3.0)
@@ -381,6 +381,11 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (3.1.1)
       activesupport (>= 4.0.0)
+    sidekiq (4.2.10)
+      concurrent-ruby (~> 1.0)
+      connection_pool (~> 2.2, >= 2.2.0)
+      rack-protection (>= 1.5.0)
+      redis (~> 3.2, >= 3.2.1)
     simple_form (3.4.0)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
@@ -433,7 +438,7 @@ DEPENDENCIES
   capistrano-db-tasks
   capistrano-rails
   capistrano-rvm
-  capistrano3-delayed-job
+  capistrano-sidekiq
   capistrano3-puma
   capybara
   chartkick
@@ -442,7 +447,6 @@ DEPENDENCIES
   cucumber-rails
   daemons
   database_cleaner
-  delayed_job_active_record
   devise
   dotenv-rails
   email_spec
@@ -453,10 +457,10 @@ DEPENDENCIES
   guard
   guard-annotate
   guard-bundler
-  guard-delayed
   guard-livereload
   guard-rails
   guard-rspec
+  guard-sidekiq
   haml
   high_voltage
   jquery-rails
@@ -476,10 +480,12 @@ DEPENDENCIES
   rails_admin
   rails_best_practices
   rb-fsevent
+  redis-namespace
   rollbar
   rspec-rails
   sass-rails
   shoulda-matchers
+  sidekiq
   simple_form
   simplecov
   twitter-bootstrap-rails

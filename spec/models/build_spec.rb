@@ -53,41 +53,22 @@ RSpec.describe Build, type: :model do
   end
 
   context "#run!" do
-    before do
-      repository = create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
-      @build = repository.builds.create(last_commit_id: "987654321")
-      @build.run!
-    end
+    let(:build) { create :build }
 
-    it "should fetch remote git and analyze" do
-      build_analyze_success
-
-      @build.reload
-      expect(@build.aasm_state).to eq "completed"
-    end
-
-    it "should fail" do
-      build_analyze_failure
-
-      @build.reload
-      expect(@build.aasm_state).to eq "failed"
+    it "should trigger AnalyzeBuildJob" do
+      expect {
+        build.run!
+      }.to have_enqueued_job(AnalyzeBuildJob)
     end
   end
 
   context "#rerun!" do
-    before do
-      repository = create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git")
-      @build = repository.builds.create(last_commit_id: "987654321")
-      @build.aasm_state = "failed"
-      @build.save
-      @build.rerun!
-    end
+    let(:build) { create :build, aasm_state: 'failed' }
 
-    it "should fetch remote git and analyze" do
-      build_analyze_success
-
-      @build.reload
-      expect(@build.aasm_state).to eq "completed"
+    it "should trigger AnalyzeBuildJob" do
+      expect {
+        build.rerun!
+      }.to have_enqueued_job(AnalyzeBuildJob)
     end
   end
 

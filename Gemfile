@@ -14,7 +14,6 @@ gem 'twitter-bootstrap-rails'
 gem 'gravtastic'
 gem 'octokit'
 gem 'daemons'
-gem 'delayed_job_active_record'
 gem 'aasm'
 gem 'git'
 gem 'cancancan'
@@ -30,6 +29,8 @@ gem 'chartkick'
 gem 'dotenv-rails'
 
 gem 'puma'
+gem 'redis-namespace'
+gem 'sidekiq'
 
 gem 'jquery-rails'
 gem 'sass-rails'
@@ -42,8 +43,8 @@ group :development do
   gem 'guard'
   gem 'guard-bundler'
   gem 'guard-rails'
+  gem 'guard-sidekiq'
   gem 'guard-livereload'
-  gem 'guard-delayed'
   gem 'guard-annotate'
 
   gem 'capistrano', require: false
@@ -51,7 +52,7 @@ group :development do
   gem 'capistrano-rails', require: false
   gem 'capistrano-rvm', require: false
   gem 'capistrano3-puma', require: false
-  gem 'capistrano3-delayed-job', require: false
+  gem 'capistrano-sidekiq', require: false
   gem 'capistrano-db-tasks', require: false
 end
 

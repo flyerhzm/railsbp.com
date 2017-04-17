@@ -23,8 +23,6 @@
 #
 
 require 'authorization_exception'
-require 'delayed_job/notify_collaborators'
-require 'delayed_job/sync_collaborators'
 
 class Repository < ActiveRecord::Base
   has_many :user_repositories, dependent: :destroy
@@ -66,7 +64,7 @@ class Repository < ActiveRecord::Base
   end
 
   def sync_collaborators
-    Delayed::Job.enqueue(DelayedJob::SyncCollaborators.new(self.id, User.current.id))
+    SyncCollaboratorsJob.perform_later(id, User.current.id)
   end
 
   def delete_collaborator(user_id)

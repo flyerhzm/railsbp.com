@@ -20,6 +20,8 @@ Rails.logger.level = 4
 
 SimpleCov.start 'rails'
 
+ActiveJob::Base.queue_adapter = :test
+
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -36,8 +38,6 @@ RSpec.configure do |config|
 
   config.include EmailSpec::Helpers
   config.include EmailSpec::Matchers
-  config.include Support::BuildHelper
-  config.include Support::DelayedJobHelper
 
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
