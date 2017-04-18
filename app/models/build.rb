@@ -72,7 +72,7 @@ class Build < ActiveRecord::Base
   end
 
   def current_errors
-    @current_errors ||= self.load_errors
+    @current_errors ||= load_errors
   end
 
   def last_errors_memo
@@ -89,6 +89,14 @@ class Build < ActiveRecord::Base
     Rails.root.join("app/views/builds/rbp.html.erb").to_s
   end
 
+  def load_errors
+    if File.exists? yaml_output_file
+      YAML.load_file(yaml_output_file)
+    else
+      []
+    end
+  end
+
   private
 
   def set_position
@@ -99,17 +107,9 @@ class Build < ActiveRecord::Base
     FileUtils.rm(analyze_file) if File.exist?(analyze_file)
   end
 
-  def load_errors
-    if File.exists? self.yaml_output_file
-      YAML.load_file(self.yaml_output_file)
-    else
-      []
-    end
-  end
-
   def last_errors
     @last_errors ||= begin
-                       last_build = repository.builds.where("id < ?", self.id).completed.last
+                       last_build = repository.builds.where("id < ?", id).completed.last
                        last_build ? last_build.load_errors : []
                      end
   end
