@@ -113,7 +113,6 @@ GEM
       nokogiri (~> 1.5)
       railties (>= 3, < 5.1)
     cucumber-wire (0.0.1)
-    daemons (1.2.4)
     database_cleaner (1.5.3)
     devise (4.2.0)
       bcrypt (~> 3.0)
@@ -445,7 +444,6 @@ DEPENDENCIES
   coffee-rails
   css_sprite
   cucumber-rails
-  daemons
   database_cleaner
   devise
   dotenv-rails
@@ -479,7 +477,6 @@ DEPENDENCIES
   rails (= 4.2.8)
   rails_admin
   rails_best_practices
-  rb-fsevent
   redis-namespace
   rollbar
   rspec-rails
