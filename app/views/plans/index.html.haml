@@ -5,12 +5,13 @@
 = render 'accounts/tabs', active_class_name: 'plans'
 
 #plans
-  %p Free
+  %h3 Free
 
-  .alert-message.block-message.info
+  .alert.alert-message.block-message.info
     %h4 We offer some extra services
     %ul
       %li Implement checks according to your team code guideline.
       %li Install railsbp.com in your own server
+    %br
     %p Please use the #{link_to "Contact Page", new_contact_path} or send an email to #{link_to "contact-us@railsbp.com", "mailto:contact-us@railsbp.com"}.
 
