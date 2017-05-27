@@ -9,7 +9,7 @@ Any questions and suggestions are welcome, please contact me: flyerhzm@railsbp.c
 
 ## rails_best_practices gem
 
-<https://github.com/railsbp/rails_best_practices>
+<https://github.com/flyerhzm/rails_best_practices>
 
 ## Setup
 

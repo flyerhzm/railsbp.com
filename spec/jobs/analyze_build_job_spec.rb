@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe AnalyzeBuildJob do
-  let(:repository) { create(:repository, github_name: "railsbp/railsbp.com", name: "railsbp.com", git_url: "git://github.com/railsbp/railsbp.com.git") }
+  let(:repository) { create(:repository, github_name: "flyerhzm/railsbp.com", name: "railsbp.com", git_url: "git://github.com/flyerhzm/railsbp.com.git") }
   let(:build) { create(:build, last_commit_id: '987654321', repository: repository, aasm_state: 'running') }
 
   context "success" do

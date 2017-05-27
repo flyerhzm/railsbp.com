@@ -15,9 +15,9 @@ RSpec.describe Repository, type: :model do
       @owner = create(:user)
       User.current = @owner
       @repository = create(:repository,
-                      github_name: "railsbp/railsbp.com",
-                      git_url: "git://github.com/railsbp/railsbp.com.git",
-                      ssh_url: "git@github.com:railsbp/railsbp.com.git"
+                      github_name: "flyerhzm/railsbp.com",
+                      git_url: "git://github.com/flyerhzm/railsbp.com.git",
+                      ssh_url: "git@github.com:flyerhzm/railsbp.com.git"
                     )
       @repository.owners << @owner
     end
@@ -39,7 +39,7 @@ RSpec.describe Repository, type: :model do
         subject { @repository.tap { |repository| repository.update_attribute(:private, false) } }
         describe '#clone_url' do
           subject { super().clone_url }
-          it { should == "git://github.com/railsbp/railsbp.com.git" }
+          it { should == "git://github.com/flyerhzm/railsbp.com.git" }
         end
       end
 
@@ -47,7 +47,7 @@ RSpec.describe Repository, type: :model do
         subject { @repository.tap { |repository| repository.update_attribute(:private, true) } }
         describe '#clone_url' do
           subject { super().clone_url }
-          it { should == "git@github.com:railsbp/railsbp.com.git" }
+          it { should == "git@github.com:flyerhzm/railsbp.com.git" }
         end
       end
     end
@@ -62,14 +62,14 @@ RSpec.describe Repository, type: :model do
     context "config_path" do
       describe '#config_path' do
         subject { super().config_path }
-        it { should == Rails.root.join("builds/railsbp/railsbp.com").to_s }
+        it { should == Rails.root.join("builds/flyerhzm/railsbp.com").to_s }
       end
     end
 
     context "config_file_path" do
       describe '#config_file_path' do
         subject { super().config_file_path }
-        it { should == Rails.root.join("builds/railsbp/railsbp.com/rails_best_practices.yml").to_s }
+        it { should == Rails.root.join("builds/flyerhzm/railsbp.com/rails_best_practices.yml").to_s }
       end
     end
 
@@ -171,23 +171,23 @@ RSpec.describe Repository, type: :model do
   context "#sync_github" do
     before do
       allow_any_instance_of(Repository).to receive(:sync_github).and_call_original
-      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com").
+      stub_request(:get, "https://api.github.com/repos/flyerhzm/railsbp.com").
         to_return(headers: { "Content-Type": "application/json" }, body: File.new(Rails.root.join("spec/fixtures/repository.json")))
     end
 
-    subject { create(:repository, github_name: "railsbp/railsbp.com") }
+    subject { create(:repository, github_name: "flyerhzm/railsbp.com") }
 
     describe '#html_url' do
       subject { super().html_url }
-      it { should == "https://github.com/railsbp/railsbp.com" }
+      it { should == "https://github.com/flyerhzm/railsbp.com" }
     end
     describe '#git_url' do
       subject { super().git_url }
-      it { should == "git://github.com/railsbp/railsbp.com.git" }
+      it { should == "git://github.com/flyerhzm/railsbp.com.git" }
     end
     describe '#ssh_url' do
       subject { super().ssh_url }
-      it { should == "git@github.com:railsbp/railsbp.com.git" }
+      it { should == "git@github.com:flyerhzm/railsbp.com.git" }
     end
     describe '#name' do
       subject { super().name }
@@ -219,9 +219,9 @@ RSpec.describe Repository, type: :model do
     before { allow_any_instance_of(Repository).to receive(:setup_github_hook).and_call_original }
 
     it "should call github" do
-      stub_request(:post, "https://api.github.com/repos/railsbp/railsbp.com/hooks").
+      stub_request(:post, "https://api.github.com/repos/flyerhzm/railsbp.com/hooks").
         with(body: {name: "railsbp", config: { railsbp_url: "http://railsbp.com", token:"123456789" }, events: ["push"], active: true})
-      create(:repository, github_name: "railsbp/railsbp.com", authentication_token: "123456789")
+      create(:repository, github_name: "flyerhzm/railsbp.com", authentication_token: "123456789")
     end
   end
 end

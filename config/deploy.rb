@@ -3,7 +3,7 @@ set :rvm_ruby_version, '2.3.3'
 set :rvm_map_bins, %w{gem rake ruby rails bundle sidekiq sidekiqctl}
 
 set :application, 'railsbp.com'
-set :repo_url, 'git@github.com:railsbp/railsbp.com.git'
+set :repo_url, 'git@github.com:flyerhzm/railsbp.com.git'
 set :branch, 'master'
 set :deploy_to, '/home/deploy/sites/railsbp.com/production'
 set :keep_releases, 5

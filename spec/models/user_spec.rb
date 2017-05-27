@@ -16,9 +16,9 @@ RSpec.describe User, type: :model do
     end
 
     it "should create a new repository when he is a collaborator" do
-      stub_request(:get, "https://api.github.com/repos/railsbp/railsbp.com/collaborators").
+      stub_request(:get, "https://api.github.com/repos/flyerhzm/railsbp.com/collaborators").
         to_return(headers: { "Content-Type": "application/json" }, body: File.new(Rails.root.join("spec/fixtures/collaborators.json")))
-      expect { @user.add_repository("railsbp/railsbp.com") }.to change(@user.repositories, :count).by(1)
+      expect { @user.add_repository("flyerhzm/railsbp.com") }.to change(@user.repositories, :count).by(1)
     end
 
     it "should not create a new repository when he don't have privilege" do

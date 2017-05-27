@@ -55,7 +55,7 @@ RSpec.describe UserMailer, type: :mailer do
     it { is_expected.to have_subject("[Railsbp] private repository flyerhzm/test on railsbp.com") }
     it { is_expected.to have_body_text("We are appreciated that you are using railsbp.com") }
     it { is_expected.to have_body_text("your repository flyerhzm/test is a private repository on github") }
-    it { is_expected.to have_body_text("<a href=\"https://github.com/railsbp/railsbp.com\">fork railsbp.com on github</a>") }
+    it { is_expected.to have_body_text("<a href=\"https://github.com/flyerhzm/railsbp.com\">fork railsbp.com on github</a>") }
     it { is_expected.to have_body_text("<a href=\"mailto:contact-us@railsbp.com\">contact us</a>") }
   end
 end
