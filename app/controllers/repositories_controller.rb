@@ -32,7 +32,7 @@ class RepositoriesController < ApplicationController
   end
 
   def update
-    if @repository.update_attributes(repository_params)
+    if @repository.update(repository_params)
       redirect_to [:edit, @repository], notice: "Repository updated successfully."
     else
       @configs = RepositoryConfigs.new(@repository).read

@@ -6,7 +6,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def update
-    if current_user.update_attributes(user_params)
+    if current_user.update(user_params)
       redirect_to edit_user_registration_path, notice: "Successfully updated user."
     else
       render :edit
