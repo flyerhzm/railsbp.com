@@ -90,7 +90,7 @@ class Build < ActiveRecord::Base
   end
 
   def load_errors
-    if File.exists? yaml_output_file
+    if File.exist? yaml_output_file
       YAML.load_file(yaml_output_file)
     else
       []
